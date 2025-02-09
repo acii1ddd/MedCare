@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedCare.Common", "src\MedCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedCare.BLL", "src\MedCare.BLL\MedCare.BLL.csproj", "{BA156B95-0995-4EED-9248-2C9A9F0464BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedCare.DAL", "src\MedCare.DAL\MedCare.DAL.csproj", "{E639EAC9-C1ED-4AFC-B995-F097DEF32641}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedCare.DAL.Postgres", "src\MedCare.DAL.Postgres\MedCare.DAL.Postgres.csproj", "{E639EAC9-C1ED-4AFC-B995-F097DEF32641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
