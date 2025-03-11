@@ -1,0 +1,49 @@
+using MedCare.Common.Models.Users.Patient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace MedCare.DAL.Entities.Users;
+
+/// <summary>
+/// Информация о пользователях
+/// </summary>
+public class UserProfileEntity : BaseEntity
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Patronymic { get; set; } = string.Empty;
+    public DateTime BirthDate { get; set; }
+    public Gender Gender { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Профиль есть у пациента
+    /// </summary>
+    public PatientEntity Patient { get; set; } = null!;
+    
+    /// <summary>
+    /// Профиль есть у работника
+    /// </summary>
+    public WorkerEntity Worker { get; set; } = null!;
+}
+
+public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfileEntity>
+{
+    private const int MaxLength = 256;
+    
+    public void Configure(EntityTypeBuilder<UserProfileEntity> builder)
+    {
+        builder.ToTable("user_profiles");
+        
+        builder.HasKey(x => x.Id);
+        
+        builder.Property(x => x.FirstName).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.LastName).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.Patronymic).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.BirthDate).IsRequired();
+        builder.Property(x => x.Gender).IsRequired();
+        builder.Property(x => x.Email).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(MaxLength);
+    }
+}
