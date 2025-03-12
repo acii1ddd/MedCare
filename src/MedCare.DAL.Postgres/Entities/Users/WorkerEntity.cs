@@ -1,3 +1,4 @@
+using MedCare.Common.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -7,6 +8,8 @@ public class WorkerEntity : BaseEntity
 {
     public string Login { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
+    
+    public UserRole UserRole { get; set; }
     
     /// <summary>
     /// Профиль с информацией работника
@@ -39,6 +42,7 @@ public class WorkerEntity : BaseEntity
 public class WorkerConfiguration : IEntityTypeConfiguration<WorkerEntity>
 {
     private const int MaxLength = 512;
+    
     public void Configure(EntityTypeBuilder<WorkerEntity> builder)
     {
         builder.ToTable("workers");
@@ -46,6 +50,7 @@ public class WorkerConfiguration : IEntityTypeConfiguration<WorkerEntity>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Login).IsRequired().HasMaxLength(MaxLength);
         builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.UserRole).IsRequired();
         
         // связи
         builder.HasOne(x => x.UserProfile)

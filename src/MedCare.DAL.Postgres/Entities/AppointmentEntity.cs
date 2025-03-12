@@ -87,8 +87,8 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<AppointmentEnti
             .IsRequired(false); // анализы? 
         
         builder.HasOne(x => x.Service)
-            .WithOne(x => x.Appointment)
-            .HasForeignKey<AppointmentEntity>(x => x.ServiceId);
+            .WithMany(x => x.Appointments)
+            .HasForeignKey(x => x.ServiceId);
 
         builder.HasOne(x => x.Branch)
             .WithMany(x => x.Appointments)

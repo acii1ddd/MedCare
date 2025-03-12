@@ -1,3 +1,4 @@
+using MedCare.DAL;
 using MedCare.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,21 +6,31 @@ namespace MedCare.API;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-        builder.Services.AddAuthorization();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
+        
+        // Authentication
+        
+        // Add services to the container.
+        builder.Services.AddAuthentication();
+        
+        
+        
+        // Authorization
+        builder.Services.AddAuthorization();
+        
+
+        
         // custom
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"),
                 optionsBuilder =>
             {
                 optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
@@ -27,7 +38,7 @@ public class Program
         });
 
         var app = builder.Build();
-
+        
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -37,8 +48,27 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        // first
+        app.UseAuthentication();
+        // second
         app.UseAuthorization();
-
-        app.Run();
+        
+        using (var serviceScope = app.Services.CreateScope())
+        {
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await DbInitializer.Initialize(context);
+        }
+        
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        
+        try
+        {
+            await app.RunAsync();
+        }
+        catch (Exception e)
+        {
+            logger.LogError("Произошла ошибка при работе приложения {error}", e);
+            Environment.Exit(-1);
+        }
     }
 }
