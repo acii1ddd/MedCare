@@ -1,5 +1,6 @@
 using MedCare.BLL.Interfaces;
 using MedCare.BLL.Services;
+using MedCare.BLL.Services.Auth;
 
 namespace MedCare.BLL.Tests;
 

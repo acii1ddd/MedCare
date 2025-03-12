@@ -1,4 +1,4 @@
-using MedCare.Common.Models.Users.Patient;
+using MedCare.Common.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

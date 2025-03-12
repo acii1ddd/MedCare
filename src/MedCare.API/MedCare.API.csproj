@@ -26,4 +26,8 @@
       <ProjectReference Include="..\MedCare.BLL\MedCare.BLL.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ContractProfiles\" />
+    </ItemGroup>
+
 </Project>

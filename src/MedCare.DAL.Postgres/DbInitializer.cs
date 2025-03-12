@@ -1,5 +1,4 @@
 using MedCare.Common.Models.Users;
-using MedCare.Common.Models.Users.Patient;
 using MedCare.DAL.Context;
 using MedCare.DAL.Entities;
 using MedCare.DAL.Entities.Users;

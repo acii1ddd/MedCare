@@ -29,10 +29,6 @@ public class WorkerEntity : BaseEntity
     public BranchEntity Branch { get; set; } = null!;
     public Guid BranchId { get; set; }
     
-    
-    // график работы
-    
-    
     /// <summary>
     /// Записи на прием к этому доктору
     /// </summary>

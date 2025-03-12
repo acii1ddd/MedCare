@@ -1,6 +1,6 @@
 using MedCare.BLL.Interfaces;
 
-namespace MedCare.BLL.Services;
+namespace MedCare.BLL.Services.Auth;
 
 public class PasswordHashService : IPasswordHashService
 {

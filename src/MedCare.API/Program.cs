@@ -1,4 +1,7 @@
+using MedCare.API.ConfigurationDi;
+using MedCare.BLL.ConfigurationDI;
 using MedCare.DAL;
+using MedCare.DAL.ConfigurationDI;
 using MedCare.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +16,8 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+
+        builder.Services.AddControllers();
         
         // Authentication
         
@@ -37,6 +41,12 @@ public class Program
             });
         });
 
+        builder.Services
+            .RegisterRepositories()
+            .RegisterServices()
+            .RegisterProfiles()
+            .RegisterContractProfiles();
+
         var app = builder.Build();
         
         // Configure the HTTP request pipeline.
@@ -52,6 +62,8 @@ public class Program
         app.UseAuthentication();
         // second
         app.UseAuthorization();
+
+        app.MapControllers();
         
         using (var serviceScope = app.Services.CreateScope())
         {
