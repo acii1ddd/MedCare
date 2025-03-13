@@ -4,13 +4,13 @@ namespace MedCare.DAL.Interfaces;
     
 public interface IWorkerRepository
 {
-    public Task<List<WorkerEntity>> GetAllByBranchNameAsync(string filialName);
+    public Task<List<UserEntity>> GetAllByBranchNameAsync(string filialName);
     
-    public Task<WorkerEntity?> GetByIdAsync(int id);
+    public Task<UserEntity?> GetByIdAsync(int id);
     
-    public Task<WorkerEntity> AddAsync(WorkerEntity worker);
+    public Task<UserEntity> AddAsync(UserEntity user);
     
-    public Task<WorkerEntity> UpdateAsync(WorkerEntity worker);
+    public Task<UserEntity> UpdateAsync(UserEntity user);
     
-    public Task<WorkerEntity> DeleteByIdAsync(int id);
+    public Task<UserEntity> DeleteByIdAsync(int id);
 }

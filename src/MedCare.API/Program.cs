@@ -71,7 +71,7 @@ public class Program
             await DbInitializer.Initialize(context);
         }
         
-        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();   
         
         try
         {

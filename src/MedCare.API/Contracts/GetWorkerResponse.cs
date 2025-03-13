@@ -1,5 +1,5 @@
 using AutoMapper;
-using MedCare.Common.Models.Users;
+using MedCare.BLL.Models.Users;
 
 namespace MedCare.API.Contracts;
 
@@ -14,13 +14,15 @@ public class GetWorkerResponse
     public string PhoneNumber { get; init; } = string.Empty;
     
     public string SpecializationName { get; init; } = string.Empty;
+    
+    public byte[] Image { get; init; } = [];
 }
 
 public class GetWorkerResponseProfile : Profile
 {
     public GetWorkerResponseProfile()
     {
-        CreateMap<WorkerModel, GetWorkerResponse>()
+        CreateMap<UserModel, GetWorkerResponse>()
             .BeforeMap((src, dest) =>
             {
                 if (src.Specialization == null)
@@ -35,6 +37,8 @@ public class GetWorkerResponseProfile : Profile
             .ForMember(dest => dest.PhoneNumber, opt
                 => opt.MapFrom(src => src.UserProfile.PhoneNumber))
             .ForMember(dest => dest.SpecializationName, opt
-                => opt.MapFrom(src => src.Specialization!.Name));
+                => opt.MapFrom(src => src.Specialization!.Name))
+            .ForMember(dest => dest.Image, opt
+            => opt.MapFrom(src => src.Image));
     }
 }

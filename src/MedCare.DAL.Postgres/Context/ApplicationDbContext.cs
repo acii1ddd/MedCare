@@ -1,4 +1,5 @@
 using MedCare.DAL.Entities;
+using MedCare.DAL.Entities.Appointments;
 using MedCare.DAL.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +8,7 @@ namespace MedCare.DAL.Context;
 public class ApplicationDbContext : DbContext
 {
     // Users
-    public DbSet<PatientEntity> Patients { get; set; }
-    
-    public DbSet<WorkerEntity> Workers { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
     
     public DbSet<UserProfileEntity> UserProfiles { get; set; }
     

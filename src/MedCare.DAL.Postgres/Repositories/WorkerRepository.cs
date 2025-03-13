@@ -1,4 +1,3 @@
-using MedCare.Common.Models.Users;
 using MedCare.DAL.Context;
 using MedCare.DAL.Entities.Users;
 using MedCare.DAL.Interfaces;
@@ -15,30 +14,33 @@ public class WorkerRepository : IWorkerRepository
         _context = context;
     }
 
-    public async Task<List<WorkerEntity>> GetAllByBranchNameAsync(string branchName)
+    public async Task<List<UserEntity>> GetAllByBranchNameAsync(string branchName)
     {
-        return await _context.Workers.AsNoTracking()
+        return await _context.Users.AsNoTracking()
             .Where(x => x.UserRole == UserRole.Doctor)
             .Where(x => x.Branch.Name == branchName)
+            .Include(x => x.UserProfile)
+            .Include(x => x.Specialization)
+            .Include(x => x.Branch)
             .ToListAsync();
     }
 
-    public Task<WorkerEntity?> GetByIdAsync(int id)
+    public Task<UserEntity?> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<WorkerEntity> AddAsync(WorkerEntity worker)
+    public Task<UserEntity> AddAsync(UserEntity user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<WorkerEntity> UpdateAsync(WorkerEntity worker)
+    public Task<UserEntity> UpdateAsync(UserEntity user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<WorkerEntity> DeleteByIdAsync(int id)
+    public Task<UserEntity> DeleteByIdAsync(int id)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,6 @@
 using AutoMapper;
 using MedCare.BLL.Interfaces;
-using MedCare.Common.Models.Users;
+using MedCare.BLL.Models.Users;
 using MedCare.DAL.Interfaces;
 
 namespace MedCare.BLL.Services;
@@ -16,9 +16,9 @@ internal class WorkerService : IWorkerService
         _mapper = mapper;
     }
 
-    public async Task<List<WorkerModel>> GetAllByBranchNameAsync(string branchName)
+    public async Task<List<UserModel>> GetAllByBranchNameAsync(string branchName)
     {
-        var workers = _mapper.Map<List<WorkerModel>>(await _workerRepository.GetAllByBranchNameAsync(branchName));
+        var workers = _mapper.Map<List<UserModel>>(await _workerRepository.GetAllByBranchNameAsync(branchName));
         return workers;
     }
-}
+}   

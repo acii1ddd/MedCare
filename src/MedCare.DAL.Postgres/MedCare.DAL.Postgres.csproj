@@ -13,7 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MedCare.Common\MedCare.Common.csproj" />
+      <Reference Include="MedCare.Common">
+        <HintPath>..\MedCare.API\bin\Debug\net8.0\MedCare.Common.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

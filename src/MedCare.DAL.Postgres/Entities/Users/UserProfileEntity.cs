@@ -1,4 +1,3 @@
-using MedCare.Common.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,14 +17,9 @@ public class UserProfileEntity : BaseEntity
     public string PhoneNumber { get; set; } = string.Empty;
     
     /// <summary>
-    /// Профиль есть у пациента
+    /// Профиль пользователя
     /// </summary>
-    public PatientEntity Patient { get; set; } = null!;
-    
-    /// <summary>
-    /// Профиль есть у работника
-    /// </summary>
-    public WorkerEntity Worker { get; set; } = null!;
+    public UserEntity User { get; set; } = null!;
 }
 
 public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfileEntity>

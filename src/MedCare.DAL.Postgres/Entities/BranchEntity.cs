@@ -21,17 +21,12 @@ public class BranchEntity : BaseEntity
     /// <summary>
     /// Сотрудники, которые работают в этом филиале
     /// </summary>
-    public List<WorkerEntity> Workers { get; set; } = [];
+    public List<UserEntity> Workers { get; set; } = [];
     
     /// <summary>
     /// Услуги, которые предоставляет филиал
     /// </summary>
     public List<ServiceEntity> Services { get; set; } = [];
-    
-    /// <summary>
-    /// Записи в регистратуре для данного филиала
-    /// </summary>
-    public List<AppointmentEntity> Appointments { get; set; } = [];
 }
 
 public class BranchConfiguration : IEntityTypeConfiguration<BranchEntity>
@@ -58,9 +53,5 @@ public class BranchConfiguration : IEntityTypeConfiguration<BranchEntity>
 
         builder.HasMany(x => x.Services)
             .WithMany(x => x.Branches);
-        
-        builder.HasMany(x => x.Appointments)
-            .WithOne(x => x.Branch)
-            .HasForeignKey(x => x.BranchId);
     }
 }

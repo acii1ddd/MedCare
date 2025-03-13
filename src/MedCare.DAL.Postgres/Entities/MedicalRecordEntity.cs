@@ -1,3 +1,4 @@
+using MedCare.DAL.Entities.Appointments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

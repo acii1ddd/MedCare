@@ -1,5 +1,6 @@
 using MedCare.BLL.Interfaces;
 using MedCare.BLL.Mappers;
+using MedCare.BLL.Mappers.Users;
 using MedCare.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 

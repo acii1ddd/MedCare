@@ -1,8 +1,8 @@
-using MedCare.Common.Models.Users;
+using MedCare.BLL.Models.Users;
 
 namespace MedCare.BLL.Interfaces;
 
 public interface IWorkerService
 {
-    public Task<List<WorkerModel>> GetAllByBranchNameAsync(string branchName);
+    public Task<List<UserModel>> GetAllByBranchNameAsync(string branchName);
 }

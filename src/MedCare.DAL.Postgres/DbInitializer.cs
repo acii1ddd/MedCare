@@ -1,4 +1,3 @@
-using MedCare.Common.Models.Users;
 using MedCare.DAL.Context;
 using MedCare.DAL.Entities;
 using MedCare.DAL.Entities.Users;
@@ -14,8 +13,7 @@ public static class DbInitializer
         
         // база данных пуста
         if (
-            !context.Patients.Any() &&
-            !context.Workers.Any() &&
+            !context.Users.Any() &&
             !context.UserProfiles.Any() &&
             !context.Appointments.Any() &&
             !context.MedicalRecords.Any() &&
@@ -210,17 +208,18 @@ public static class DbInitializer
             const string passwordHash = "$2a$11$dqWSehl3tqJ5QRlE5zxpKeF2ulVPv.4NyU9m5FziPz9IUWwecUjxu";
             
             // гомель
-            var admin = new WorkerEntity
+            var director = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Login = "admin",
+                Login = "director",
                 PasswordHash = passwordHash,
-                UserRole = UserRole.Admin,
+                UserRole = UserRole.Director,
                 UserProfileId = user1.Id,
                 SpecializationId = null,
                 BranchId = branch1.Id,
+                Image = null
             };
-            var receptionist = new WorkerEntity
+            var receptionist = new UserEntity
             {
                 Id = Guid.NewGuid(),
                 Login = "register",
@@ -229,8 +228,9 @@ public static class DbInitializer
                 UserProfileId = user2.Id,
                 SpecializationId = null,
                 BranchId = branch1.Id,
+                Image = null
             };
-            var doctor1 = new WorkerEntity // Аллергология
+            var doctor1 = new UserEntity // Аллергология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc1",
@@ -239,8 +239,9 @@ public static class DbInitializer
                 UserProfileId = user3.Id,
                 SpecializationId = specialization1.Id,
                 BranchId = branch1.Id,
+                Image = await File.ReadAllBytesAsync("../../static/img1.jpg")
             };
-            var doctor2 = new WorkerEntity // Аллергология
+            var doctor2 = new UserEntity // Аллергология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc2",
@@ -249,18 +250,10 @@ public static class DbInitializer
                 UserProfileId = user4.Id,
                 SpecializationId = specialization2.Id,
                 BranchId = branch1.Id,
+                Image = await File.ReadAllBytesAsync("../../static/img2.png")
             };
-            var doctor3 = new WorkerEntity // Аллергология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc3",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user5.Id,
-                SpecializationId = specialization3.Id,
-                BranchId = branch1.Id,
-            };
-            await context.Workers.AddRangeAsync(admin, receptionist, doctor1, doctor2, doctor3);
+            await context.Users.AddRangeAsync(director, receptionist, doctor1, doctor2);
+            
             
             // пациентов создавать при первый заявке на запись!
             
@@ -574,7 +567,7 @@ public static class DbInitializer
         service24.Branches.Add(branch1);
         
         // Эндокринология (service25, service26 - в гомеле, service26 - в речице)
-        var service25 = new ServiceEntity 
+        var service25 = new ServiceEntity
         {
             Id = Guid.NewGuid(),
             Name = "Консультация врача-эндокринолога высшей квалификационной категории",

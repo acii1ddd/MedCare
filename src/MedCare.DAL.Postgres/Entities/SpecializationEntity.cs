@@ -19,7 +19,7 @@ public class SpecializationEntity : BaseEntity
     /// <summary>
     /// Сотрудники этой специализации
     /// </summary>
-    public List<WorkerEntity> Workers { get; set; } = null!;
+    public List<UserEntity> Workers { get; set; } = null!;
 }
 
 public class SpecializationConfiguration : IEntityTypeConfiguration<SpecializationEntity>
