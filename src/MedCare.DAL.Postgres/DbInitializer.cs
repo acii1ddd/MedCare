@@ -149,59 +149,60 @@ public static class DbInitializer
             var user1 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
+                Image = null,
                 FirstName = "Александр",
                 LastName = "Иванов",
                 Patronymic = "Сергеевич",
                 BirthDate = new DateTime(1990, 5, 15).ToUniversalTime(),
                 Gender = Gender.Male,
                 Email = "ivanov@gmail.com",
-                PhoneNumber = "+375291234567"
+                PhoneNumber = "+375291234567",
+                PassportSeries = "HB",
+                PassportNumber = "5678903"
             };
             var user2 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
+                Image = null,
                 FirstName = "Екатерина",
                 LastName = "Петрова",
                 Patronymic = "Викторовна",
                 BirthDate = new DateTime(1985, 11, 23).ToUniversalTime(),
                 Gender = Gender.Female,
                 Email = "petrova@gmail.com",
-                PhoneNumber = "+375333456789"
+                PhoneNumber = "+375333456789",
+                PassportSeries = "HB",
+                PassportNumber = "7896543"
             };
             var user3 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img1.jpg"),
                 FirstName = "Дмитрий",
                 LastName = "Сидоров",
                 Patronymic = "Андреевич",
                 BirthDate = new DateTime(1995, 7, 30).ToUniversalTime(),
                 Gender = Gender.Male,
                 Email = "sidorov@gmail.com",
-                PhoneNumber = "+375447890123"
+                PhoneNumber = "+375447890123",
+                PassportSeries = "HB",
+                PassportNumber = "7896543"
             };
             var user4 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
                 FirstName = "Анна",
                 LastName = "Козлова",
                 Patronymic = "Игоревна",
                 BirthDate = new DateTime(2000, 2, 12).ToUniversalTime(),
                 Gender = Gender.Female,
                 Email = "kozlova@gmail.com",
-                PhoneNumber = "+375293210987"
+                PhoneNumber = "+375293210987",
+                PassportSeries = "HB",
+                PassportNumber = "9090909"
             };
-            var user5 = new UserProfileEntity
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Максим",
-                LastName = "Васильев",
-                Patronymic = "Олегович",
-                BirthDate = new DateTime(1988, 9, 5).ToUniversalTime(),
-                Gender = Gender.Male,
-                Email = "vasiliev@gmail.com",
-                PhoneNumber = "+375336543210"
-            };
-            await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4, user5);
+            await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4);
             
             // сотрудники
             // password: 123
@@ -216,8 +217,7 @@ public static class DbInitializer
                 UserRole = UserRole.Director,
                 UserProfileId = user1.Id,
                 SpecializationId = null,
-                BranchId = branch1.Id,
-                Image = null
+                BranchId = branch1.Id
             };
             var receptionist = new UserEntity
             {
@@ -227,8 +227,7 @@ public static class DbInitializer
                 UserRole = UserRole.Receptionist,
                 UserProfileId = user2.Id,
                 SpecializationId = null,
-                BranchId = branch1.Id,
-                Image = null
+                BranchId = branch1.Id
             };
             var doctor1 = new UserEntity // Аллергология
             {
@@ -238,8 +237,7 @@ public static class DbInitializer
                 UserRole = UserRole.Doctor,
                 UserProfileId = user3.Id,
                 SpecializationId = specialization1.Id,
-                BranchId = branch1.Id,
-                Image = await File.ReadAllBytesAsync("../../static/img1.jpg")
+                BranchId = branch1.Id
             };
             var doctor2 = new UserEntity // Аллергология
             {
@@ -249,11 +247,9 @@ public static class DbInitializer
                 UserRole = UserRole.Doctor,
                 UserProfileId = user4.Id,
                 SpecializationId = specialization2.Id,
-                BranchId = branch1.Id,
-                Image = await File.ReadAllBytesAsync("../../static/img2.png")
+                BranchId = branch1.Id
             };
             await context.Users.AddRangeAsync(director, receptionist, doctor1, doctor2);
-            
             
             // пациентов создавать при первый заявке на запись!
             

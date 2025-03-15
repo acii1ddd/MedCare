@@ -1,16 +1,16 @@
+using MedCare.DAL.Entities;
 using MedCare.DAL.Entities.Users;
 
 namespace MedCare.BLL.Models.Users;
 
 public class UserModel
 {
-    public byte[]? Image { get; set; } = [];
     public UserRole UserRole { get; set; }
 
     /// <summary>
     /// Профиль с информацией пользователя
     /// </summary>
-    public UserProfileEntity UserProfile { get; set; } = null!;
+    public UserProfileModel UserProfile { get; set; } = null!;
     public Guid UserProfileId { get; set; }
     
     /// <summary>
@@ -29,4 +29,9 @@ public class UserModel
     /// Записи на прием к этому доктору
     /// </summary>
     public List<AppointmentModel>? Appointments { get; set; }
+    
+    /// <summary>
+    /// График работы сотрудника (набор записей в shedules для определенных дней недели)
+    /// </summary>
+    public List<ScheduleEntity>? Schedules { get; set; }
 }

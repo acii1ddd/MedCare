@@ -39,6 +39,6 @@ public class GetWorkerResponseProfile : Profile
             .ForMember(dest => dest.SpecializationName, opt
                 => opt.MapFrom(src => src.Specialization!.Name))
             .ForMember(dest => dest.Image, opt
-            => opt.MapFrom(src => src.Image));
+            => opt.MapFrom(src => src.UserProfile.Image));
     }
 }

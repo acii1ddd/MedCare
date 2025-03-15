@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using MedCare.DAL.Entities.Appointments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -7,7 +6,6 @@ namespace MedCare.DAL.Entities.Users;
 
 public class UserEntity : BaseEntity
 {
-    public byte[]? Image { get; set; } = [];
     public string Login { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public UserRole UserRole { get; set; }
@@ -39,6 +37,11 @@ public class UserEntity : BaseEntity
     /// Записи на прием, где этот user - пациент
     /// </summary>
     public List<AppointmentEntity>? PatientAppointments { get; set; }
+    
+    /// <summary>
+    /// График работы сотрудника (набор записей в shedules для определенных дней недели)
+    /// </summary>
+    public List<ScheduleEntity>? Schedules { get; set; }
 }
 
 public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
@@ -51,7 +54,6 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 
         builder.HasKey(x => x.Id);
         
-        builder.Property(x => x.Image).IsRequired(false);
         builder.Property(x => x.Login).IsRequired().HasMaxLength(MaxLength);
         builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(MaxLength);
         builder.Property(x => x.UserRole).IsRequired();
@@ -78,5 +80,8 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasMany(x => x.PatientAppointments)
             .WithOne(x => x.Patient)
             .HasForeignKey(x => x.PatientId);
+
+        builder.HasMany(x => x.Schedules)
+            .WithMany(x => x.Users);
     }
 }

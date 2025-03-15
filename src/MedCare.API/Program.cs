@@ -4,6 +4,7 @@ using MedCare.DAL;
 using MedCare.DAL.ConfigurationDI;
 using MedCare.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace MedCare.API;
 
@@ -64,6 +65,12 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../MedCare.UI/public")),
+            RequestPath = ""
+        });
         
         using (var serviceScope = app.Services.CreateScope())
         {

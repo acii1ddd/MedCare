@@ -18,7 +18,7 @@ public class WorkerRepository : IWorkerRepository
     {
         return await _context.Users.AsNoTracking()
             .Where(x => x.UserRole == UserRole.Doctor)
-            .Where(x => x.Branch.Name == branchName)
+            .Where(x => x.Branch != null && x.Branch.Name == branchName)
             .Include(x => x.UserProfile)
             .Include(x => x.Specialization)
             .Include(x => x.Branch)
