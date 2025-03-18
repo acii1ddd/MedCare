@@ -3,7 +3,7 @@ import DoctorList from './components/DoctorList';
 
 function App() {
   return (
-    <>
+    <div>
       <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center fixed top-0 left-0 w-full">
         {/* Логотип */}
         <div className="text-green-600 font-bold text-lg">
@@ -19,7 +19,7 @@ function App() {
 
         {/* Кнопки Войти / Зарегистрироваться */}
         <div className="flex space-x-4">
-          <button className="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
             Войти
           </button>
           <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
@@ -28,11 +28,9 @@ function App() {
         </div>
       </nav>
       <main>
-        <DoctorList>
-          
-        </DoctorList>
+        <DoctorList/>
       </main>
-    </>
+    </div>
   );
 }
 

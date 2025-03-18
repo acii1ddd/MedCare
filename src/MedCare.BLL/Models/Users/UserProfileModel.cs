@@ -2,7 +2,7 @@ using MedCare.DAL.Entities.Users;
 
 namespace MedCare.BLL.Models.Users;
 
-public class UserProfileModel
+public class UserProfileModel : BaseModel
 {
     public byte[]? Image { get; set; } = [];
 

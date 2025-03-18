@@ -1,6 +1,6 @@
 namespace MedCare.BLL.Models;
 
-public class ServiceModel
+public class ServiceModel : BaseModel
 {
     public string Name { get; set; } = string.Empty;
     public decimal Price { get; set; }

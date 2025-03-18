@@ -2,7 +2,7 @@ using MedCare.BLL.Models.Users;
 
 namespace MedCare.BLL.Models;
 
-public class ScheduleModel
+public class ScheduleModel : BaseModel
 {
     // DATE в Postgres
     public DateTime WorkDate { get; set; }

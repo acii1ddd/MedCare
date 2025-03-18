@@ -2,7 +2,7 @@ using MedCare.BLL.Models.Users;
 
 namespace MedCare.BLL.Models;
 
-public class SpecializationModel
+public class SpecializationModel : BaseModel
 {
     public string Name { get; set; } = string.Empty;
     

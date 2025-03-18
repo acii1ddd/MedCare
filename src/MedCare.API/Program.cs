@@ -48,6 +48,18 @@ public class Program
             .RegisterProfiles()
             .RegisterContractProfiles();
 
+        const string myCorsPolicy = "MedCareCorsPolicy";
+        
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(
+                name: myCorsPolicy,
+                policy =>
+            {
+                policy.WithOrigins("http://localhost:5173");
+            });
+        });
+        
         var app = builder.Build();
         
         // Configure the HTTP request pipeline.
@@ -66,11 +78,13 @@ public class Program
 
         app.MapControllers();
 
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../MedCare.UI/public")),
-            RequestPath = ""
-        });
+        app.UseCors(myCorsPolicy);
+
+        // app.UseStaticFiles(new StaticFileOptions
+        // {
+        //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../MedCare.UI/public")),
+        //     RequestPath = ""
+        // });
         
         using (var serviceScope = app.Services.CreateScope())
         {

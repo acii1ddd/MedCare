@@ -1,6 +1,6 @@
 namespace MedCare.BLL.Models;
 
-public class MedicalRecordModel
+public class MedicalRecordModel : BaseModel
 {
     public string? Diagnosis { get; set; } = string.Empty;
     

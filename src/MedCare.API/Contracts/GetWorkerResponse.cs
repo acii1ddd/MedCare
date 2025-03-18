@@ -5,6 +5,8 @@ namespace MedCare.API.Contracts;
 
 public class GetWorkerResponse
 {
+    public Guid Id { get; set; }
+    
     public string FirstName { get; init; } = string.Empty;
     
     public string LastName { get; init; } = string.Empty;
@@ -28,6 +30,8 @@ public class GetWorkerResponseProfile : Profile
                 if (src.Specialization == null)
                     throw new InvalidOperationException($"Worker {src.UserProfile.Email} не является врачом");
             })
+            .ForMember(dest => dest.Id, opt
+                => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FirstName, opt
                 => opt.MapFrom(src => src.UserProfile.FirstName))
             .ForMember(dest => dest.LastName, opt

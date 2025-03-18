@@ -3,7 +3,7 @@ using MedCare.DAL.Entities.Users;
 
 namespace MedCare.BLL.Models.Users;
 
-public class UserModel
+public class UserModel : BaseModel
 {
     public UserRole UserRole { get; set; }
 

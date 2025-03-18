@@ -1,6 +1,6 @@
 namespace MedCare.BLL.Models;
 
-public class CityModel
+public class CityModel : BaseModel
 {
     public string Name { get; set; } = string.Empty;
     

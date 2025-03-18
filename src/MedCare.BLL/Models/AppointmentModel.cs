@@ -3,7 +3,7 @@ using MedCare.DAL.Entities.Appointments;
 
 namespace MedCare.BLL.Models;
 
-public class AppointmentModel
+public class AppointmentModel : BaseModel
 {
     /// <summary>
     /// Дата приема врача

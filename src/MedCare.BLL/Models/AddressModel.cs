@@ -1,6 +1,6 @@
 namespace MedCare.BLL.Models;
 
-public class AddressModel
+public class AddressModel : BaseModel
 {
     public string Street { get; set; } = string.Empty;
     public int BuildingNumber { get; set; }
