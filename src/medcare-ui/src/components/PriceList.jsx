@@ -2,7 +2,7 @@ export default function ServiceList() {
     
     return (
         <div>
-            <h1>Цены</h1>
+            <h1>Услуги</h1>
         </div>
     );  
 }

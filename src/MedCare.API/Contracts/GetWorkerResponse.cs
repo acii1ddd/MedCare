@@ -17,7 +17,7 @@ public class GetWorkerResponse
     
     public string SpecializationName { get; init; } = string.Empty;
     
-    public byte[] Image { get; init; } = [];
+    public byte[] Image { get; init; } = [];    
 }
 
 public class GetWorkerResponseProfile : Profile

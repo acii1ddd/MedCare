@@ -145,7 +145,7 @@ public static class DbInitializer
                 specialization9, specialization10, specialization11, specialization12
             );
 
-            // профили пользователей
+            // В Гомеле
             var user1 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
@@ -177,7 +177,7 @@ public static class DbInitializer
             var user3 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
-                Image = await File.ReadAllBytesAsync("../../static/img1.jpg"),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
                 FirstName = "Дмитрий",
                 LastName = "Сидоров",
                 Patronymic = "Андреевич",
@@ -202,27 +202,169 @@ public static class DbInitializer
                 PassportSeries = "HB",
                 PassportNumber = "9090909"
             };
-            await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4);
+            var user5 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Мария",
+                LastName = "Захарова",
+                Patronymic = "Анатольевна",
+                BirthDate = new DateTime(1992, 4, 20).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "maria@gmail.com",
+                PhoneNumber = "+375293450987",
+                PassportSeries = "HB",
+                PassportNumber = "8765409"
+            };
+            var user6 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Сергей",
+                LastName = "Васильев",
+                Patronymic = "Олегович",
+                BirthDate = new DateTime(1982, 12, 14).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "vasilyev.sergey@gmail.com",
+                PhoneNumber = "+375297890123",
+                PassportSeries = "GH",
+                PassportNumber = "8901234"
+            };
+            var user7 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Игорь",
+                LastName = "Кузнецов",
+                Patronymic = "Анатольевич",
+                BirthDate = new DateTime(1984, 1, 29).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "kuznetsov.igor@gmail.com",
+                PhoneNumber = "+375291234568",
+                PassportSeries = "XZ",
+                PassportNumber = "3456789"
+            };
+            var user8 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Максим",
+                LastName = "Орлов",
+                Patronymic = "Петрович",
+                BirthDate = new DateTime(1996, 7, 12).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "orlov.maxim@gmail.com",
+                PhoneNumber = "+375292345678",
+                PassportSeries = "MN",
+                PassportNumber = "4567891"
+            };
+            var user9 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Елена",
+                LastName = "Зайцева",
+                Patronymic = "Викторовна",
+                BirthDate = new DateTime(1998, 5, 20).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "zaitseva.elena@mail.ru",
+                PhoneNumber = "+375293456789",
+                PassportSeries = "ZA",
+                PassportNumber = "5678902"
+            };
+            var user10 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Андрей",
+                LastName = "Козлов",
+                Patronymic = "Сергеевич",
+                BirthDate = new DateTime(1985, 7, 5).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "kozlov.andrey@gmail.com",
+                PhoneNumber = "+375295678901",
+                PassportSeries = "CK",
+                PassportNumber = "4567890"
+            };
+            var user11 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Ольга",
+                LastName = "Фёдорова",
+                Patronymic = "Николаевна",
+                BirthDate = new DateTime(2000, 4, 18).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "fedorova.olga@outlook.com",
+                PhoneNumber = "+375296789012",
+                PassportSeries = "DF",
+                PassportNumber = "6789012"
+            };
+            var user12 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Константин",
+                LastName = "Фролов",
+                Patronymic = "Алексеевич",
+                BirthDate = new DateTime(1993, 2, 28).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "frolov.konstantin@yandex.ru",
+                PhoneNumber = "+375294567890",
+                PassportSeries = "FR",
+                PassportNumber = "6789013"
+            };
+            var user13 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Анастасия",
+                LastName = "Мельникова",
+                Patronymic = "Денисовна",
+                BirthDate = new DateTime(2001, 10, 15).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "melnikova.anastasia@outlook.com",
+                PhoneNumber = "+375295678901",
+                PassportSeries = "ME",
+                PassportNumber = "7890124"
+            };
+            var user14 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Николай",
+                LastName = "Борисов",
+                Patronymic = "Сергеевич",
+                BirthDate = new DateTime(1987, 9, 5).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "borisov.nikolay@gmail.com",
+                PhoneNumber = "+375296789012",
+                PassportSeries = "BO",
+                PassportNumber = "8901235"
+            };
+            
+            await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4, user5, user6, 
+                user7, user8, user9, user10, user11, user12, user13, user14);
             
             // сотрудники
             // password: 123
             const string passwordHash = "$2a$11$dqWSehl3tqJ5QRlE5zxpKeF2ulVPv.4NyU9m5FziPz9IUWwecUjxu";
             
-            // гомель
-            var director = new UserEntity
+            // Гомель
+            var director1 = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Login = "director",
+                Login = "director1",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Director,
                 UserProfileId = user1.Id,
                 SpecializationId = null,
                 BranchId = branch1.Id
             };
-            var receptionist = new UserEntity
+            var receptionist1 = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Login = "register",
+                Login = "register1",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Receptionist,
                 UserProfileId = user2.Id,
@@ -249,8 +391,212 @@ public static class DbInitializer
                 SpecializationId = specialization2.Id,
                 BranchId = branch1.Id
             };
-            await context.Users.AddRangeAsync(director, receptionist, doctor1, doctor2);
+            var doctor3 = new UserEntity // Кардиология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc3",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user5.Id,
+                SpecializationId = specialization3.Id,
+                BranchId = branch1.Id
+            };
+            var doctor4 = new UserEntity // Косметология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc4",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user6.Id,
+                SpecializationId = specialization4.Id,
+                BranchId = branch1.Id
+            };
+            var doctor5 = new UserEntity // Неврология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc5",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user7.Id,
+                SpecializationId = specialization5.Id,
+                BranchId = branch1.Id
+            };
+            var doctor6 = new UserEntity // Оториноларингология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc6",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user8.Id,
+                SpecializationId = specialization6.Id,
+                BranchId = branch1.Id
+            };
+            var doctor7 = new UserEntity // Офтальмология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc7",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user9.Id,
+                SpecializationId = specialization7.Id,
+                BranchId = branch1.Id
+            };
+            var doctor8 = new UserEntity // Психологическая помощь
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc8",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user10.Id,
+                SpecializationId = specialization8.Id,
+                BranchId = branch1.Id
+            };
+            var doctor9 = new UserEntity // Терапия
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc9",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user11.Id,
+                SpecializationId = specialization9.Id,
+                BranchId = branch1.Id
+            };
+            var doctor10 = new UserEntity // Ультразвуковая диагностика
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc10",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user12.Id,
+                SpecializationId = specialization10.Id,
+                BranchId = branch1.Id
+            };
+            var doctor11 = new UserEntity // Лазерная эпиляция
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc11",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user13.Id,
+                SpecializationId = specialization11.Id,
+                BranchId = branch1.Id
+            };
+            var doctor12 = new UserEntity // Эндокринология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc12",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user14.Id,
+                SpecializationId = specialization12.Id,
+                BranchId = branch1.Id
+            };
+            await context.Users.AddRangeAsync(director1, receptionist1, doctor1, doctor2, doctor3, 
+                doctor4, doctor5, doctor6, doctor7, doctor8, doctor9, doctor10, doctor11, doctor12);
             
+            // В Речице
+            var user15 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Мария",
+                LastName = "Петрова",
+                Patronymic = "Александровна",
+                BirthDate = new DateTime(1995, 8, 22).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "petrova.maria@gmail.com",
+                PhoneNumber = "+375292345678",
+                PassportSeries = "MP",
+                PassportNumber = "3456789"
+            };
+            var user16 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Дмитрий",
+                LastName = "Смирнов",
+                Patronymic = "Игоревич",
+                BirthDate = new DateTime(1988, 2, 10).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "smirnov.dmitriy@yandex.ru",
+                PhoneNumber = "+375293456789",
+                PassportSeries = "AB",
+                PassportNumber = "1234567"
+            };
+            var user17 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Екатерина",
+                LastName = "Сидорова",
+                Patronymic = "Владимировна",
+                BirthDate = new DateTime(1993, 11, 30).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "sidorova.katya@mail.ru",
+                PhoneNumber = "+375294567890",
+                PassportSeries = "KV",
+                PassportNumber = "7890123"
+            };
+            var user18 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Татьяна",
+                LastName = "Беляева",
+                Patronymic = "Геннадьевна",
+                BirthDate = new DateTime(1991, 3, 8).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "belyaeva.tanya@outlook.com",
+                PhoneNumber = "+375290123456",
+                PassportSeries = "OP",
+                PassportNumber = "2345678"
+            };
+            
+            await context.UserProfiles.AddRangeAsync(user15, user16, user17, user18);
+            
+            var director2 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "director2",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Director,
+                UserProfileId = user15.Id,
+                SpecializationId = null,
+                BranchId = branch2.Id
+            };
+            var receptionist2 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "register2",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Receptionist,
+                UserProfileId = user16.Id,
+                SpecializationId = null,
+                BranchId = branch2.Id
+            };
+            var doctor13 = new UserEntity // Кардиология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc13",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user17.Id,
+                SpecializationId = specialization3.Id,
+                BranchId = branch2.Id
+            };
+            var doctor14 = new UserEntity // Неврология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc11",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user18.Id,
+                SpecializationId = specialization5.Id,
+                BranchId = branch2.Id
+            };
+
+            await context.Users.AddRangeAsync(director2, receptionist2, doctor13, doctor14);
+
             // пациентов создавать при первый заявке на запись!
             
             await context.SaveChangesAsync();
