@@ -4,7 +4,7 @@ namespace MedCare.DAL.Interfaces;
     
 public interface IWorkerRepository
 {
-    public Task<List<UserEntity>> GetAllByBranchNameAsync(string filialName);
+    public Task<List<UserEntity>> GetByBranchNameAsync(string filialName);
     
     public Task<UserEntity?> GetByIdAsync(int id);
     

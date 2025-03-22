@@ -19,7 +19,7 @@ export default function DoctorList({ branchName }) {
 
     return (
         <div className="doctor-list">
-            <p className="text-4xl font-semibold mb-4">Cпециалисты:</p>
+            <p className="text-3xl font-semibold mb-4">Cпециалисты</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {
                     doctors.map((doctor) => {

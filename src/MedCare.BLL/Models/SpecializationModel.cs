@@ -6,6 +6,8 @@ public class SpecializationModel : BaseModel
 {
     public string Name { get; set; } = string.Empty;
     
+    public string Description { get; set; } = string.Empty;
+    
     /// <summary>
     /// Услуги этой специализации
     /// </summary>

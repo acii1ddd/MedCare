@@ -22,7 +22,7 @@ public class DoctorController : ControllerBase
     [HttpGet("{branchName}")]
     public async Task<IActionResult> GetAllByBranchNameAsync([FromRoute] string branchName)
     {
-        var workers = await _workerService.GetAllByBranchNameAsync(branchName);
+        var workers = await _workerService.GetByBranchNameAsync(branchName);
         return Ok(_mapper.Map<List<GetWorkerResponse>>(workers));
     }
 }

@@ -11,6 +11,8 @@ public class SpecializationEntity : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     
+    public string Description { get; set; } = string.Empty;
+    
     /// <summary>
     /// Услуги этой специализации
     /// </summary>
@@ -24,7 +26,7 @@ public class SpecializationEntity : BaseEntity
 
 public class SpecializationConfiguration : IEntityTypeConfiguration<SpecializationEntity>
 {
-    private const int MaxLength = 256;
+    private const int MaxLength = 512;
     
     public void Configure(EntityTypeBuilder<SpecializationEntity> builder)
     {
@@ -33,6 +35,7 @@ public class SpecializationConfiguration : IEntityTypeConfiguration<Specializati
         builder.HasKey(x => x.Id);
         
         builder.Property(x => x.Name).IsRequired().HasMaxLength(MaxLength);
+        builder.Property(x => x.Description).IsRequired().HasMaxLength(MaxLength);
         
         // связи
         builder.HasMany(x => x.Services)

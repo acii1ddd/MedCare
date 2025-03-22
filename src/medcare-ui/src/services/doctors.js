@@ -13,6 +13,6 @@ export default async function GetDoctorsByBranch(branchName) {
 
         return doctorsWithImages;   
     } catch (error) {
-        console.error("Ошибка при загрузке врачей:", error);
+        console.error("Ошибка при загрузке врачей: ", error);
     }
 }

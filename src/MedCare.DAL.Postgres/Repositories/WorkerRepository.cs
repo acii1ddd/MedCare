@@ -14,9 +14,10 @@ public class WorkerRepository : IWorkerRepository
         _context = context;
     }
 
-    public async Task<List<UserEntity>> GetAllByBranchNameAsync(string branchName)
+    public async Task<List<UserEntity>> GetByBranchNameAsync(string branchName)
     {
-        return await _context.Users.AsNoTracking()
+        return await _context.Users
+            .AsNoTracking()
             .Where(x => x.UserRole == UserRole.Doctor)
             .Where(x => x.Branch != null && x.Branch.Name == branchName)
             .Include(x => x.UserProfile)

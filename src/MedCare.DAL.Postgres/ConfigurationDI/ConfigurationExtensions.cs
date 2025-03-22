@@ -9,6 +9,8 @@ public static class ConfigurationExtensions
     public static IServiceCollection RegisterRepositories(this IServiceCollection services)
     {
         services.AddScoped<IWorkerRepository, WorkerRepository>();
+        services.AddScoped<IBranchRepository, BranchRepository>();
+        // services.AddScoped<ISpecializationRepository, SpecializationRepository>();
         return services;
     }
 }

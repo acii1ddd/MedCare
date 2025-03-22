@@ -16,9 +16,9 @@ internal class WorkerService : IWorkerService
         _mapper = mapper;
     }
 
-    public async Task<List<UserModel>> GetAllByBranchNameAsync(string branchName)
+    public async Task<List<UserModel>> GetByBranchNameAsync(string branchName)
     {
-        var workers = _mapper.Map<List<UserModel>>(await _workerRepository.GetAllByBranchNameAsync(branchName));
+        var workers = _mapper.Map<List<UserModel>>(await _workerRepository.GetByBranchNameAsync(branchName));
         return workers;
     }
 }   

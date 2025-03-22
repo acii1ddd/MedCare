@@ -1,29 +1,24 @@
 import { useState } from "react";
+import BranchSelection from "../BranchSelection";
 import DoctorList from "../DoctorList";
 
 export default function DoctorsPage() {
-    const branches = ["МЦ \"Свагушка\" в Гомеле", "МЦ \"Свагушка\" в Речице"];
-
-    const [selectedBranch, setSelectedBranch] = useState(branches[0]); // по умолчанию первый филиал
-
+    const [selectedBranch, setSelectedBranch] = useState(null);
+    
     return (
-        <div className="bg-red-400 mt-15 flex flex-row gap-20">
+        <div className="bg-gray-50 p-5 mt-15 flex flex-row gap-20 rounded-lg">
+            <BranchSelection
+                selectedBranch={selectedBranch}
+                setSelectedBranch={setSelectedBranch}
+            />
             <div>
-                <p className="text-4xl font-semibold mb-4">Выберите филиал:</p>
-                    <select value={selectedBranch} onChange={e => setSelectedBranch(e.target.value)} className="border rounded p-2 mb-4">
-                        {branches.map(
-                            branch => (
-                                <option key={branch} value={branch}>
-                                    {branch}
-                                </option>    
-                            )
-                        )}
-                    </select>
-            </div>
-
-            <div>
-                {/* Отображение врачей выбранного филиала */}
-                <DoctorList branchName={selectedBranch}/>
+                {selectedBranch ? (
+                    /* Отображение врачей выбранного филиала */
+                    <DoctorList branchName={selectedBranch.name}/>
+                ) : 
+                ( 
+                    <p>Выберите филиал</p>
+                )}
             </div>
         </div>
     );
