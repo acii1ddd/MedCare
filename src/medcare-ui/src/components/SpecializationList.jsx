@@ -9,8 +9,8 @@ export default function SpecializationList({ branchId }) {
 
     useEffect(() => {
         const fetchSpecializationForBranch = async () => {
-            // setSpecializations([]);
             const specializations = await GetSpecializationsForBranch(branchId);
+            console.log("Specializations loaded", specializations);
             setSpecializations(specializations);   // компонент SpecialozationList перерендеривается
         };
 
@@ -20,7 +20,6 @@ export default function SpecializationList({ branchId }) {
 
     return (
         <div className="specialization-list">
-            <p className="text-3xl font-semibold mb-4">Направления</p>
             <div className="grid grid-cols-1 grid-rows-1 gap-4">
                 {specializations.length ? (
                     specializations.map((specialization) => {

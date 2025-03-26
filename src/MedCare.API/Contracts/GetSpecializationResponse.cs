@@ -10,6 +10,9 @@ public class GetSpecializationResponse
     public string Name { get; set; } = string.Empty;
     
     public string Description { get; set; } = string.Empty;
+    
+    
+    public List<GetServiceResponse> Services { get; set; } = null!;
 }
 
 public class GetSpecializationResponseProfile : Profile
@@ -22,6 +25,8 @@ public class GetSpecializationResponseProfile : Profile
             .ForMember(dest => dest.Name, opt
                 => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Description, opt
-                => opt.MapFrom(src => src.Description));
+                => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.Services, opt
+                => opt.MapFrom(src => src.Services));
     }
 }

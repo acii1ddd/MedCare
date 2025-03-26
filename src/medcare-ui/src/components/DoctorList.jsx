@@ -4,7 +4,7 @@ import GetDoctorsByBranch from '../services/doctors';
 
 export default function DoctorList({ branchName }) {
     
-    // Состояние для списка врачей
+    // состояние для списка врачей
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {

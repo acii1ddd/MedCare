@@ -58,14 +58,14 @@ public static class DbInitializer
             var branch1 = new BranchEntity // мозырь
             {
                 Id = Guid.NewGuid(),
-                Name = "МЦ 'Свагушка' в Гомеле",
+                Name = "Gomel",
                 Phone = "+375295789364",
                 AddressId = address1.Id
             };
             var branch2 = new BranchEntity // мозырь
             {
                 Id = Guid.NewGuid(),
-                Name = "МЦ 'Свагушка' в Речице",
+                Name = "Rechitsa",
                 Phone = "+375447899678",
                 AddressId = address2.Id
             };
@@ -767,7 +767,7 @@ public static class DbInitializer
         service10.Branches.Add(branch1);
         service11.Branches.Add(branch1);
         
-        // Неврология (service12 - в обоих, service13 - только в речице)
+        // Неврология (service12 - в обоих, service12, service13 - в речице)
         var service12 = new ServiceEntity 
         {
             Id = Guid.NewGuid(),

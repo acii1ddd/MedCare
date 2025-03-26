@@ -12,7 +12,8 @@ public static class ConfigurationExtensions
     {
         services.AddScoped<IWorkerService, WorkerService>();
         services.AddScoped<IBranchService, BranchService>();
-        // services.AddScoped<ISpecializationService, SpecializationService>();
+        services.AddScoped<ISpecializationService, SpecializationService>();
+        // services.AddScoped<IServiceService, ServiceService>();
         return services;
     }
 

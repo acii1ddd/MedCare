@@ -18,9 +18,10 @@
 //         _serviceService = serviceService;
 //     }
 //
-//     public async Task<IActionResult> GetByBranchNameAsync(string branchName)
+//     [HttpGet("{branchId:guid}/specializations/{specializationId:guid}/services")]
+//     public async Task<IActionResult> GetBySpecializationForBranchAsync(Guid branchId, Guid specializationId)
 //     {
-//         var services = await _serviceService.GetByBranchNameAsync(branchName);
+//         var services = await _serviceService.GetServicesBySpecializationForBranch(specializationId, branchId);
 //         var result = _mapper.Map<List<GetServiceResponse>>(services);
 //         return Ok(result);
 //     }

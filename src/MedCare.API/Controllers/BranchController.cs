@@ -27,20 +27,4 @@ public class BranchController : ControllerBase
         var result = _mapper.Map<List<GetBranchNameResponse>>(branches);
         return Ok(result);
     }
-    
-    [HttpGet("{branchId:guid}/specializations")]
-    public async Task<IActionResult> GetSpecializationsForBranchAsync(Guid branchId)
-    {
-        var specializations = await _branchService.GetByBranchAsync(branchId);
-        var result = _mapper.Map<List<GetSpecializationResponse>>(specializations);
-        return Ok(result);
-    }
-    
-    [HttpGet("{branchId:guid}/specializations/{specializationId:guid}/services")]
-    public async Task<IActionResult> GetServicesBySpecializationForBranchAsync(Guid branchId, Guid specializationId)
-    {
-        var services = await _branchService.GetServicesBySpecializationForBranch(specializationId, branchId);
-        var result = _mapper.Map<List<GetServiceResponse>>(services);
-        return Ok(result);
-    }
 }

@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import GetAllBranches from '../services/branches';
 
+// чтоб отметить выбранный филиал и захендлить нажатие
 export default function BranchSelection({selectedBranch, setSelectedBranch}) {
     const [branches, setBranches] = useState([]);
 
     useEffect(() => {
         const fetchBranches = async () => {
             const data = await GetAllBranches();
+            console.log("Branches loaded:", data);
             setBranches(data);
-            if (data.length > 0) {
-                setSelectedBranch(data[0]);
-            }
         };
 
         fetchBranches();
-    }, [setSelectedBranch]);
+    }, []);
 
     return (
         <div>

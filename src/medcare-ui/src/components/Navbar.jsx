@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 export default function Navbar() {
     return (
         <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center fixed top-0 left-0 w-full">
-          {/* Логотип */}
           <div className="text-black-600 font-bold text-2xl">
             Медицинский Центр
           </div>
