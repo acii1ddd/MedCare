@@ -1,6 +1,8 @@
 using AutoMapper;
 using MedCare.API.Contracts;
+using MedCare.API.Contracts.Responses;
 using MedCare.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedCare.API.Controllers;
@@ -21,6 +23,7 @@ public class BranchController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllAsync()
     {
         var branches = await _branchService.GetAllAsync();

@@ -1,6 +1,8 @@
 using AutoMapper;
 using MedCare.API.Contracts;
+using MedCare.API.Contracts.Responses;
 using MedCare.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedCare.API.Controllers;
@@ -19,6 +21,7 @@ public class SpecializationController : ControllerBase
     }
 
     [HttpGet("{branchId:guid}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetForBranchAsync(Guid branchId)
     {
         var specializations = await _specializationService.GetByBranchAsync(branchId);

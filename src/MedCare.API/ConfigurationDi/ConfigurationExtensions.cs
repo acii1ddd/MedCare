@@ -1,4 +1,8 @@
-using MedCare.API.Contracts;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MedCare.API.Contracts.Responses;
+using MedCare.API.Controllers;
+using MedCare.API.Validators;
 
 namespace MedCare.API.ConfigurationDi;
 
@@ -10,6 +14,10 @@ public static class ConfigurationExtensions
         {
             options.AddMaps(typeof(GetWorkerResponseProfile).Assembly);
         });
+
+        services.AddValidatorsFromAssemblyContaining<SignInRequestValidator>();
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
         return services;
     }
 }

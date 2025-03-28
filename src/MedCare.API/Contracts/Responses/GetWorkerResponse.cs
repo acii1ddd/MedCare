@@ -1,7 +1,7 @@
 using AutoMapper;
 using MedCare.BLL.Models.Users;
 
-namespace MedCare.API.Contracts;
+namespace MedCare.API.Contracts.Responses;
 
 public class GetWorkerResponse
 {

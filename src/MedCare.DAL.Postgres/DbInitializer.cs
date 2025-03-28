@@ -625,8 +625,60 @@ public static class DbInitializer
 
             await context.Users.AddRangeAsync(director2, receptionist2, doctor13, doctor14);
 
-            // пациентов создавать при первый заявке на запись!
+            // пациенты
+            var user19 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = null,
+                FirstName = "Алексей",
+                LastName = "Петров",
+                Patronymic = "Александрович",
+                BirthDate = new DateTime(1990, 6, 12).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "petrov.aleksey@example.com",
+                PhoneNumber = "+375296789014",
+                PassportSeries = "CD",
+                PassportNumber = "1122334"
+            };
+            var user20 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = null,
+                FirstName = "Елена",
+                LastName = "Смирнова",
+                Patronymic = "Игоревна",
+                BirthDate = new DateTime(1985, 11, 25).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "smirnova.elena@example.com",
+                PhoneNumber = "+375296789015",
+                PassportSeries = "EF",
+                PassportNumber = "4455667"
+            };
+            await context.UserProfiles.AddRangeAsync(user19, user20);
             
+            var patient1 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "patient1",
+                PasswordHash = passwordHash, // 123
+                UserRole = UserRole.Patient,
+                UserProfileId = user19.Id,
+                SpecializationId = null,
+                BranchId = null
+            };
+            var patient2 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "patient2",
+                PasswordHash = passwordHash, // 123
+                UserRole = UserRole.Patient,
+                UserProfileId = user20.Id,
+                SpecializationId = null,
+                BranchId = null
+            };
+            await context.Users.AddRangeAsync(patient1, patient2);
+            
+            // all
             await context.SaveChangesAsync();
         }
     }

@@ -1,0 +1,8 @@
+namespace MedCare.BLL.Models.Auth;
+
+public class SignInModel
+{
+    public string Login { get; set; } = string.Empty;
+    
+    public string Password { get; set; } = string.Empty;
+}

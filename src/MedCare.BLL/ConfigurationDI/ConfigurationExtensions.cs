@@ -1,7 +1,9 @@
 using MedCare.BLL.Interfaces;
+using MedCare.BLL.Interfaces.Auth;
 using MedCare.BLL.Mappers;
 using MedCare.BLL.Mappers.Users;
 using MedCare.BLL.Services;
+using MedCare.BLL.Services.Auth;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MedCare.BLL.ConfigurationDI;
@@ -13,6 +15,8 @@ public static class ConfigurationExtensions
         services.AddScoped<IWorkerService, WorkerService>();
         services.AddScoped<IBranchService, BranchService>();
         services.AddScoped<ISpecializationService, SpecializationService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPasswordHashService, PasswordHashService>();
         // services.AddScoped<IServiceService, ServiceService>();
         return services;
     }

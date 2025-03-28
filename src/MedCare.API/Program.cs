@@ -1,10 +1,16 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using MedCare.API.ConfigurationDi;
+using MedCare.API.Extensions;
+using MedCare.API.Middleware;
 using MedCare.BLL.ConfigurationDI;
+using MedCare.BLL.Models.Auth;
 using MedCare.DAL;
 using MedCare.DAL.ConfigurationDI;
 using MedCare.DAL.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MedCare.API;
 
@@ -46,8 +52,46 @@ public class Program
             .RegisterRepositories()
             .RegisterServices()
             .RegisterProfiles()
-            .RegisterContractProfiles();
+            .RegisterContractProfiles()
+            .AddSwagger();
+        
+        var authSection = builder.Configuration.GetSection("AuthSettings");
+        if (!authSection.Exists()) 
+        {
+            throw new ApplicationException($"Секция {nameof(AuthSettings)} не найдена в конфигурационном файле");
+        }
+        builder.Services.Configure<AuthSettings>(authSection);
+        
+        var authSettings = authSection.Get<AuthSettings>()
+            ?? throw new ApplicationException("Не удалось сопоставить параметры аутентификации");
 
+
+        builder.Services
+            .AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = authSettings.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = authSettings.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.Secret)),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+        
+        builder.Services.AddAuthorization(authOptions =>
+        {
+            // authOptions.AddPolicy();
+        });
+        
         const string myCorsPolicy = "MedCareCorsPolicy";
         
         builder.Services.AddCors(options =>
@@ -61,6 +105,8 @@ public class Program
         });
         
         var app = builder.Build();
+
+        app.UseMiddleware<ExceptionHandling>();
         
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -92,7 +138,7 @@ public class Program
             await DbInitializer.Initialize(context);
         }
         
-        var logger = app.Services.GetRequiredService<ILogger<Program>>();   
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
         
         try
         {
