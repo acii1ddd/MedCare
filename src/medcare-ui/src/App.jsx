@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
-import Navbar from './components/Navbar';
+import Navbar from './components/Layout/Navbar';
 import DoctorsPage from './components/Pages/DoctorsPage';
 import ServicesPage from './components/Pages/ServicesPage';
 import ContactPage from './components/Pages/ContactPage';
@@ -8,9 +8,10 @@ import NotFoundPage from './components/Pages/Auth/NotFoundPage';
 import ForbiddenPage from './components/Pages/Auth/ForbiddenPage';
 import LoginPage from './components/Pages/Auth/LoginPage';
 import AuthPrivateRoute from './components/Routes/AuthPrivateRoute';
-import Dashboard from './components/Dashboard';
+import PatientDashboard from './components/Dashboards/PatientDashboard';
 import AuthProvider from './components/Auth/AuthProvider';
-import MainPage from './components/Pages/MainPage';
+import MainPage from './components/Layout/MainPage';
+import DashboardRouter from './components/Routes/DashboardRouter';
 
 function Layout() {
   return(
@@ -28,10 +29,18 @@ function Layout() {
               <Route path="/contacts" element={<ContactPage/>}/>
 
               <Route path="/sign-in" element={<LoginPage />} />
-              <Route path="/dashboard"
+              {/* <Route path="/dashboard"
                 element={
                   <AuthPrivateRoute allowedRoles={["Patient", "Receptionist", "Doctor", "Director"]}>
-                    <Dashboard/>
+                    <PatientDashboard/>
+                  </AuthPrivateRoute>
+                } 
+              /> */}
+
+              <Route path="/dashboard"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Patient", "Receptionist", "Doctor", "Director"]}> {/* успевает положить токен в localstorage при forbidden */}
+                    <DashboardRouter/>
                   </AuthPrivateRoute>
                 } 
               />

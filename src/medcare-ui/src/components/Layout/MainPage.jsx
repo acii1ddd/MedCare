@@ -1,3 +1,5 @@
+import Footer from "./Footer";
+
 export default function MainPage() {
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col mt-15">
@@ -47,12 +49,7 @@ export default function MainPage() {
                     </p>
                 </div>
             </section>
-
-            {/* Footer Section */}
-            <footer className="bg-blue-600 text-white py-6 text-center">
-                <p>&copy; 2025 Медцентр. Все права защищены.</p>
-                <p>Телефон: +1 234 567 890</p>
-            </footer>
+            <Footer/>
         </div>
     );
 }

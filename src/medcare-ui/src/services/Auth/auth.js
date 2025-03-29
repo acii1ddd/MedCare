@@ -31,7 +31,7 @@ export const signIn = async (login, password) => {
     }
 }
 
-export const getUserRole = async () => {
+export const getCurrUser = async () => {
     const token = localStorage.getItem("token");
     if (!token) return null;
 

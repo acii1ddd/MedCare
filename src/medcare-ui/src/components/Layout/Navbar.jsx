@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from './Auth/AuthContext';
+import { AuthContext } from '../Auth/AuthContext';
 
 export default function Navbar() {
     const { currUser, logout } = useContext(AuthContext);
@@ -18,27 +18,19 @@ export default function Navbar() {
             
             {currUser && (
               currUser.userRole === "Patient" && (
-                <li>
-                  <Link to="/contacts" 
-                    className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Запись на прием</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/contacts" 
+                      className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Запись на прием</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard" 
+                      className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Мой кабинет</Link>
+                  </li>
+                </>
               )
             )}
-            
           </ul>
-
-          {/* Кнопки Войти / Зарегистрироваться */}
-          {/* <div className="flex space-x-4"> */}
-            {/* <Link to="/sign-in">
-              <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                Войти
-              </button>
-            </Link> */}
-            {/* <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-              Зарегистрироваться
-            </button> */}
-          {/* </div> */}
-
 
           {currUser ? (
             <div className='flex space-x-4'>
