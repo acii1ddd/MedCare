@@ -20,4 +20,12 @@ public class UserRepository : IUserRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Login == login);
     }
+
+    public async Task<UserEntity?> GetByIdAsync(Guid userId)
+    {
+        return await _context.Users
+            .Include(x => x.UserProfile)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == userId);
+    }
 }

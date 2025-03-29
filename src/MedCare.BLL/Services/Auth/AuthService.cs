@@ -53,4 +53,15 @@ public class AuthService : IAuthService
             UserRole = userSignInDetails.UserRole
         }, _authSettings);
     }
+
+    public async Task<UserModel> GetCurrentUserAsync(Guid userId)
+    {
+        var currUser = await _userRepository.GetByIdAsync(userId);
+        if (currUser is null)
+        {
+            throw new InvalidOperationException($"Пользователь с Id {userId} не найден");
+        }
+
+        return _mapper.Map<UserModel>(currUser);
+    }
 }

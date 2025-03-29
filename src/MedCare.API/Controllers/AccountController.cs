@@ -36,10 +36,12 @@ public class AccountController : BaseController
     }
 
     [Authorize]
-    [HttpGet("user-role")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetUserRoleResponse))]
-    public IActionResult GetUserRoleAsync()
+    [HttpGet("curr-user")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetCurrentUserResponse))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GetUserRoleAsync()
     {
-        return Ok(_mapper.Map<GetUserRoleResponse>(AuthorizedUserRole));
+        var currUser = await _authService.GetCurrentUserAsync(AuthorizedUserId);
+        return Ok(_mapper.Map<GetCurrentUserResponse>(currUser));
     }
 }

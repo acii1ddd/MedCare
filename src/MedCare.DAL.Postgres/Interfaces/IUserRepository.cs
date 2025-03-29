@@ -5,4 +5,6 @@ namespace MedCare.DAL.Interfaces;
 public interface IUserRepository
 {
     public Task<UserEntity?> GetByLoginAsync(string login);
+    
+    public Task<UserEntity?> GetByIdAsync(Guid userId);
 }
