@@ -10,7 +10,7 @@ import LoginPage from './components/Pages/Auth/LoginPage';
 import AuthPrivateRoute from './components/Routes/AuthPrivateRoute';
 import PatientDashboard from './components/Dashboards/PatientDashboard';
 import AuthProvider from './components/Auth/AuthProvider';
-import MainPage from './components/Layout/MainPage';
+import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
 
 function Layout() {

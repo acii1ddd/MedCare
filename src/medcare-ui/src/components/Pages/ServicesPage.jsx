@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BranchSelection from "../BranchSelection";
-import SpecializationList from "../SpecializationList";
+import SpecializationList from "../Lists/SpecializationList";
 import { useNavigate, useParams } from "react-router-dom";
 import GetAllBranches from './../../services/branches';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Doctor from "./Doctor";
-import GetDoctorsByBranch from '../services/doctors';
+import Doctor from "../Items/Doctor";
+import GetDoctorsByBranch from '../../services/doctors';
 
 export default function DoctorList({ branchName }) {
     

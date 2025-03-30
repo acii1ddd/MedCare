@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Specialization from "./Specialization";
-import GetSpecializationsForBranch from '../services/specializations';
+import Specialization from "../Items/Specialization";
+import GetSpecializationsForBranch from '../../services/specializations';
 
 export default function SpecializationList({ branchId }) {
     

@@ -1,4 +1,4 @@
-import Service from "./Service";
+import Service from "../Items/Service";
 
 export default function ServiceList({ services }) {
     return (

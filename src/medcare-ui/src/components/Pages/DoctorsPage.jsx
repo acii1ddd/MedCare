@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BranchSelection from "../BranchSelection";
-import DoctorList from "../DoctorList";
+import DoctorList from "../Lists/DoctorList";
 import { useNavigate, useParams } from "react-router-dom";
 import GetAllBranches from './../../services/branches';
 
