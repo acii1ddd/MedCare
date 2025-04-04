@@ -17,7 +17,6 @@ export default function Navbar() {
             <li><Link to="/contacts" className="bg-gray-100 hover:bg-gray-300 text-xl text-black px-4 py-2 rounded-lg duration-150">Контакты</Link></li>
             
             {currUser && (
-              currUser.userRole === "Patient" && (
                 <>
                   <li>
                     <Link to="/contacts" 
@@ -29,7 +28,7 @@ export default function Navbar() {
                   </li>
                 </>
               )
-            )}
+            }
           </ul>
 
           {currUser ? (
