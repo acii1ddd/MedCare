@@ -262,6 +262,20 @@ public static class DbInitializer
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Ирина",
+                LastName = "Ковалёва",
+                Patronymic = "Александровна",
+                BirthDate = new DateTime(1991, 6, 25).ToUniversalTime(),
+                Gender = Gender.Female,
+                Email = "kovaleva.irina@gmail.com",
+                PhoneNumber = "+375291234567",
+                PassportSeries = "KL",
+                PassportNumber = "1234567"
+            };
+            var user8 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
                 FirstName = "Игорь",
                 LastName = "Кузнецов",
                 Patronymic = "Анатольевич",
@@ -272,7 +286,7 @@ public static class DbInitializer
                 PassportSeries = "XZ",
                 PassportNumber = "3456789"
             };
-            var user8 = new UserProfileEntity
+            var user9 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -286,7 +300,7 @@ public static class DbInitializer
                 PassportSeries = "MN",
                 PassportNumber = "4567891"
             };
-            var user9 = new UserProfileEntity
+            var user10 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -300,7 +314,7 @@ public static class DbInitializer
                 PassportSeries = "ZA",
                 PassportNumber = "5678902"
             };
-            var user10 = new UserProfileEntity
+            var user11 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -314,7 +328,7 @@ public static class DbInitializer
                 PassportSeries = "CK",
                 PassportNumber = "4567890"
             };
-            var user11 = new UserProfileEntity
+            var user12 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -328,7 +342,7 @@ public static class DbInitializer
                 PassportSeries = "DF",
                 PassportNumber = "6789012"
             };
-            var user12 = new UserProfileEntity
+            var user13 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -342,7 +356,7 @@ public static class DbInitializer
                 PassportSeries = "FR",
                 PassportNumber = "6789013"
             };
-            var user13 = new UserProfileEntity
+            var user14 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -356,7 +370,7 @@ public static class DbInitializer
                 PassportSeries = "ME",
                 PassportNumber = "7890124"
             };
-            var user14 = new UserProfileEntity
+            var user15 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -370,9 +384,23 @@ public static class DbInitializer
                 PassportSeries = "BO",
                 PassportNumber = "8901235"
             };
+            var user16 = new UserProfileEntity
+            {
+                Id = Guid.NewGuid(),
+                Image = await File.ReadAllBytesAsync("../../static/img2.png"),
+                FirstName = "Михаил",
+                LastName = "Сидоров",
+                Patronymic = "Игоревич",
+                BirthDate = new DateTime(1979, 3, 10).ToUniversalTime(),
+                Gender = Gender.Male,
+                Email = "sidorov.mikhail@gmail.com",
+                PhoneNumber = "+375447654321",
+                PassportSeries = "MN",
+                PassportNumber = "7654321"
+            };
             
             await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4, user5, user6, 
-                user7, user8, user9, user10, user11, user12, user13, user14);
+                user7, user8, user9, user10, user11, user12, user13, user14, user15, user16);
             
             // сотрудники
             // password: 123
@@ -409,7 +437,7 @@ public static class DbInitializer
                 SpecializationId = specialization1.Id,
                 BranchId = branch1.Id
             };
-            var doctor2 = new UserEntity // Аллергология
+            var doctor2 = new UserEntity
             {
                 Id = Guid.NewGuid(),
                 Login = "doc2",
@@ -429,101 +457,167 @@ public static class DbInitializer
                 SpecializationId = specialization3.Id,
                 BranchId = branch1.Id
             };
-            var doctor4 = new UserEntity // Косметология
+            
+            var doctor4 = new UserEntity // Кардиология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc4",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user6.Id,
-                SpecializationId = specialization4.Id,
+                SpecializationId = specialization3.Id,
                 BranchId = branch1.Id
             };
-            var doctor5 = new UserEntity // Неврология
+            
+            var doctor5 = new UserEntity // Косметология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc5",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user7.Id,
-                SpecializationId = specialization5.Id,
+                SpecializationId = specialization4.Id,
                 BranchId = branch1.Id
             };
-            var doctor6 = new UserEntity // Оториноларингология
+            var doctor6 = new UserEntity // Неврология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc6",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user8.Id,
-                SpecializationId = specialization6.Id,
+                SpecializationId = specialization5.Id,
                 BranchId = branch1.Id
             };
-            var doctor7 = new UserEntity // Офтальмология
+            var doctor7 = new UserEntity // Оториноларингология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc7",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user9.Id,
-                SpecializationId = specialization7.Id,
+                SpecializationId = specialization6.Id,
                 BranchId = branch1.Id
             };
-            var doctor8 = new UserEntity // Психологическая помощь
+            var doctor8 = new UserEntity // Офтальмология
             {
                 Id = Guid.NewGuid(),
                 Login = "doc8",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user10.Id,
-                SpecializationId = specialization8.Id,
+                SpecializationId = specialization7.Id,
                 BranchId = branch1.Id
             };
-            var doctor9 = new UserEntity // Терапия
+            var doctor9 = new UserEntity // Психологическая помощь
             {
                 Id = Guid.NewGuid(),
                 Login = "doc9",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user11.Id,
-                SpecializationId = specialization9.Id,
+                SpecializationId = specialization8.Id,
                 BranchId = branch1.Id
             };
-            var doctor10 = new UserEntity // Ультразвуковая диагностика
+            var doctor10 = new UserEntity // Терапия
             {
                 Id = Guid.NewGuid(),
                 Login = "doc10",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user12.Id,
-                SpecializationId = specialization10.Id,
+                SpecializationId = specialization9.Id,
                 BranchId = branch1.Id
             };
-            var doctor11 = new UserEntity // Лазерная эпиляция
+            var doctor11 = new UserEntity // Ультразвуковая диагностика
             {
                 Id = Guid.NewGuid(),
                 Login = "doc11",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user13.Id,
-                SpecializationId = specialization11.Id,
+                SpecializationId = specialization10.Id,
                 BranchId = branch1.Id
             };
-            var doctor12 = new UserEntity // Эндокринология
+            var doctor12 = new UserEntity // Лазерная эпиляция
             {
                 Id = Guid.NewGuid(),
                 Login = "doc12",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
                 UserProfileId = user14.Id,
+                SpecializationId = specialization11.Id,
+                BranchId = branch1.Id
+            };
+            var doctor13 = new UserEntity // Лазерная эпиляция
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc13",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user15.Id,
+                SpecializationId = specialization11.Id,
+                BranchId = branch1.Id
+            };
+            var doctor14 = new UserEntity // Эндокринология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc14",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user16.Id,
                 SpecializationId = specialization12.Id,
                 BranchId = branch1.Id
             };
             await context.Users.AddRangeAsync(director1, receptionist1, doctor1, doctor2, doctor3, 
-                doctor4, doctor5, doctor6, doctor7, doctor8, doctor9, doctor10, doctor11, doctor12);
+                doctor4, doctor5, doctor6, doctor7, doctor8, doctor9, doctor10, doctor11, doctor12, 
+                doctor13, doctor14);
+            
+            // расписание врачей
+            var scheduleRecord1 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Monday, 
+                StartTime = TimeSpan.FromHours(9), 
+                EndTime = TimeSpan.FromHours(14)
+            };
+            var scheduleRecord2 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Tuesday, 
+                StartTime = TimeSpan.FromHours(9), 
+                EndTime = TimeSpan.FromHours(14)
+            };
+            var scheduleRecord3 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Wednesday, 
+                StartTime = TimeSpan.FromHours(9), 
+                EndTime = TimeSpan.FromHours(14)
+            };
+            var scheduleRecord4 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Thursday, StartTime = TimeSpan.FromHours(9), EndTime = TimeSpan.FromHours(14)
+            };
+            var scheduleRecord5 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Friday, StartTime = TimeSpan.FromHours(9), EndTime = TimeSpan.FromHours(14)
+            };
+            var scheduleRecord6 = new ScheduleEntity
+            {
+                DayOfWeek = DayOfWeek.Saturday, StartTime = TimeSpan.FromHours(9), EndTime = TimeSpan.FromHours(14)
+            };
+            context.Schedules.AddRange(scheduleRecord1, scheduleRecord2, scheduleRecord3, scheduleRecord4, scheduleRecord5, scheduleRecord6);
+
+            var scheduleList1 = new List<ScheduleEntity>
+            {
+                scheduleRecord1,
+                scheduleRecord2,
+                scheduleRecord3,
+                scheduleRecord4,
+                scheduleRecord5,
+                scheduleRecord6
+            };
             
             // В Речице
-            var user15 = new UserProfileEntity
+            var user17 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -537,7 +631,7 @@ public static class DbInitializer
                 PassportSeries = "MP",
                 PassportNumber = "3456789"
             };
-            var user16 = new UserProfileEntity
+            var user18 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -551,7 +645,7 @@ public static class DbInitializer
                 PassportSeries = "AB",
                 PassportNumber = "1234567"
             };
-            var user17 = new UserProfileEntity
+            var user19 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -565,7 +659,7 @@ public static class DbInitializer
                 PassportSeries = "KV",
                 PassportNumber = "7890123"
             };
-            var user18 = new UserProfileEntity
+            var user20 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = await File.ReadAllBytesAsync("../../static/img2.png"),
@@ -580,7 +674,7 @@ public static class DbInitializer
                 PassportNumber = "2345678"
             };
             
-            await context.UserProfiles.AddRangeAsync(user15, user16, user17, user18);
+            await context.UserProfiles.AddRangeAsync(user17, user18, user19, user20);
             
             var director2 = new UserEntity
             {
@@ -588,7 +682,7 @@ public static class DbInitializer
                 Login = "director2",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Director,
-                UserProfileId = user15.Id,
+                UserProfileId = user17.Id,
                 SpecializationId = null,
                 BranchId = branch2.Id
             };
@@ -598,35 +692,37 @@ public static class DbInitializer
                 Login = "register2",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Receptionist,
-                UserProfileId = user16.Id,
+                UserProfileId = user18.Id,
                 SpecializationId = null,
                 BranchId = branch2.Id
             };
-            var doctor13 = new UserEntity // Кардиология
+            var doctor15 = new UserEntity // Кардиология
             {
                 Id = Guid.NewGuid(),
-                Login = "doc13",
+                Login = "doc15",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
-                UserProfileId = user17.Id,
+                UserProfileId = user19.Id,
                 SpecializationId = specialization3.Id,
-                BranchId = branch2.Id
+                BranchId = branch2.Id,
+                Schedules = scheduleList1
             };
-            var doctor14 = new UserEntity // Неврология
+            var doctor16 = new UserEntity // Неврология
             {
                 Id = Guid.NewGuid(),
-                Login = "doc11",
+                Login = "doc16",
                 PasswordHash = passwordHash,
                 UserRole = UserRole.Doctor,
-                UserProfileId = user18.Id,
+                UserProfileId = user20.Id,
                 SpecializationId = specialization5.Id,
-                BranchId = branch2.Id
+                BranchId = branch2.Id,
+                Schedules = scheduleList1
             };
 
-            await context.Users.AddRangeAsync(director2, receptionist2, doctor13, doctor14);
+            await context.Users.AddRangeAsync(director2, receptionist2, doctor15, doctor16);
 
             // пациенты
-            var user19 = new UserProfileEntity
+            var user21 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = null,
@@ -640,7 +736,7 @@ public static class DbInitializer
                 PassportSeries = "CD",
                 PassportNumber = "1122334"
             };
-            var user20 = new UserProfileEntity
+            var user22 = new UserProfileEntity
             {
                 Id = Guid.NewGuid(),
                 Image = null,
@@ -654,7 +750,7 @@ public static class DbInitializer
                 PassportSeries = "EF",
                 PassportNumber = "4455667"
             };
-            await context.UserProfiles.AddRangeAsync(user19, user20);
+            await context.UserProfiles.AddRangeAsync(user21, user22);
             
             var patient1 = new UserEntity
             {
@@ -662,7 +758,7 @@ public static class DbInitializer
                 Login = "patient1",
                 PasswordHash = passwordHash, // 123
                 UserRole = UserRole.Patient,
-                UserProfileId = user19.Id,
+                UserProfileId = user21.Id,
                 SpecializationId = null,
                 BranchId = null
             };
@@ -672,7 +768,7 @@ public static class DbInitializer
                 Login = "patient2",
                 PasswordHash = passwordHash, // 123
                 UserRole = UserRole.Patient,
-                UserProfileId = user20.Id,
+                UserProfileId = user22.Id,
                 SpecializationId = null,
                 BranchId = null
             };

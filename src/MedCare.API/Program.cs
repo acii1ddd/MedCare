@@ -96,9 +96,7 @@ public class Program
         
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy(
-                name: myCorsPolicy,
-                policy =>
+            options.AddPolicy(name: myCorsPolicy, policy =>
             {
                 policy.WithOrigins("http://localhost:5173")
                       .AllowAnyHeader()

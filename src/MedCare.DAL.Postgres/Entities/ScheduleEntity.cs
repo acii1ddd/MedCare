@@ -6,12 +6,11 @@ namespace MedCare.DAL.Entities;
 
 public class ScheduleEntity : BaseEntity
 {
-    // DATE в Postgres
-    public DateTime WorkDate { get; set; }
+    public DayOfWeek DayOfWeek { get; set; }
     
+    // только время
     public TimeSpan StartTime { get; set; }
     
-    // TIME в Postgres
     public TimeSpan EndTime { get; set; }
 
     /// <summary>
@@ -28,7 +27,7 @@ public class SchedulConfiguration : IEntityTypeConfiguration<ScheduleEntity>
         
         builder.HasKey(x => x.Id);
         
-        builder.Property(x => x.WorkDate).IsRequired();
+        builder.Property(x => x.DayOfWeek).IsRequired();
         builder.Property(x => x.StartTime).IsRequired();
         builder.Property(x => x.EndTime).IsRequired();
         

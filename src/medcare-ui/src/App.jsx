@@ -8,10 +8,10 @@ import NotFoundPage from './components/Pages/Auth/NotFoundPage';
 import ForbiddenPage from './components/Pages/Auth/ForbiddenPage';
 import LoginPage from './components/Pages/Auth/LoginPage';
 import AuthPrivateRoute from './components/Routes/AuthPrivateRoute';
-import PatientDashboard from './components/Dashboards/PatientDashboard';
 import AuthProvider from './components/Auth/AuthProvider';
 import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
+import AppointmentForm from "./components/Forms/AppointmentForm";
 
 function Layout() {
   return(
@@ -44,7 +44,9 @@ function Layout() {
                   </AuthPrivateRoute>
                 } 
               />
-          
+
+              <Route path='/appointment' element={<AppointmentForm/>}/>
+              
             </Routes>
       </div>
   );

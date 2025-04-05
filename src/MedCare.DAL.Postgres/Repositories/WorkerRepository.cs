@@ -14,21 +14,16 @@ public class WorkerRepository : IWorkerRepository
         _context = context;
     }
 
-    public async Task<List<UserEntity>> GetByBranchNameAsync(string branchName)
+    public async Task<UserEntity?> GetByIdAsync(Guid id)
     {
         return await _context.Users
             .AsNoTracking()
-            .Where(x => x.UserRole == UserRole.Doctor)
-            .Where(x => x.Branch != null && x.Branch.Name == branchName)
             .Include(x => x.UserProfile)
             .Include(x => x.Specialization)
             .Include(x => x.Branch)
-            .ToListAsync();
-    }
-
-    public Task<UserEntity?> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
+            .Include(x => x.Schedules)
+            .Where(x => x.UserRole == UserRole.Doctor)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public Task<UserEntity> AddAsync(UserEntity user)
@@ -45,4 +40,26 @@ public class WorkerRepository : IWorkerRepository
     {
         throw new NotImplementedException();
     }
+
+    public async Task<List<UserEntity>> GetDoctorsByBranchNameWithFilterAsync(string branchName, Guid? specializationId)
+    {
+        var doctors = _context.Users
+            .AsNoTracking()
+            .Include(x => x.UserProfile)
+            .Include(x => x.Specialization)
+            .Include(x => x.Branch)
+            .Where(x => x.UserRole == UserRole.Doctor)
+            .Where(x => x.Branch != null && x.Branch.Name == branchName);
+        
+        if (specializationId.HasValue)
+        {
+            doctors = doctors.Where(x => x.Specialization!.Id == specializationId);
+        }
+        return await doctors.ToListAsync();
+    }
+
+    // public Task<List<UserEntity>> GetAvailableDaysForDoctorAsync(Guid doctorId)
+    // {
+    //     
+    // }
 }

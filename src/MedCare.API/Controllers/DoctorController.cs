@@ -1,5 +1,4 @@
 using AutoMapper;
-using MedCare.API.Contracts;
 using MedCare.API.Contracts.Responses;
 using MedCare.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +19,26 @@ public class DoctorController : ControllerBase
         _mapper = mapper;
     }
     
-    // api/doctors/branchName
+    // api/doctors/branchName?specialization=spec
     [HttpGet("{branchName}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAllByBranchNameAsync([FromRoute] string branchName)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
+    public async Task<IActionResult> GetAllByBranchNameWithFilterAsync(
+        [FromRoute] string branchName, [FromQuery] Guid? specializationId)
     {
-        var workers = await _workerService.GetByBranchNameAsync(branchName);
-        return Ok(_mapper.Map<List<GetWorkerResponse>>(workers));
+        var doctors = await _workerService.GetByBranchNameWithFilterAsync(branchName, specializationId);
+        return Ok(_mapper.Map<List<GetWorkerResponse>>(doctors));
+    }
+    
+    [HttpGet("{doctorId:guid}/available-days")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAvailableDaysResponse))]
+    public async Task<IActionResult> GetAvailableDaysForDoctorAsync(
+        [FromRoute] Guid doctorId, 
+        [FromQuery] DateTime? startDate, 
+        [FromQuery] DateTime? endDate)
+    {
+        var days = await _workerService.GetAvailableDaysForDoctorAsync(doctorId, startDate, endDate);
+        return Ok(_mapper.Map<GetAvailableDaysResponse>(days));
     }
 }
-

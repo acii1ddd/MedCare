@@ -10,6 +10,8 @@ public class ApplicationDbContext : DbContext
     // Users
     public DbSet<UserEntity> Users { get; set; }
     
+    public DbSet<ScheduleEntity> Schedules { get; set; }
+    
     public DbSet<UserProfileEntity> UserProfiles { get; set; }
     
     // 

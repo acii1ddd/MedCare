@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Doctor from "../Items/Doctor";
-import GetDoctorsByBranch from '../../services/doctors';
+import { GetDoctorsByBranch } from '../../services/doctors';
 
 export default function DoctorList({ branchName }) {
     
@@ -17,7 +17,7 @@ export default function DoctorList({ branchName }) {
 
     }, [branchName]); // зависим от branchName
 
-    return (
+    return (    
         <div className="doctor-list">
             <p className="text-3xl font-semibold mb-4">Cпециалисты</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

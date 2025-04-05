@@ -8,7 +8,7 @@ export default function Navbar() {
     return (
         <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center fixed top-0 left-0 w-full">
           <Link to="/" className="bg-blue-100 hover:bg-gray-400 text-2xl font-semibold text-black 
-            px-6 py-3 rounded-xl shadow-lg transition duration-200">Медицинский Центр</Link>
+            px-6 py-3 rounded-xl shadow-lg transition duration-200">МЦ «Здоровье плюс»</Link>
 
           {/* Навигация */}
           <ul className="flex space-x-6 text-gray-700 font-medium">
@@ -19,7 +19,7 @@ export default function Navbar() {
             {currUser && (
                 <>
                   <li>
-                    <Link to="/contacts" 
+                    <Link to="/appointment" 
                       className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Запись на прием</Link>
                   </li>
                   <li>

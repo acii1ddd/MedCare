@@ -12,6 +12,7 @@ public static class ConfigurationExtensions
         services.AddScoped<IBranchRepository, BranchRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         // services.AddScoped<IServiceRepository, ServiceRepository>();
         return services;
     }

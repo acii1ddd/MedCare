@@ -1,4 +1,4 @@
-import Footer from "../Layout/Footer";
+import Footer from "../Layout/Footer";  
 
 export default function MainPage() {
     return (
