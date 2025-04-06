@@ -12,6 +12,7 @@ export default function SpecializationSelector({ specializations, selectedSpecia
           
           className="w-full p-2 border rounded mb-4"
         >
+          <option value="" disabled>Выберите специализацию врача</option>
           {
             specializations.map((specialization) => (
                 <option key={specialization.id} value={specialization.id}>

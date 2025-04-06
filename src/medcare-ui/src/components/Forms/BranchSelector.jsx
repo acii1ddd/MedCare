@@ -12,6 +12,7 @@ export default function BranchSelector({ branches, selectedBranch, setSelectedBr
           }
           className="w-full p-2 border rounded mb-4"
         >
+          <option value="" disabled>Выберите филиал</option>
           {
             branches.map((branch) => (
                 <option key={branch.id} value={branch.id}>

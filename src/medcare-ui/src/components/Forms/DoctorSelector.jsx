@@ -9,6 +9,7 @@ export default function DoctorSelector({ doctors, selectedDoctor, setSelectedDoc
           }
           className="w-full p-2 border rounded mb-4"
         >
+          <option value="" disabled>Выберите врача</option>
           {doctors.map((doctor) => (
             <option key={doctor.id} value={doctor.id}>
               {doctor.firstName} {doctor.lastName} {doctor.patronymic}

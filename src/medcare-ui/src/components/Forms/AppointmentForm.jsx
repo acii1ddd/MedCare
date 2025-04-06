@@ -5,6 +5,8 @@ import DoctorSelector from "./DoctorSelector";
 import GetSpecializationsForBranch from '../../services/specializations';
 import GetAllBranches from '../../services/branches';
 import { GetDoctorsByBranchWithSpecializationFilter } from '../../services/doctors';
+import { GetAvailableDaysForDoctor } from '../../services/doctors';
+
 
 import Calendar from "./Calendar";
 
@@ -19,6 +21,11 @@ export default function AppointmentForm() {
     const [doctors, setDoctors] = useState([]);
     
     const [availableDays, setAvailableDays] = useState([]);
+    const [monthBorders, setMonthBorders] = useState({
+        startOfMonth: null,
+        endOfMonth: null,
+    });
+
 
     useEffect(() => {
         const fetchBranches = async () => {
@@ -63,6 +70,28 @@ export default function AppointmentForm() {
         fetchDoctorsForBranch();
     }, [selectedBranch, selectedSpecialization]);
 
+
+    useEffect(() => {
+        if (!selectedDoctor || !monthBorders) {
+            return;
+        }
+
+        const fetchAvailableDaysForDoctor = async () => {
+            
+            const startOfMonthString = monthBorders.startOfMonth.toISOString();
+            const endOfMonthString = monthBorders.endOfMonth.toISOString();
+            console.log("monthBorders value is", monthBorders, "monthBorders value is", typeof monthBorders);
+            console.log(startOfMonthString, endOfMonthString);
+
+            let days = await GetAvailableDaysForDoctor(selectedDoctor.id, startOfMonthString, endOfMonthString);
+            console.log("Days loaded", days);
+            console.log("Type of days: ", Array.isArray(days) ? "Array" : "Not Array");
+            setAvailableDays(days);
+        }
+
+        fetchAvailableDaysForDoctor();
+    }, [monthBorders, selectedDoctor]);
+
   return (
     <div className="p-6 max-w-lg mx-auto mt-15">
         <BranchSelector branches={branches} selectedBranch={selectedBranch} setSelectedBranch ={setSelectedBranch} />
@@ -70,9 +99,9 @@ export default function AppointmentForm() {
         <SpecializationSelector specializations={specializations} selectedSpecialization={selectedSpecialization} setSelectedSpecialization={setSelectedSpecialization} />
 
         <DoctorSelector doctors={doctors} selectedDoctor={selectedDoctor} setSelectedDoctor={setSelectedDoctor}/>
-
+        
         {selectedDoctor && (
-            <Calendar availableDays={availableDays} />
+            <Calendar availableDays={availableDays} setMonthBorders={setMonthBorders}/>
         )}
     </div>
   );
