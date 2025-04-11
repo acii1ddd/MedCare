@@ -29,13 +29,6 @@ const PatientDashboard = () => {
                             </p>
                             <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg">Ознакомиться</button>
                         </div>
-                        <div className="bg-green-50 p-6 rounded-lg shadow-lg">
-                            <h3 className="text-xl font-semibold text-green-600">Терапевт</h3>
-                            <p className="mt-2 text-gray-600">
-                                Проведите плановый осмотр и диагностику у нашего терапевта.
-                            </p>
-                            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg">Записаться</button>
-                        </div>
                     </div>
                 </div>
             </section>

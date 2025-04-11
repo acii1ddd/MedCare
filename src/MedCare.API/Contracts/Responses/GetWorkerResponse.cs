@@ -1,4 +1,5 @@
 using AutoMapper;
+using MedCare.API.Contracts.Responses.Branches;
 using MedCare.BLL.Models.Users;
 
 namespace MedCare.API.Contracts.Responses;
@@ -15,9 +16,15 @@ public class GetWorkerResponse
     
     public string PhoneNumber { get; init; } = string.Empty;
     
+    public string Email { get; init; } = string.Empty;
+    
     public string SpecializationName { get; init; } = string.Empty;
     
-    public byte[] Image { get; init; } = [];    
+    public byte[] Image { get; init; } = [];
+
+    public List<GetScheduleResponse> Schedules { get; init; } = [];
+
+    public GetBranchResponse Branch { get; init; } = null!;
 }
 
 public class GetWorkerResponseProfile : Profile
@@ -40,9 +47,15 @@ public class GetWorkerResponseProfile : Profile
                 => opt.MapFrom(src => src.UserProfile.Patronymic))
             .ForMember(dest => dest.PhoneNumber, opt
                 => opt.MapFrom(src => src.UserProfile.PhoneNumber))
+            .ForMember(dest => dest.Email, opt
+                => opt.MapFrom(src => src.UserProfile.Email))
             .ForMember(dest => dest.SpecializationName, opt
                 => opt.MapFrom(src => src.Specialization!.Name))
             .ForMember(dest => dest.Image, opt
-            => opt.MapFrom(src => src.UserProfile.Image));
+                => opt.MapFrom(src => src.UserProfile.Image))
+            .ForMember(dest => dest.Schedules, opt
+                => opt.MapFrom(src => src.Schedules))
+            .ForMember(dest => dest.Branch, opt
+                => opt.MapFrom(src => src.Branch));
     }
 }

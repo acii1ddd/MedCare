@@ -22,7 +22,7 @@ public class DoctorController : ControllerBase
     // api/doctors/branchName?specialization=spec
     [HttpGet("{branchName}")]
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetWorkerResponse>))]
     public async Task<IActionResult> GetAllByBranchNameWithFilterAsync(
         [FromRoute] string branchName, [FromQuery] Guid? specializationId)
     {
@@ -40,5 +40,14 @@ public class DoctorController : ControllerBase
     {
         var days = await _workerService.GetAvailableDaysForDoctorAsync(doctorId, startDate, endDate);
         return Ok(_mapper.Map<GetAvailableDaysResponse>(days));
+    }
+    
+    [HttpGet("{id:guid}")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var doctor = await _workerService.GetByIdAsync(id);
+        return Ok(_mapper.Map<GetWorkerResponse>(doctor));
     }
 }

@@ -76,6 +76,11 @@ internal class WorkerService : IWorkerService
         return availableDays;
     }
 
+    public async Task<UserModel> GetByIdAsync(Guid id)
+    {
+        return _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(id));
+    }
+
     private static List<DateTime> GetAllSlotsForDay(DateTime date, TimeSpan startTime, TimeSpan endTime)
     {
         var slots = new List<DateTime>();

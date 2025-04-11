@@ -12,10 +12,4 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="MedCare.Common">
-        <HintPath>..\MedCare.API\bin\Debug\net8.0\MedCare.Common.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>

@@ -4,12 +4,11 @@ namespace MedCare.BLL.Models;
 
 public class ScheduleModel : BaseModel
 {
-    // timestamp в Postgres
-    public DateTime WorkDate { get; set; }
+    public DayOfWeek DayOfWeek { get; set; }
     
+    // только время
     public TimeSpan StartTime { get; set; }
     
-    // interval в Postgres
     public TimeSpan EndTime { get; set; }
 
     /// <summary>

@@ -21,6 +21,8 @@ public class WorkerRepository : IWorkerRepository
             .Include(x => x.UserProfile)
             .Include(x => x.Specialization)
             .Include(x => x.Branch)
+                .ThenInclude(x => x!.Address)
+                    .ThenInclude(x => x!.City)
             .Include(x => x.Schedules)
             .Where(x => x.UserRole == UserRole.Doctor)
             .FirstOrDefaultAsync(x => x.Id == id);

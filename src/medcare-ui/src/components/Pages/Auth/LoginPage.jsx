@@ -24,7 +24,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="mt-15">
             <input type="text" placeholder="Введите логин" value={userLogin} onChange={(e) => setUserLogin(e.target.value)}/> 
             <input type="text" placeholder="Введите пароль" value={userPassword} onChange={(e) => setUserPassword(e.target.value)}/>
-            <button type="submit">Войти</button>
+            <button type="submit" className="text-white">Войти</button>
         </form>
     );
 }

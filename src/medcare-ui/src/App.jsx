@@ -12,6 +12,7 @@ import AuthProvider from './components/Auth/AuthProvider';
 import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
 import AppointmentForm from "./components/Forms/AppointmentForm";
+import DoctorInfo from "./components/Items/DoctorInfo";
 
 function Layout() {
   return(
@@ -22,6 +23,7 @@ function Layout() {
 
               <Route path="/doctors" element={<DoctorsPage/>}/>
               <Route path="/doctors/:branchName" element={<DoctorsPage />} />
+              <Route path="/doctors/info/:id" element={<DoctorInfo />} />
 
               <Route path="/services" element={<ServicesPage/>}/>
               <Route path="/services/:branchName" element={<ServicesPage/>}/>
@@ -29,6 +31,7 @@ function Layout() {
               <Route path="/contacts" element={<ContactPage/>}/>
 
               <Route path="/sign-in" element={<LoginPage />} />
+
               {/* <Route path="/dashboard"
                 element={
                   <AuthPrivateRoute allowedRoles={["Patient", "Receptionist", "Doctor", "Director"]}>
@@ -42,7 +45,7 @@ function Layout() {
                   <AuthPrivateRoute allowedRoles={["Patient", "Receptionist", "Doctor", "Director"]}> {/* успевает положить токен в localstorage при forbidden */}
                     <DashboardRouter/>
                   </AuthPrivateRoute>
-                } 
+                }
               />
 
               <Route path='/appointment' element={<AppointmentForm/>}/>
@@ -58,7 +61,7 @@ function App() {
       <Routes>
         {/* * - для вложенных маршрутов */}
         <Route path="/*" element={<Layout/>}/>
-        
+
         <Route path="/notFoundPage" element={<NotFoundPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
 

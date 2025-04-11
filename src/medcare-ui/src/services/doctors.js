@@ -10,6 +10,18 @@ export async function GetDoctorsByBranch(branchName) {
     }
 }
 
+export async function GetById(id) {
+    try {
+        const response = await fetch(`https://localhost:7009/api/doctors/${id}`);
+        const doctor = await response.json();
+        doctor.image = "data:image/png;charset=utf-8;base64, " + doctor.image;
+        return doctor;
+    } catch (error) {
+        console.error("Ошибка при загрузке врачей филиала: ", error);
+        throw error;
+    }
+}
+
 export async function GetDoctorsByBranchWithSpecializationFilter(branchName, specializationId) {
     try {
         const query = specializationId 

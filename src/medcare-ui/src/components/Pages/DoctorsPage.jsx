@@ -21,8 +21,7 @@ export default function DoctorsPage() {
                 const foundBranch = branches.find(branch => branch.name === branchName);
                 if (foundBranch) {
                     setSelectedBranch(foundBranch);
-                } else 
-                {
+                } else {
                     console.warn(`Branch ${branchName} not found`);
                     navigate("/notFoundPage");
                 }

@@ -1,6 +1,7 @@
-export default function Doctor({ doctor }) {
+export default function Doctor({ doctor, onClick }) {
     return (
-        <div className="doctor-card border p-4 rounded-lg shadow-lg max-w-xs mx-auto">
+        <div className="doctor-card border p-4 rounded-lg shadow-lg max-w-xs mx-auto cursor-pointer hover:shadow-xl transition hover:bg-blue-100"
+            onClick={() => onClick(doctor.id)}>
             <div className="doctor-image mb-4">
                 {doctor.image ? (
                     <img 
