@@ -11,7 +11,7 @@ import AuthPrivateRoute from './components/Routes/AuthPrivateRoute';
 import AuthProvider from './components/Auth/AuthProvider';
 import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
-import AppointmentForm from "./components/Forms/AppointmentForm";
+import AppointmentForm from "./components/Forms/AppointmentForm/AppointmentForm";
 import DoctorInfo from "./components/Items/DoctorInfo";
 
 function Layout() {

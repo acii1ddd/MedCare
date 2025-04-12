@@ -1,7 +1,7 @@
 using AutoMapper;
 using MedCare.BLL.Models;
 
-namespace MedCare.API.Contracts.Responses;
+namespace MedCare.API.Contracts.Responses.Schedules;
 
 public class GetScheduleResponse
 {

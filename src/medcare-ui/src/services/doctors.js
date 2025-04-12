@@ -1,4 +1,3 @@
-
 // получение врачей определенного филиала
 export async function GetDoctorsByBranch(branchName) {
     try {
@@ -46,17 +45,45 @@ const GetDoctorsWithImages = (data) => {
     return doctorsWithImages;
 }
 
-export async function GetAvailableDaysForDoctor(doctorId) {
+export async function GetAvailableDaysForDoctor(doctorId, startDate, endDate) {
     if (!doctorId) {
         throw new Error("DoctorId неопределен");
     }
     try {
-        const response = await fetch(`https://localhost:7009/api/doctors/${doctorId}/available-days`);
+        let url = `https://localhost:7009/api/doctors/${doctorId}/available-days`;
+
+        const params = new URLSearchParams();
+
+        if (startDate && endDate) {
+            params.append("startDate", startDate);
+            params.append("endDate", endDate);
+        }
+
+        if (params.toString()) {
+            url += "?" + params.toString();
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
         
-        const availableDays = data.availableDays.map((d) => new Date(d));
+        const availableDays = data.days.map((d) => new Date(d));
         return availableDays;
     } catch (error) {
         console.error("Ошибка при загрузке свободных дней врача: ", error);
+    }
+}
+
+export async function GetAvailableSlotsForDoctor(id, visitDate) {
+    if (!id) throw new Error("Параметр id неопределен");
+    if (!visitDate) throw new Error("Параметр visitDate неопределен");
+
+    try {
+        const response = await fetch(`https://localhost:7009/api/doctors/${id}/available-slots?visitDate=${visitDate.toLocaleDateString("sv-SE")}`);
+        const data = await response.json();
+
+        return data.slots.map(d => new Date(d));
+    } catch (err) {
+        console.error("Ошибка при загрузке свободных слотов на запись к врачу: ", err);
+        throw err;
     }
 }

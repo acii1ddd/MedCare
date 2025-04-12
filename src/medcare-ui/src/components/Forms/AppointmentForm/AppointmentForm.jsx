@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import BranchSelector from "./BranchSelector";
 import SpecializationSelector from "./SpecializationSelector";
 import DoctorSelector from "./DoctorSelector";
-import GetSpecializationsForBranch from '../../services/specializations';
-import GetAllBranches from '../../services/branches';
-import { GetDoctorsByBranchWithSpecializationFilter } from '../../services/doctors';
-import { GetAvailableDaysForDoctor } from '../../services/doctors';
-
-
+import GetSpecializationsForBranch from '../../../services/specializations';
+import GetAllBranches from '../../../services/branches';
+import { GetDoctorsByBranchWithSpecializationFilter, GetAvailableDaysForDoctor, GetAvailableSlotsForDoctor } from '../../../services/doctors';
+import TimeSlots from './TimeSlots';
 import Calendar from "./Calendar";
+import PatientForm from "../PatientForm/PatientForm"
 
 export default function AppointmentForm() {
     const [selectedBranch, setSelectedBranch] = useState(null);
@@ -26,6 +25,9 @@ export default function AppointmentForm() {
         endOfMonth: null,
     });
 
+    const [slots, setSlots] = useState([]);
+
+    const [slot, selectedSlot] = useState(null);
 
     useEffect(() => {
         const fetchBranches = async () => {
@@ -65,6 +67,9 @@ export default function AppointmentForm() {
             const doctors = await GetDoctorsByBranchWithSpecializationFilter(selectedBranch.name, selectedSpecialization.id);
             console.log("Doctors loaded", doctors);
             setDoctors(doctors);
+
+            // первый выбранный по умолчанию
+            setSelectedDoctor(doctors[0]);
         };
 
         fetchDoctorsForBranch();
@@ -77,11 +82,15 @@ export default function AppointmentForm() {
         }
 
         const fetchAvailableDaysForDoctor = async () => {
-            
-            const startOfMonthString = monthBorders.startOfMonth.toISOString();
-            const endOfMonthString = monthBorders.endOfMonth.toISOString();
-            console.log("monthBorders value is", monthBorders, "monthBorders value is", typeof monthBorders);
-            console.log(startOfMonthString, endOfMonthString);
+            let startOfMonthString = null;
+            let endOfMonthString = null;
+
+            if (monthBorders.startOfMonth && monthBorders.endOfMonth) {
+                startOfMonthString = monthBorders.startOfMonth.toLocaleDateString("sv-SE");
+                endOfMonthString = monthBorders.endOfMonth.toLocaleDateString("sv-SE");
+            }
+
+            console.log("monthBorders value is", startOfMonthString, "monthBorders value is", endOfMonthString);
 
             let days = await GetAvailableDaysForDoctor(selectedDoctor.id, startOfMonthString, endOfMonthString);
             console.log("Days loaded", days);
@@ -92,17 +101,40 @@ export default function AppointmentForm() {
         fetchAvailableDaysForDoctor();
     }, [monthBorders, selectedDoctor]);
 
-  return (
-    <div className="p-6 max-w-lg mx-auto mt-15">
-        <BranchSelector branches={branches} selectedBranch={selectedBranch} setSelectedBranch ={setSelectedBranch} />
-        
-        <SpecializationSelector specializations={specializations} selectedSpecialization={selectedSpecialization} setSelectedSpecialization={setSelectedSpecialization} />
+    const dayClickHandler = async (day) => {
+        console.log("Дата записи ", day);
+        console.log("Выбранный врач ", selectedDoctor);
 
-        <DoctorSelector doctors={doctors} selectedDoctor={selectedDoctor} setSelectedDoctor={setSelectedDoctor}/>
+        const slots = await GetAvailableSlotsForDoctor(selectedDoctor.id, day);
+        console.log("Свободные временные слоты: ", slots);
+        setSlots(slots);
+    }
+
+    const slotClickHandler = (slot) => {
+        console.log("Выбранный слот для записи ", slot);
+        selectedSlot(slot);
+    };
+
+    return (
+        <div className="p-6 max-w-lg mx-auto mt-15">
+            <BranchSelector branches={branches} selectedBranch={selectedBranch} setSelectedBranch ={setSelectedBranch} />
+            
+            <SpecializationSelector specializations={specializations} selectedSpecialization={selectedSpecialization} setSelectedSpecialization={setSelectedSpecialization} />
+
+            <DoctorSelector doctors={doctors} selectedDoctor={selectedDoctor} setSelectedDoctor={setSelectedDoctor}/>
+            
+            {selectedDoctor && (
+                <Calendar availableDays={availableDays} setMonthBorders={setMonthBorders} onDayClick={dayClickHandler}/>
+            )}
         
-        {selectedDoctor && (
-            <Calendar availableDays={availableDays} setMonthBorders={setMonthBorders}/>
-        )}
-    </div>
-  );
+            {slots.length > 0 && (
+                <TimeSlots slots={slots} onClick={slotClickHandler}/>
+            )}
+
+            {slot && (
+                <PatientForm />
+            )}
+            
+        </div>
+    );
 }

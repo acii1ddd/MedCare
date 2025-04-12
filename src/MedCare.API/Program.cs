@@ -32,10 +32,8 @@ public class Program
         builder.Services.AddAuthentication();
         
         
-        
         // Authorization
         builder.Services.AddAuthorization();
-        
 
         
         // custom

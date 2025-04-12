@@ -1,5 +1,6 @@
 using AutoMapper;
 using MedCare.API.Contracts.Responses.Branches;
+using MedCare.API.Contracts.Responses.Schedules;
 using MedCare.BLL.Models.Users;
 
 namespace MedCare.API.Contracts.Responses;

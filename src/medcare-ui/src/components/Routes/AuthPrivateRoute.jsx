@@ -10,7 +10,7 @@ export default function AuthPrivateRoute({ children, allowedRoles }) {
     }
 
     // в dashboard если есть роли, иначе на страницу со входом
-    // if (!currUser) {
+    // if (!currUser) { 
     //     return <Navigate to="/sign-in"/>
     // }
 

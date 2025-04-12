@@ -40,7 +40,8 @@ export const getCurrUser = async () => {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
-            }
+            },
+            credentials: "include"
         });
         return await response.json();
     } catch (error) {

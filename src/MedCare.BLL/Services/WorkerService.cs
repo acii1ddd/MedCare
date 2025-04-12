@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using AutoMapper;
+using MedCare.BLL.Exceptions;
 using MedCare.BLL.Interfaces;
 using MedCare.BLL.Models;
 using MedCare.BLL.Models.Users;
@@ -29,45 +30,25 @@ internal class WorkerService : IWorkerService
 
     public async Task<List<DateTime>> GetAvailableDaysForDoctorAsync(Guid doctorId, DateTime? startDate, DateTime? endDate)
     {
-        if (!startDate.HasValue)
-        {
-            startDate = DateTime.Today;
-        }
-        if (!endDate.HasValue)
-        {
-            endDate = new DateTime(
-                startDate.Value.Year, startDate.Value.Month, 
-                DateTime.DaysInMonth(startDate.Value.Year, startDate.Value.Month)
-            );
-        }
+        // если null, то присвоить значения
+        startDate ??= DateTime.Today;
+        endDate ??= new DateTime(
+            startDate.Value.Year, startDate.Value.Month,
+            DateTime.DaysInMonth(startDate.Value.Year, startDate.Value.Month)
+        );
         
         var doctor = _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(doctorId));
         
-        if (doctor.Schedules == null) 
-            throw new InvalidOperationException("Schedules cannot be null.");
+        if (doctor.Schedules == null)
+            throw new InvalidOperationException($"У врача {doctor.Id} нет расписания");
 
-        var availableDays =  new List<DateTime>();
+        var availableDays = new List<DateTime>();
         
         // по дням до конца текущего месяца
         for (var currentDate = startDate.Value; currentDate <= endDate.Value; currentDate = currentDate.AddDays(1))
         {
-            var currentDayOfWeek = currentDate.DayOfWeek;
-            
-            // расписание этого дня недели
-            var schedule = doctor.Schedules.FirstOrDefault(x => x.DayOfWeek == currentDayOfWeek);
-            if (schedule == null)
-                continue;
-            
-            var allSlots = GetAllSlotsForDay(currentDate, schedule.StartTime, schedule.EndTime);
-            
-            // записи к этому врачу на этот день
-            var appointments = _mapper.Map<List<AppointmentModel>>(
-                await _appointmentRepository.GetAllWithFilterAsync(doctorId, currentDate)
-            );
-            var occupiedSlots = appointments.Select(x => x.VisitDate).ToList();
-            
-            // слоты из allSlots, которых нет в занятых
-            var freeSlots = allSlots.Where(slot => !occupiedSlots.Contains(slot)).ToList();
+            var freeSlots = await GetAvailableSlotsForDoctorAsync(doctor, currentDate);
+
             if (freeSlots.Count != 0)
             {
                 availableDays.Add(currentDate);
@@ -76,9 +57,40 @@ internal class WorkerService : IWorkerService
         return availableDays;
     }
 
+    private async Task<List<DateTime>> GetAvailableSlotsForDoctorAsync(UserModel doctor, DateTime visitDate)
+    {
+        var currentDayOfWeek = visitDate.DayOfWeek;
+            
+        // расписание этого дня недели
+        var schedule = doctor.Schedules?.FirstOrDefault(x => x.DayOfWeek == currentDayOfWeek);
+        if (schedule == null)
+            return [];
+            
+        var allSlots = GetAllSlotsForDay(visitDate, schedule.StartTime, schedule.EndTime);
+            
+        // записи к этому врачу на этот день
+        var appointments = _mapper.Map<List<AppointmentModel>>(
+            await _appointmentRepository.GetAllWithFilterAsync(doctor.Id, visitDate)
+        );
+        var occupiedSlots = appointments.Select(x => x.VisitDate).ToList();
+            
+        // слоты из allSlots, которых нет в занятых
+        var freeSlots = allSlots.Where(slot => !occupiedSlots.Contains(slot)).ToList();
+        
+        return freeSlots.Count != 0 ? freeSlots : [];
+    }
+
     public async Task<UserModel> GetByIdAsync(Guid id)
     {
         return _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(id));
+    }
+
+    public async Task<List<DateTime>> GetAvailableSlotsForDoctor(Guid id, DateTime visitDate)
+    {
+        var doctor = _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(id))
+            ?? throw new NotFoundException($"Врач с Id {id} не найден");
+        
+        return await GetAvailableSlotsForDoctorAsync(doctor, visitDate);
     }
 
     private static List<DateTime> GetAllSlotsForDay(DateTime date, TimeSpan startTime, TimeSpan endTime)

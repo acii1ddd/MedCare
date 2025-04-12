@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DayCell from "./DayCell";
 
-export default function Calendar({ availableDays, setMonthBorders }) {
+export default function Calendar({ availableDays, setMonthBorders, onDayClick }) {
     const [monthOffset, setMonthOffset] = useState(0);
 
     if (!availableDays) {
@@ -16,24 +16,51 @@ export default function Calendar({ availableDays, setMonthBorders }) {
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const startDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
-    const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    const days = Array.from({ length: daysInMonth }, (_, i) => {
+      const date = new Date(currentYear, currentMonth, i + 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    });
     const weekDays = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
     const updateMonthBorders = (newOffset) => {
-      const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + newOffset, 1);
+      const today = new Date();
+      const newDate = new Date(today.getFullYear(), today.getMonth() + newOffset, 1);
       const startOfMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 1);
       const endOfMonth = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0);
       setMonthBorders({ startOfMonth, endOfMonth });
     };
+
+    const dayClickHandler = (day) => {
+      onDayClick(day);
+    }
+
+    const isAvailableCheck = (day) => {
+      const todayWithoutTime = new Date();
+      todayWithoutTime.setHours(0, 0, 0, 0);
+
+      if (day < todayWithoutTime) {
+        return false;
+      }
+
+      const isAvailable = availableDays.some(availableDay => {
+        return availableDay.getDate() === day.getDate() &&
+               availableDay.getMonth() === day.getMonth() &&
+               availableDay.getFullYear() === day.getFullYear();
+      });
+
+      return isAvailable;
+    }
 
     return (
         <div>
           <div className="flex justify-between items-center mb-2">
             <button
                 onClick={() => {
-                  if (monthOffset > 0) {
-                    setMonthOffset((m) => m - 1);
-                    updateMonthBorders(monthOffset - 1);
+                  const newOffset = monthOffset - 1;
+                  if (newOffset >= 0) {
+                    setMonthOffset(newOffset);
+                    updateMonthBorders(newOffset);
                   }
                 }}
                 disabled={monthOffset === 0}
@@ -44,7 +71,14 @@ export default function Calendar({ availableDays, setMonthBorders }) {
             <span className="font-bold">
               {currentDate.toLocaleString("ru-RU", { month: "long", year: "numeric" })}
             </span>
-            <button onClick={() => setMonthOffset((m) => m + 1)} className={"text-gray-100"}>&rarr;</button>
+            <button onClick={() => {
+               const newOffset = monthOffset + 1;
+               setMonthOffset(newOffset);
+               updateMonthBorders(newOffset);
+            }} className={"text-gray-100"}
+            >
+              &rarr;
+            </button>
           </div>
 
           <div className="grid grid-cols-7 gap-2 mb-2">
@@ -57,10 +91,17 @@ export default function Calendar({ availableDays, setMonthBorders }) {
             {Array.from({ length: startDayOfWeek }, (_, i) => (
               <div key={`empty-${i}`} />
             ))}
-            {days.map((day) => (
-              // сравниваем дату свободного дня с бека с числом на карточке дня для отображения свободных дней
-              <DayCell key={day} day={day} isAvailable={availableDays.some((availableDay) => availableDay.getDate() === day)} />
-            ))}
+            {days.map((day) => {
+              return <div key={day} className="flex justify-center">
+                {/* сравниваем дату свободного дня с бека с числом на карточке дня для отображения свободных дней */}
+                <DayCell
+                  key={day}
+                  day={day}
+                  isAvailable={isAvailableCheck(day)} 
+                  onClick={dayClickHandler}
+                />
+              </div>
+            })}
           </div>
         </div>
     );

@@ -1,5 +1,6 @@
 using AutoMapper;
 using MedCare.API.Contracts.Responses;
+using MedCare.API.Contracts.Responses.Schedules;
 using MedCare.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +46,18 @@ public class DoctorController : ControllerBase
     [HttpGet("{id:guid}")]
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
-    public async Task<IActionResult> GetByIdAsync(Guid id)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
     {
         var doctor = await _workerService.GetByIdAsync(id);
         return Ok(_mapper.Map<GetWorkerResponse>(doctor));
+    }
+    
+    [HttpGet("{id:guid}/available-slots")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAvailableSlotsResponse))]
+    public async Task<IActionResult> GetAvailableSlotsForDoctor([FromRoute] Guid id,[FromQuery] DateTime visitDate)
+    {
+        var freeSlots = await _workerService.GetAvailableSlotsForDoctor(id, visitDate);
+        return Ok(_mapper.Map<GetAvailableSlotsResponse>(freeSlots));
     }
 }
