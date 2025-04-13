@@ -25,4 +25,11 @@ public class ServiceRepository : IServiceRepository
             .AsNoTracking()
             .ToListAsync();
     }
+
+    public async Task<ServiceEntity?> GetByIdAsync(Guid serviceId)
+    {
+        return await _context.Services
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == serviceId);
+    }
 }

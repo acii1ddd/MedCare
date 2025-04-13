@@ -1,4 +1,6 @@
-const TimeSlots = ({ slots, onClick }) => {
+import { isEqualWithTime } from '../../../utils/date.js';
+
+const TimeSlots = ({ slots, onClick, selectedSlot }) => {
     const formatTime = (slot) => {
         return `${slot.getHours()}:${slot.getMinutes() < 10 ? '0' + slot.getMinutes() : slot.getMinutes()}`;
     };
@@ -11,7 +13,10 @@ const TimeSlots = ({ slots, onClick }) => {
                     {slots.map((slot, index) => (
                     <li
                         key={index}
-                        className="bg-blue-100 p-3 rounded-lg text-center cursor-pointer hover:bg-blue-200 transition-all"
+                        className={`bg-blue-100 p-3 rounded-lg text-center cursor-pointer hover:bg-blue-200 transition-all
+                            ${isEqualWithTime(slot, selectedSlot) ? "ring-4 ring-blue-500 lue-600 font-semibold shadow-md" : ""}
+                        `}
+                        
                         onClick={() => onClick(slot)}
                     >
                         {formatTime(slot)}

@@ -4,5 +4,5 @@ namespace MedCare.BLL.Services;
 
 public interface IAppointmentService
 {
-    public Task<AppointmentModel> AddAsync(AppointmentModel appointment);
+    public Task<AppointmentModel> AddAsync(AppointmentModel appointment, Guid patientId);
 }

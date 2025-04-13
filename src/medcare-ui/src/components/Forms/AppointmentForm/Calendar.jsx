@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DayCell from "./DayCell";
+import { isEqual } from '../../../utils/date.js';
 
 export default function Calendar({ availableDays, setMonthBorders, onDayClick }) {
     const [monthOffset, setMonthOffset] = useState(0);
@@ -37,12 +38,6 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
       setSelectedDay(day);
       onDayClick(day);
     }
-
-    const compareDates = (d1, d2) => {
-      return d1.getDate() === d2.getDate() &&
-             d1.getMonth() === d2.getMonth() &&
-             d1.getFullYear() === d2.getFullYear();
-    }
     
     const isAvailableCheck = (day) => {
       const todayWithoutTime = new Date();
@@ -53,7 +48,7 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
       }
 
       const isAvailable = availableDays.some(availableDay => {
-        return compareDates(availableDay, day);
+        return isEqual(availableDay, day);
       });
       
       return isAvailable;
@@ -106,7 +101,7 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
                   day={day}
                   isAvailable={isAvailableCheck(day)} 
                   onClick={dayClickHandler}
-                  isSelected={compareDates(selectedDay, day)}
+                  isSelected={isEqual(selectedDay, day)}
                 />
               </div>
             })}

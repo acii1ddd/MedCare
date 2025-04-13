@@ -9,8 +9,10 @@ public class AppointmentModel : BaseModel
     /// Дата приема врача
     /// </summary>
     public DateTime VisitDate { get; set; }
-    public AppointmentStatus AppointmentStatus { get; set; }
-    public PaymentStatus PaymentStatus { get; set; }
+
+    public AppointmentStatus AppointmentStatus { get; set; } = AppointmentStatus.Confirmed;
+    
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Unpaid;
 
     /// <summary>
     /// Примечание пациента

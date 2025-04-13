@@ -1,22 +1,25 @@
+using AutoMapper;
 using MedCare.BLL.Models;
-using MedCare.BLL.Models.Users;
 using MedCare.DAL.Entities.Appointments;
 
-namespace MedCare.API.Contracts.Requests;
+namespace MedCare.API.Contracts.Responses;
 
-public class AddAppointmentRequestContract
+public class AddAppointmentResponse : BaseModel
 {
     /// <summary>
     /// Дата приема врача
     /// </summary>
     public DateTime VisitDate { get; set; }
-    public AppointmentStatus AppointmentStatus { get; set; }
-    public PaymentStatus PaymentStatus { get; set; }
+
+    public AppointmentStatus AppointmentStatus { get; set; } = AppointmentStatus.Confirmed;
+    
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Unpaid;
 
     /// <summary>
     /// Примечание пациента
     /// </summary>
     public string? Note { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     /// <summary>
     /// Пациент
@@ -32,4 +35,12 @@ public class AddAppointmentRequestContract
     /// Услуга, предоставляемая пациенту в рамках этого приема
     /// </summary>
     public Guid ServiceId { get; set; }
+}
+
+public class AddAppointmentResponseProfile : Profile
+{
+    public AddAppointmentResponseProfile()
+    {
+        CreateMap<AppointmentModel, AddAppointmentResponse>();
+    }
 }

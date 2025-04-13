@@ -5,4 +5,6 @@ namespace MedCare.DAL.Interfaces;
 public interface IServiceRepository
 {
     public Task<List<ServiceEntity>> GetByBranchWithFilterAsync(Guid branchId, Guid specializationId);
+    
+    public Task<ServiceEntity?> GetByIdAsync(Guid serviceId);
 }

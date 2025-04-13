@@ -9,6 +9,8 @@ import TimeSlots from './TimeSlots';
 import Calendar from "./Calendar";
 import Note from "./Note";
 import ServiceSelector from "./ServiceSelector";
+import { Add } from '../../../services/appointments';
+import { useNavigate } from "react-router-dom";
 
 export default function AppointmentForm() {
     const [selectedBranch, setSelectedBranch] = useState(null);
@@ -26,20 +28,16 @@ export default function AppointmentForm() {
         endOfMonth: null,
     });
 
-    const [slot, selectedSlot] = useState(null);
+    const [selectedSlot, setSelectedSlot] = useState(null);
     const [slots, setSlots] = useState([]);
 
-    const [note, setNote] = useState("");
+    const [selectedNote, setSelectedNote] = useState("");
 
     const [selectedService, setSelectedService] = useState(null);
 
-    const [appointmentData, setAppointmentData] = useState({
-        day: "",
-        time: "",
-        note: "",
-        doctorId: "",
-        serviceId: "",
-    });
+    const [selectedDay, setSelectedDay] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBranches = async () => {
@@ -115,36 +113,53 @@ export default function AppointmentForm() {
 
     const dayClickHandler = async (day) => {
         console.log("Дата записи ", day);
-        console.log("Выбранный врач ", selectedDoctor);
-        setAppointmentData((prev) => ({...prev, day: day}))
+        setSelectedDay(day);
 
         const slots = await GetAvailableSlotsForDoctor(selectedDoctor.id, day);
         console.log("Свободные временные слоты: ", slots);
         setSlots(slots);
     };
 
-    const slotClickHandler = (slot) => {
-        console.log("Выбранный слот для записи ", slot);
-        setAppointmentData((prev) => ({...prev, time: slot}));
-        selectedSlot(slot);
-    };
+    // const slotClickHandler = (slot) => {
+    //     console.log("Выбранный слот для записи ", slot);
+    //     setAppointmentData((prev) => ({...prev, time: slot}));
+    //     setSelectedSlot(slot);
+    // };
 
     const handleNoteChange = (e) => {
         const {value} = e.target;
-        setNote(value);
+        setSelectedNote(value);
     };
 
-    const handleClick = () => {
-        alert("Запись на прием");
+    const handleClick = async () => {
+        const yyyy = selectedDay.getFullYear();
+        const mm = String(selectedDay.getMonth() + 1).padStart(2, '0');
+        const dd = String(selectedDay.getDate()).padStart(2, '0');
         
-        appointmentData.note = note;
-        appointmentData.doctorId = selectedDoctor.id;
-        appointmentData.serviceId = selectedService.id;
-        console.log(appointmentData);    
+        const hh = String(selectedSlot.getHours()).padStart(2, '0');
+        const mins = String(selectedSlot.getMinutes()).padStart(2, '0');
+
+        const visitDate = new Date(`${yyyy}-${mm}-${dd}T${hh}:${mins}:00`).toISOString();
+        
+        const newAppointment = {
+            "visitDate": visitDate,
+            "note": selectedNote,
+            "doctorId": selectedDoctor.id,
+            "serviceId": selectedService.id
+        }
+        
+        console.log(newAppointment);
+        await Add(newAppointment);
+
+        alert("Вы успешно записаны на прием.");
+        navigate("/dashboard");
     };
 
     return (
         <div className="p-6 max-w-lg mx-auto mt-15">
+            <h2 className="text-3xl font-semibold text-center text-blue-800 mb-3">
+                Запись на приём
+            </h2>
             <BranchSelector branches={branches} selectedBranch={selectedBranch} setSelectedBranch ={setSelectedBranch} />
             
             <SpecializationSelector specializations={specializations} selectedSpecialization={selectedSpecialization} setSelectedSpecialization={setSelectedSpecialization} />
@@ -160,12 +175,12 @@ export default function AppointmentForm() {
             )}
         
             {slots.length > 0 && (
-                <TimeSlots slots={slots} onClick={slotClickHandler}/>
+                <TimeSlots slots={slots} onClick={setSelectedSlot} selectedSlot={selectedSlot}/>
             )}
 
-            {slot && (
+            {selectedSlot && (
                 <>
-                    <Note value={note} handleChange={handleNoteChange}/>
+                    <Note value={selectedNote} handleChange={handleNoteChange}/>
                     <button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                         onClick={() => handleClick()}
