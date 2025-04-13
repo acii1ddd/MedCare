@@ -3,6 +3,8 @@ import DayCell from "./DayCell";
 
 export default function Calendar({ availableDays, setMonthBorders, onDayClick }) {
     const [monthOffset, setMonthOffset] = useState(0);
+    const [selectedDay, setSelectedDay] = useState(null);
+
 
     if (!availableDays) {
       console.error("Пропс availableDays неопределен");
@@ -32,9 +34,16 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
     };
 
     const dayClickHandler = (day) => {
+      setSelectedDay(day);
       onDayClick(day);
     }
 
+    const compareDates = (d1, d2) => {
+      return d1.getDate() === d2.getDate() &&
+             d1.getMonth() === d2.getMonth() &&
+             d1.getFullYear() === d2.getFullYear();
+    }
+    
     const isAvailableCheck = (day) => {
       const todayWithoutTime = new Date();
       todayWithoutTime.setHours(0, 0, 0, 0);
@@ -44,16 +53,14 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
       }
 
       const isAvailable = availableDays.some(availableDay => {
-        return availableDay.getDate() === day.getDate() &&
-               availableDay.getMonth() === day.getMonth() &&
-               availableDay.getFullYear() === day.getFullYear();
+        return compareDates(availableDay, day);
       });
-
+      
       return isAvailable;
     }
 
     return (
-        <div>
+        <div className="mt-7">
           <div className="flex justify-between items-center mb-2">
             <button
                 onClick={() => {
@@ -64,7 +71,7 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
                   }
                 }}
                 disabled={monthOffset === 0}
-                className={`px-2 py-1 rounded text-gray-100 ${monthOffset === 0 ? "сursor-not-allowed" : "hover:bg-gray-200"}`}
+                className={`px-2 py-1 rounded text-gray-100 ${monthOffset === 0 ? "" : "hover:bg-gray-200"}`}
             >
                 &larr;
             </button>
@@ -95,10 +102,11 @@ export default function Calendar({ availableDays, setMonthBorders, onDayClick })
               return <div key={day} className="flex justify-center">
                 {/* сравниваем дату свободного дня с бека с числом на карточке дня для отображения свободных дней */}
                 <DayCell
-                  key={day}
+                  key={day.toISOString()}
                   day={day}
                   isAvailable={isAvailableCheck(day)} 
                   onClick={dayClickHandler}
+                  isSelected={compareDates(selectedDay, day)}
                 />
               </div>
             })}

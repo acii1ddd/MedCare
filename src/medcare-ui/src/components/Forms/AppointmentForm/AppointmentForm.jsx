@@ -7,7 +7,8 @@ import GetAllBranches from '../../../services/branches';
 import { GetDoctorsByBranchWithSpecializationFilter, GetAvailableDaysForDoctor, GetAvailableSlotsForDoctor } from '../../../services/doctors';
 import TimeSlots from './TimeSlots';
 import Calendar from "./Calendar";
-import PatientForm from "../PatientForm/PatientForm"
+import Note from "./Note";
+import ServiceSelector from "./ServiceSelector";
 
 export default function AppointmentForm() {
     const [selectedBranch, setSelectedBranch] = useState(null);
@@ -25,9 +26,20 @@ export default function AppointmentForm() {
         endOfMonth: null,
     });
 
+    const [slot, selectedSlot] = useState(null);
     const [slots, setSlots] = useState([]);
 
-    const [slot, selectedSlot] = useState(null);
+    const [note, setNote] = useState("");
+
+    const [selectedService, setSelectedService] = useState(null);
+
+    const [appointmentData, setAppointmentData] = useState({
+        day: "",
+        time: "",
+        note: "",
+        doctorId: "",
+        serviceId: "",
+    });
 
     useEffect(() => {
         const fetchBranches = async () => {
@@ -104,15 +116,31 @@ export default function AppointmentForm() {
     const dayClickHandler = async (day) => {
         console.log("Дата записи ", day);
         console.log("Выбранный врач ", selectedDoctor);
+        setAppointmentData((prev) => ({...prev, day: day}))
 
         const slots = await GetAvailableSlotsForDoctor(selectedDoctor.id, day);
         console.log("Свободные временные слоты: ", slots);
         setSlots(slots);
-    }
+    };
 
     const slotClickHandler = (slot) => {
         console.log("Выбранный слот для записи ", slot);
+        setAppointmentData((prev) => ({...prev, time: slot}));
         selectedSlot(slot);
+    };
+
+    const handleNoteChange = (e) => {
+        const {value} = e.target;
+        setNote(value);
+    };
+
+    const handleClick = () => {
+        alert("Запись на прием");
+        
+        appointmentData.note = note;
+        appointmentData.doctorId = selectedDoctor.id;
+        appointmentData.serviceId = selectedService.id;
+        console.log(appointmentData);    
     };
 
     return (
@@ -122,8 +150,12 @@ export default function AppointmentForm() {
             <SpecializationSelector specializations={specializations} selectedSpecialization={selectedSpecialization} setSelectedSpecialization={setSelectedSpecialization} />
 
             <DoctorSelector doctors={doctors} selectedDoctor={selectedDoctor} setSelectedDoctor={setSelectedDoctor}/>
-            
+
             {selectedDoctor && (
+                <ServiceSelector selectedBranch={selectedBranch} selectedSpecialization={selectedSpecialization} setSelectedService={setSelectedService}/>
+            )}
+            
+            {selectedService && (
                 <Calendar availableDays={availableDays} setMonthBorders={setMonthBorders} onDayClick={dayClickHandler}/>
             )}
         
@@ -132,9 +164,16 @@ export default function AppointmentForm() {
             )}
 
             {slot && (
-                <PatientForm />
+                <>
+                    <Note value={note} handleChange={handleNoteChange}/>
+                    <button
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                        onClick={() => handleClick()}
+                    >
+                        Записаться
+                    </button>
+                </>
             )}
-            
         </div>
     );
 }

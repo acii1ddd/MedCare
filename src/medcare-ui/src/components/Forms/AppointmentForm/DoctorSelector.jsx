@@ -1,7 +1,7 @@
 export default function DoctorSelector({ doctors, selectedDoctor, setSelectedDoctor }) {
     return (
       <>
-        <label className="block font-bold">Специалист:</label>
+        <label className="text-left block font-bold">Специалист:</label>
         <select
           value={selectedDoctor?.id || ""}
           onChange={(e) =>

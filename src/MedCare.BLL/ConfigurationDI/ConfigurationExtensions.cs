@@ -18,7 +18,7 @@ public static class ConfigurationExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IPasswordHashService, PasswordHashService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
-        // services.AddScoped<IServiceService, ServiceService>();
+        services.AddScoped<IServiceService, ServiceService>();
         return services;
     }
 

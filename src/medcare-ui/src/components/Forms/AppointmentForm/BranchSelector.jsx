@@ -1,7 +1,7 @@
 export default function BranchSelector({ branches, selectedBranch, setSelectedBranch }) {
     return (
       <>
-        <label className="block font-bold">Филиал:</label>
+        <label className="text-left block font-bold">Филиал:</label>
         <select
           value={selectedBranch?.id || ""}
           onChange={(e) => {

@@ -1,7 +1,7 @@
 export default function SpecializationSelector({ specializations, selectedSpecialization, setSelectedSpecialization }) {
     return (
       <>
-        <label className="block font-bold">Специализация врача:</label>
+        <label className="text-left block font-bold">Специализация врача:</label>
         <select
           value={selectedSpecialization?.id || ""} // если specialization - пустой айтем
           onChange={(e) => {
