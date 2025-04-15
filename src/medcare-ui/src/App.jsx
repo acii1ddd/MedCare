@@ -13,6 +13,8 @@ import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
 import AppointmentForm from "./components/Forms/AppointmentForm/AppointmentForm";
 import DoctorInfo from "./components/Items/DoctorInfo";
+import PatientDashboard from './components/Dashboards/PatientDashboard';
+import DoctorDashboard from './components/Dashboards/DoctorDashboard';
 
 function Layout() {
   return(
@@ -47,8 +49,14 @@ function Layout() {
                   </AuthPrivateRoute>
                 }
               />
-
-              <Route path='/appointment' element={<AppointmentForm/>}/>
+              
+              <Route path="/appointment"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Patient", "Receptionist", "Doctor", "Director"]}> {/* успевает положить токен в localstorage при forbidden */}
+                    <AppointmentForm/>
+                  </AuthPrivateRoute>
+                }
+              />
               
             </Routes>
       </div>

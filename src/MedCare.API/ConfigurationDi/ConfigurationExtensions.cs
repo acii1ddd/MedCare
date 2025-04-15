@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MedCare.API.Contracts.Responses;
+using MedCare.API.Contracts.Responses.Workers;
 using MedCare.API.Controllers;
 using MedCare.API.Validators;
 

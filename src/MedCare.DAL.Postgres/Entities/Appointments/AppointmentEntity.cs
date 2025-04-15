@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using MedCare.DAL.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

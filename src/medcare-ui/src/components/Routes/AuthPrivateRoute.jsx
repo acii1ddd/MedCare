@@ -4,7 +4,8 @@ import { Navigate } from "react-router-dom";
 
 export default function AuthPrivateRoute({ children, allowedRoles }) {
     const { currUser, loading } = useContext(AuthContext);
-    
+    // const navigate = useNavigate();
+
     if (loading) {
         return null; // ждем пока загрузится пользователь
     }
@@ -15,6 +16,7 @@ export default function AuthPrivateRoute({ children, allowedRoles }) {
     // }
 
     if (!currUser) {
+        // navigate("/forbidden");
         return null; // если пользователя нету - ничего не рендерим
     }
     if (!allowedRoles.includes(currUser.userRole)) {

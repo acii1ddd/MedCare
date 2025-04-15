@@ -23,12 +23,19 @@ export default function Navbar() {
                       className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Запись на прием</Link>
                   </li>
                   <li>
-                    <Link to="/dashboard" 
+                    <Link to="/dashboard"
                       className="bg-blue-100 hover:bg-blue-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">Мой кабинет</Link>
                   </li>
-                </>
-              )
-            }
+
+                  {(currUser.userRole === "Doctor" || currUser.userRole === "Receptionist" || currUser.userRole === "Director") && (
+                    <li>
+                      <Link to="/dashboard?as=patient" className="bg-red-100 hover:bg-red-300 text-xl text-black px-4 py-2 rounded-lg shadow-md transition duration-200">
+                        Кабинет пациента
+                      </Link>
+                    </li>
+                  )}
+              </>
+              )}
           </ul>
 
           {currUser ? (

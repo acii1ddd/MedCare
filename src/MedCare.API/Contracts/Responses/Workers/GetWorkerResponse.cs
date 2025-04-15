@@ -3,11 +3,11 @@ using MedCare.API.Contracts.Responses.Branches;
 using MedCare.API.Contracts.Responses.Schedules;
 using MedCare.BLL.Models.Users;
 
-namespace MedCare.API.Contracts.Responses;
+namespace MedCare.API.Contracts.Responses.Workers;
 
 public class GetWorkerResponse
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     
     public string FirstName { get; init; } = string.Empty;
     

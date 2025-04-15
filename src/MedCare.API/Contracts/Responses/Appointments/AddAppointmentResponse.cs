@@ -2,7 +2,7 @@ using AutoMapper;
 using MedCare.BLL.Models;
 using MedCare.DAL.Entities.Appointments;
 
-namespace MedCare.API.Contracts.Responses;
+namespace MedCare.API.Contracts.Responses.Appointments;
 
 public class AddAppointmentResponse : BaseModel
 {

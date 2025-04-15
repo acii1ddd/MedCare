@@ -1,63 +1,104 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth/AuthContext";
 import Footer from '../Layout/Footer';
 import { Link } from "react-router-dom";
+import Appointment from "../Items/Appointment";
+import { GetAllForPatient } from "../../services/appointments.js";
 
 const PatientDashboard = () => {
     const { currUser } = useContext(AuthContext);
+    const [appointments, setAppointments] = useState([]);
+
+    useEffect(() => {
+        const fetchAppointments = async () => {
+            const appointments = await GetAllForPatient(currUser.id);
+            setAppointments(appointments);
+        };
+
+        fetchAppointments();
+    }, [currUser.id]);
+
+    const [statusFilter, setStatusFilter] = useState("all");
+
+    const filteredAppointments = appointments.filter((appointment) => {
+        const status = appointment.appointmentStatus;
+
+        if (statusFilter === "upcoming") {
+            return status === "Confirmed";
+        } else if (statusFilter === "past") {
+            return status === "Completed";
+        } else {
+            return true;
+        }
+    });
 
     return (
-      <div className="mt-15">
-        <div className="bg-gray-50 min-h-screen flex flex-col">
-            <header className="bg-green-600 text-white py-8 text-center">
-                <h1 className="text-4xl font-bold">Добро пожаловать, {currUser.firstName} {currUser.lastName} {currUser.patronymic}!</h1>
-                {/* <h2 className="text-2xl font-bold">Ваша роль: {currUser.userRole}</h2> */}
+        <div className="mt-15">
+            <div className="bg-gray-50 min-h-screen flex flex-col">
+            <header className="bg-emerald-600 text-white py-8 text-center">
+                <h1 className="text-4xl font-bold">
+                    Добро пожаловать, {currUser.firstName} {currUser.lastName} {currUser.patronymic}!
+                </h1>
                 <p className="mt-2 text-lg">Ваше здоровье — наша забота</p>
             </header>
 
-            <section className="px-6 py-12 bg-white">
+            <section className="px-6 py-12">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h2 className="text-3xl font-semibold text-gray-800">Запись на прием</h2>
-                    <p className="mt-4 text-lg text-gray-600">
-                        Вы можете <Link to="/appointment" className="text-green-600 font-semibold hover:underline">записаться</Link> на прием к специалистам в удобное для вас время.
-                    </p>
-                    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="bg-green-50 p-6 rounded-lg shadow-lg">
-                            <h3 className="text-xl font-semibold text-green-600">Мои приемы</h3>
-                            <p className="mt-2 text-gray-600">
-                                Ознакомьтесь с вашими прошлыми и будущими записями на прием.
-                            </p>
-                            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg">Ознакомиться</button>
-                        </div>
-                    </div>
+                <h2 className="text-3xl font-semibold text-gray-800 text-left">Запись на прием</h2>
+                <p className="mt-4 text-lg text-gray-600 text-left">
+                    Вы можете{" "}
+                    <Link to="/appointment" className="text-green-600 font-semibold hover:underline">
+                        записаться
+                    </Link>{" "}
+                        на прием к специалистам в удобное для вас время.
+                </p>
                 </div>
             </section>
 
-            {/* Medical History */}
             <section className="px-6 py-12 bg-white">
-                <div className="max-w-7xl mx-auto text-center">
-                    <h2 className="text-3xl font-semibold text-gray-800">Медицинская карта</h2>
-                    <p className="mt-4 text-lg text-gray-600">
-                        Ознакомьтесь с вашей медицинской историей и записями о визитах к врачам.
-                    </p>
-                    <div className="mt-6 space-y-4">
-                        <div className="flex justify-between items-center p-6 bg-gray-50 rounded-lg shadow-lg">
-                            <span className="text-lg font-semibold text-gray-700">Последний визит</span>
-                            <span className="text-gray-600">20 марта 2025, Терапевт</span>
-                        </div>
-                        <div className="flex justify-between items-center p-6 bg-gray-50 rounded-lg shadow-lg">
-                            <span className="text-lg font-semibold text-gray-700">Диагноз</span>
-                            <span className="text-gray-600">Гипертония</span>
-                        </div>
-                        <Link to="/contacts" className="block mt-4 bg-green-600 text-white px-4 py-2 rounded-lg w-max mx-auto">
-                            Подробнее
-                        </Link>
+                <div className="max-w-7xl mx-auto">
+                <h2 className="text-3xl font-semibold text-gray-800 text-center">Медицинская история</h2>
+                <p className="mt-4 text-lg text-gray-600 text-center">
+                    Ознакомьтесь с вашей медицинской историей, информацией о прошедших и предстоящих приемах.
+                </p>
+
+                <div className="flex justify-center gap-4 mt-6">
+                <button 
+                    onClick={() => setStatusFilter("upcoming")} 
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "upcoming" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Предстоящие
+                </button>
+                <button 
+                    onClick={() => setStatusFilter("past")} 
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "past" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Прошедшие
+                </button>
+                <button 
+                    onClick={() => setStatusFilter("all")}
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "all" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Все
+                </button>
+                </div>
+
+                <div className="mt-8 space-y-6">
+                    {filteredAppointments && filteredAppointments.length > 0 ? (
+                    filteredAppointments.map((appointment) => (
+                        <Appointment key={appointment.id} appointment={appointment} />
+                    ))
+                    ) : (
+                    <div
+                        className="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition"
+                    >
+                        <p className="text-center text-xl font-semibold">Нет данных о приёмах</p>
                     </div>
+                    )}
+                </div>
                 </div>
             </section>
-            <Footer/>
+            
+            <Footer />
+            </div>
         </div>
-      </div>
     );
 }
 

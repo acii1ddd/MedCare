@@ -1,6 +1,7 @@
 using AutoMapper;
 using MedCare.API.Contracts.Responses;
 using MedCare.API.Contracts.Responses.Schedules;
+using MedCare.API.Contracts.Responses.Workers;
 using MedCare.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

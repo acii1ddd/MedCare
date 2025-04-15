@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using AutoMapper;
 using MedCare.BLL.Exceptions;
 using MedCare.BLL.Interfaces;
@@ -70,7 +69,8 @@ internal class WorkerService : IWorkerService
             
         // записи к этому врачу на этот день
         var appointments = _mapper.Map<List<AppointmentModel>>(
-            await _appointmentRepository.GetAllWithFilterAsync(doctor.Id, visitDate)
+            await _appointmentRepository.GetAllWithFilterAsync(
+                visitDate, null, null, null, doctor.Id)
         );
         var occupiedSlots = appointments.Select(x => x.VisitDate).ToList();
             

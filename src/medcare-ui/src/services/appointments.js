@@ -18,4 +18,23 @@ const Add = async (appointmentData) => {
     }
 };
 
-export { Add }
+const GetAllForPatient = async (patientId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`https://localhost:7009/api/appointments?patientId=${patientId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.err("Ошибка при получении записей о приемах пациентов ", err);
+        throw err;
+    }
+};
+
+export { Add, GetAllForPatient}

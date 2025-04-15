@@ -1,7 +1,6 @@
-using System.Globalization;
-using System.Linq.Expressions;
 using AutoMapper;
 using MedCare.BLL.Exceptions;
+using MedCare.BLL.Interfaces;
 using MedCare.BLL.Models;
 using MedCare.DAL.Entities.Appointments;
 using MedCare.DAL.Interfaces;
@@ -61,6 +60,14 @@ public class AppointmentService : IAppointmentService
         appointment.PatientId = patientId;
         return _mapper.Map<AppointmentModel>(
             await _appointmentRepository.AddAsync(_mapper.Map<AppointmentEntity>(appointment))
+        );
+    }
+
+    public async Task<List<AppointmentModel>> GetAllWithFilterAsync(DateTime? visitDate, 
+        AppointmentStatus? appointmentStatus, PaymentStatus? paymentStatus, Guid? patientId, Guid? doctorId)
+    {
+        return _mapper.Map<List<AppointmentModel>>(await _appointmentRepository
+            .GetAllWithFilterAsync(visitDate, appointmentStatus, paymentStatus, patientId, doctorId)
         );
     }
 }
