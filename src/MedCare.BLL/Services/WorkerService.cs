@@ -72,7 +72,13 @@ internal class WorkerService : IWorkerService
             await _appointmentRepository.GetAllWithFilterAsync(
                 visitDate, null, null, null, doctor.Id)
         );
-        var occupiedSlots = appointments.Select(x => x.VisitDate).ToList();
+        var occupiedSlots = appointments
+            .Select(
+            x => TimeZoneInfo.ConvertTimeFromUtc(
+                x.VisitDate,
+                TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time")
+            ))
+            .ToList();
             
         // слоты из allSlots, которых нет в занятых
         var freeSlots = allSlots.Where(slot => !occupiedSlots.Contains(slot)).ToList();

@@ -9,4 +9,6 @@ public interface IAppointmentService
 
     public Task<List<AppointmentModel>> GetAllWithFilterAsync(DateTime? visitDate,
         AppointmentStatus? appointmentStatus, PaymentStatus? paymentStatus, Guid? patientId, Guid? doctorId);
+
+    public Task SetToCompletedAsync(Guid appointmentId);
 }

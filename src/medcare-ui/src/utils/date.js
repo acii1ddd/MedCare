@@ -22,4 +22,22 @@ const isEqualWithTime = (d1, d2) => {
     );
 }
 
-export {isEqual, isEqualWithTime};
+const formatDate = (isoDate) => {
+    return new Date(isoDate).toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+};
+
+const formatFullDateRuLocale = (isoDate) => {
+    return new Date(isoDate).toLocaleDateString('ru-RU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    });
+};
+
+export {isEqual, isEqualWithTime, formatDate, formatFullDateRuLocale};

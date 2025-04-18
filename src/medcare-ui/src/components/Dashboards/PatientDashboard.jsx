@@ -4,10 +4,12 @@ import Footer from '../Layout/Footer';
 import { Link } from "react-router-dom";
 import Appointment from "../Items/Appointment";
 import { GetAllForPatient } from "../../services/appointments.js";
+import { AppointmentFilter } from '../../utils/filters.js';
 
 const PatientDashboard = () => {
     const { currUser } = useContext(AuthContext);
     const [appointments, setAppointments] = useState([]);
+    const [statusFilter, setStatusFilter] = useState(AppointmentFilter.All);
 
     useEffect(() => {
         const fetchAppointments = async () => {
@@ -18,15 +20,13 @@ const PatientDashboard = () => {
         fetchAppointments();
     }, [currUser.id]);
 
-    const [statusFilter, setStatusFilter] = useState("all");
-
     const filteredAppointments = appointments.filter((appointment) => {
         const status = appointment.appointmentStatus;
 
-        if (statusFilter === "upcoming") {
-            return status === "Confirmed";
-        } else if (statusFilter === "past") {
-            return status === "Completed";
+        if (statusFilter === AppointmentFilter.Confirmed) {
+            return status === AppointmentFilter.Confirmed;
+        } else if (statusFilter === AppointmentFilter.Completed) {
+            return status === AppointmentFilter.Completed;
         } else {
             return true;
         }
@@ -64,26 +64,26 @@ const PatientDashboard = () => {
 
                 <div className="flex justify-center gap-4 mt-6">
                 <button 
-                    onClick={() => setStatusFilter("upcoming")} 
-                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "upcoming" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                    Предстоящие
+                    onClick={() => setStatusFilter(AppointmentFilter.Confirmed)} 
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Confirmed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                        Предстоящие
                 </button>
                 <button 
-                    onClick={() => setStatusFilter("past")} 
-                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "past" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                    Прошедшие
+                    onClick={() => setStatusFilter(AppointmentFilter.Completed)} 
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Completed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                        Прошедшие
                 </button>
                 <button 
-                    onClick={() => setStatusFilter("all")}
-                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === "all" ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                    Все
+                    onClick={() => setStatusFilter(AppointmentFilter.All)}
+                    className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                        Все
                 </button>
                 </div>
 
                 <div className="mt-8 space-y-6">
                     {filteredAppointments && filteredAppointments.length > 0 ? (
-                    filteredAppointments.map((appointment) => (
-                        <Appointment key={appointment.id} appointment={appointment} />
+                        filteredAppointments.map((appointment) => (
+                            <Appointment key={appointment.id} appointment={appointment} />
                     ))
                     ) : (
                     <div

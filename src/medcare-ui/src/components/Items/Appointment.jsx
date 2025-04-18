@@ -1,6 +1,11 @@
 import MedicalRecord from '../Items/MedicalRecord';
+import { AppointmentFilter } from '../../utils/filters';
 
 export default function Appointment({ appointment }) {
+    if (!appointment) {
+        throw new Error("Параметр 'appointment' не определен");
+    }
+    
     return (
         <div
             key={appointment.id}
@@ -12,11 +17,11 @@ export default function Appointment({ appointment }) {
                 </h3>
                 <span className="text-base text-gray-500 text-left">
                     Статус:{" "}
-                    {appointment.appointmentStatus === "Confirmed"
-                        ? "Подтвержден"
-                        : appointment.appointmentStatus === "Pending"
-                        ? "В ожидании"
-                        : "Неизвестно"}
+                    {
+                        appointment.appointmentStatus === AppointmentFilter.Confirmed ? "Предстоит"
+                        : appointment.appointmentStatus === AppointmentFilter.Completed ? "Пройден"
+                        : "Неизвестно"
+                    }
                 </span>
             </div>
 

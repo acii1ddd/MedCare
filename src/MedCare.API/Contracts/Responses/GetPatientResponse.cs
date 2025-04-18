@@ -6,6 +6,8 @@ namespace MedCare.API.Contracts.Responses;
 
 public class GetPatientResponse
 {
+    public Guid Id { get; set; }
+    
     public string FirstName { get; init; } = string.Empty;
     
     public string LastName { get; init; } = string.Empty;
@@ -26,6 +28,8 @@ public class GetPatientResponseProfile : Profile
     public GetPatientResponseProfile()
     {
         CreateMap<UserModel, GetPatientResponse>()
+            .ForMember(dest => dest.Id, opt
+                => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FirstName, opt
                 => opt.MapFrom(src => src.UserProfile.FirstName))
             .ForMember(dest => dest.LastName, opt

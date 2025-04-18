@@ -1,86 +1,53 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth/AuthContext";
 import Footer from "../Layout/Footer";
-import { Link } from "react-router-dom";
 import AppointmentForDoctor from "../Items/AppointmentForDoctor";
+import { GetAllForDoctor } from '../../services/appointments';
 
 const DoctorDashboard = () => {
   const { currUser } = useContext(AuthContext);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("sv-SE"));
+  const [appointments, setAppointments] = useState([]);
+  
+  const AppointmentFilter = Object.freeze({
+      // предстоящие не пройденные
+      Confirmed: "Confirmed",
+      Completed: "Completed",
+      All: "All",
+      Date: "Date"
+  });
 
-  const appointments = [
-    {
-      id: "6fdef70d-0671-495b-a567-e9379aac52ed",
-      visitDate: "2025-05-08T07:30:00Z",
-      appointmentStatus: "Confirmed",
-      paymentStatus: "Unpaid",
-      note: "doctor",
-      createdAt: "2025-04-15T09:14:48.341006Z",
-      doctor: {
-        id: "6e8a54d3-cb13-4066-b751-6da8421c35e0",
-        firstName: "Екатерина",
-        lastName: "Сидорова",
-        patronymic: "Владимировна",
-        specializationName: "Кардиология",
-      },
-      service: {
-        id: "b014aac3-711b-4766-81ed-d32db438e62e",
-        name: "Консультация врача-кардиолога второй квалификационной категории",
-        price: 34,
-      },
-      patient: {
-        firstName: "Дмитрий",
-        lastName: "Сидоров",
-        patronymic: "Андреевич",
-        birthDate: "1995-07-29T21:00:00Z",
-        gender: 0,
-        email: "sidorov@gmail.com",
-        phoneNumber: "+375447890123",
-      },
-      medicalRecords: [],
-    },
-    {
-      id: "9a8725d4-8f4c-499e-8ee3-d7626d1679ad",
-      visitDate: "2025-05-12T10:00:00Z",
-      appointmentStatus: "Pending",
-      paymentStatus: "Unpaid",
-      note: "на консультацию",
-      createdAt: "2025-04-16T11:12:48.000000Z",
-      doctor: {
-        id: "bd1e537a-d364-44e2-aaa5-2e22cc8c2175",
-        firstName: "Иван",
-        lastName: "Петров",
-        patronymic: "Сергеевич",
-        specializationName: "Дерматология",
-      },
-      service: {
-        id: "d08a4219-8c65-469f-a24c-27f50a449f91",
-        name: "Первичный прием дерматолога",
-        price: 25,
-      },
-      patient: {
-        firstName: "Мария",
-        lastName: "Иванова",
-        patronymic: "Павловна",
-        birthDate: "1990-11-15T00:00:00Z",
-        gender: 1,
-        email: "m.ivanova@example.com",
-        phoneNumber: "+375292223344",
-      },
-      medicalRecords: [],
-    },
-  ];
+  const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Date);
+
+  const fetchAppointments = useCallback(async () => {
+    const appointments = await GetAllForDoctor(currUser.id);
+    setAppointments(appointments);
+  }, [currUser.id]);
+  
+  useEffect(() => {
+    fetchAppointments();
+  }, [fetchAppointments]);
 
   const handleTodayFilter = () => {
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toLocaleDateString("sv-SE");
+    setStatusFilter(AppointmentFilter.Date);
     setSelectedDate(today);
   };
 
-  const filteredAppointments = appointments.filter((appointment) => {
-    if (!selectedDate) return true;
-
-    const visitDate = new Date(appointment.visitDate).toISOString().split("T")[0];
-    return visitDate === selectedDate;
+  const filteredTodayAppointments = appointments.filter((appointment) => {
+    const visitDate = new Date(appointment.visitDate).toLocaleDateString("sv-SE");
+    const status = appointment.appointmentStatus;
+  
+    switch (statusFilter) {
+      case AppointmentFilter.Confirmed:
+        return status === AppointmentFilter.Confirmed;
+      case AppointmentFilter.Completed:
+        return status === AppointmentFilter.Completed;
+      case AppointmentFilter.Date:
+        return visitDate === selectedDate;
+      default:
+        return true;
+    }
   });
 
   return (
@@ -102,27 +69,39 @@ const DoctorDashboard = () => {
             <input
               type="date"
               value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
+              onChange={(e) => {
+                setSelectedDate(e.target.value);
+                setStatusFilter(AppointmentFilter.Date);
+              }}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
             />
             <button
+              className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
               onClick={handleTodayFilter}
-              className="px-6 py-2 bg-emerald-600 text-white rounded-md text-lg hover:bg-emerald-700 transition"
-            >
-              Сегодня
+              >
+                Сегодня
             </button>
             <button
-              onClick={() => setSelectedDate("")}
-              className="px-6 py-2 bg-emerald-600 text-white rounded-md text-lg hover:bg-emerald-700 transition"
-            >
-              Сбросить
+                onClick={() => setStatusFilter(AppointmentFilter.Confirmed)} 
+                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Confirmed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Предстоящие
+            </button>
+            <button 
+                onClick={() => setStatusFilter(AppointmentFilter.Completed)} 
+                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Completed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Прошедшие
+            </button>
+            <button 
+                onClick={() => setStatusFilter(AppointmentFilter.All)}
+                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Все
             </button>
           </div>
 
           <div className="mt-8 space-y-6">
-            {filteredAppointments.length > 0 ? (
-              filteredAppointments.map((appointment) => (
-                <AppointmentForDoctor key={appointment.id} appointment={appointment} />
+            {filteredTodayAppointments.length > 0 ? (
+              filteredTodayAppointments.map((appointment) => (
+                <AppointmentForDoctor key={appointment.id} appointment={appointment} onComplete={fetchAppointments} />
               ))
             ) : (
               <div className="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition">

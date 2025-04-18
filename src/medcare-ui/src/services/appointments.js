@@ -37,4 +37,45 @@ const GetAllForPatient = async (patientId) => {
     }
 };
 
-export { Add, GetAllForPatient}
+const GetAllForDoctor = async (doctorId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`https://localhost:7009/api/appointments?doctorId=${doctorId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.err("Ошибка при получении записей о приемах для доктора ", err);
+        throw err;
+    }
+};
+
+const CompleteAppointment = async (appointmentId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(`https://localhost:7009/api/appointments/${appointmentId}/complete`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `bearer ${token}`
+            }
+        });
+        
+        if (response.status != 200) {
+            throw new Error("Ошибка при установке приема на 'Пройденный'");
+        }
+    } catch (err) {
+        console.err(err);
+        throw err;
+    }
+};
+
+
+export { Add, GetAllForPatient, GetAllForDoctor, CompleteAppointment }

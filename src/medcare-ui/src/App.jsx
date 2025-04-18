@@ -15,6 +15,7 @@ import AppointmentForm from "./components/Forms/AppointmentForm/AppointmentForm"
 import DoctorInfo from "./components/Items/DoctorInfo";
 import PatientDashboard from './components/Dashboards/PatientDashboard';
 import DoctorDashboard from './components/Dashboards/DoctorDashboard';
+import MedRecordList from './components/Lists/MedRecordList';
 
 function Layout() {
   return(
@@ -57,7 +58,15 @@ function Layout() {
                   </AuthPrivateRoute>
                 }
               />
-              
+
+              <Route path="/appointment/:id/med-card"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Doctor"]}>
+                    <MedRecordList/>
+                  </AuthPrivateRoute>
+                }
+              />
+
             </Routes>
       </div>
   );

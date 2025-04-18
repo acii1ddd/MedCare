@@ -53,4 +53,13 @@ public class AppointmentController : BaseController
         var mapped = _mapper.Map<List<GetAppointmentResponseWithCards>>(appointments); 
         return Ok(mapped);
     }
+    
+    [HttpPost("{appointmentId:guid}/complete")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> SetToCompletedAsync([FromRoute] Guid appointmentId)
+    {
+        await _appointmentService.SetToCompletedAsync(appointmentId);
+        return Ok();
+    }
 }

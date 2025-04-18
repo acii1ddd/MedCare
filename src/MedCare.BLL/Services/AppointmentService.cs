@@ -1,3 +1,4 @@
+using System.Text;
 using AutoMapper;
 using MedCare.BLL.Exceptions;
 using MedCare.BLL.Interfaces;
@@ -53,8 +54,8 @@ public class AppointmentService : IAppointmentService
 
         appointment.Id = Guid.NewGuid();
 
-        appointment.VisitDate = appointment.VisitDate.Kind != DateTimeKind.Utc 
-            ? appointment.VisitDate.ToUniversalTime() 
+        appointment.VisitDate = appointment.VisitDate.Kind != DateTimeKind.Utc
+            ? appointment.VisitDate.ToUniversalTime()
             : appointment.VisitDate;
         
         appointment.PatientId = patientId;
@@ -69,5 +70,17 @@ public class AppointmentService : IAppointmentService
         return _mapper.Map<List<AppointmentModel>>(await _appointmentRepository
             .GetAllWithFilterAsync(visitDate, appointmentStatus, paymentStatus, patientId, doctorId)
         );
+    }
+
+    public async Task SetToCompletedAsync(Guid appointmentId)
+    {
+        var appointment = await _appointmentRepository.GetByIdAsync(appointmentId);
+        if (appointment is null)
+        {
+            throw new NotFoundException($"Запись с Id {appointmentId} не найдена");
+        }
+        
+        appointment.AppointmentStatus = AppointmentStatus.Completed;
+        await _appointmentRepository.Update(_mapper.Map<AppointmentEntity>(appointment));
     }
 }
