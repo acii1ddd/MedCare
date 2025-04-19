@@ -20,12 +20,6 @@ const DoctorDashboard = () => {
     fetchAppointments();
   }, [fetchAppointments]);
 
-  const handleTodayFilter = () => {
-    const today = new Date().toLocaleDateString("sv-SE");
-    setStatusFilter(AppointmentFilter.Date);
-    setSelectedDate(today);
-  };
-
   const filteredAppointments = FilterAppoinements(appointments, statusFilter, selectedDate);
 
   return (
@@ -55,8 +49,11 @@ const DoctorDashboard = () => {
             />
             <button
               className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
-              onClick={handleTodayFilter}
-              >
+              onClick={() => {
+                setStatusFilter(AppointmentFilter.Date);
+                setSelectedDate(new Date().toLocaleDateString("sv-SE"));
+              }}
+            >
                 Сегодня
             </button>
             <button
@@ -77,7 +74,7 @@ const DoctorDashboard = () => {
             </button>
             <button 
                 onClick={() => {
-                  setStatusFilter(AppointmentFilter.All)
+                  setStatusFilter(AppointmentFilter.All);
                   setSelectedDate("");
                 }}
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
