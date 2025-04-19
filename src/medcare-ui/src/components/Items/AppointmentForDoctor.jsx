@@ -36,7 +36,9 @@ export default function AppointmentForDoctor({ appointment, onComplete }) {
                     <p><strong>Телефон:</strong> {appointment.patient.phoneNumber}</p>
 
                     <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                        onClick={() => navigate(`/appointment/${appointment.patient.id}/med-card`)}
+                        onClick={() => navigate(`/med-card/${appointment.patient.id}`, {
+                            state: {appointmentId: appointment.id}
+                        })}
                     >
                         Мед карта пациента
                     </button>

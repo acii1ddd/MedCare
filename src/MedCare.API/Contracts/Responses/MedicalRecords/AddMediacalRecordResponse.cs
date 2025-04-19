@@ -16,8 +16,6 @@ public class AddMedicalRecordResponse
     public string? Description { get; init; } = string.Empty;
 
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
-    
-    public GetAppointmentResponse Appointment { get; init; } = null!;
 }
 
 public class AddMedicalRecordResponseProfile : Profile

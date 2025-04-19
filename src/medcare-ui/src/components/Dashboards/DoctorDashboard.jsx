@@ -3,20 +3,12 @@ import { AuthContext } from "../Auth/AuthContext";
 import Footer from "../Layout/Footer";
 import AppointmentForDoctor from "../Items/AppointmentForDoctor";
 import { GetAllForDoctor } from '../../services/appointments';
+import { AppointmentFilter, FilterAppoinements } from '../../utils/filters';
 
 const DoctorDashboard = () => {
   const { currUser } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("sv-SE"));
   const [appointments, setAppointments] = useState([]);
-  
-  const AppointmentFilter = Object.freeze({
-      // предстоящие не пройденные
-      Confirmed: "Confirmed",
-      Completed: "Completed",
-      All: "All",
-      Date: "Date"
-  });
-
   const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Date);
 
   const fetchAppointments = useCallback(async () => {
@@ -34,21 +26,7 @@ const DoctorDashboard = () => {
     setSelectedDate(today);
   };
 
-  const filteredTodayAppointments = appointments.filter((appointment) => {
-    const visitDate = new Date(appointment.visitDate).toLocaleDateString("sv-SE");
-    const status = appointment.appointmentStatus;
-  
-    switch (statusFilter) {
-      case AppointmentFilter.Confirmed:
-        return status === AppointmentFilter.Confirmed;
-      case AppointmentFilter.Completed:
-        return status === AppointmentFilter.Completed;
-      case AppointmentFilter.Date:
-        return visitDate === selectedDate;
-      default:
-        return true;
-    }
-  });
+  const filteredAppointments = FilterAppoinements(appointments, statusFilter, selectedDate);
 
   return (
     <div className="mt-15 bg-gray-50 min-h-screen flex flex-col">
@@ -76,31 +54,40 @@ const DoctorDashboard = () => {
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
             />
             <button
-              className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
+              className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
               onClick={handleTodayFilter}
               >
                 Сегодня
             </button>
             <button
-                onClick={() => setStatusFilter(AppointmentFilter.Confirmed)} 
+                onClick={() => {
+                  setStatusFilter(AppointmentFilter.Confirmed);
+                  setSelectedDate("");
+                }}
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Confirmed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
                     Предстоящие
             </button>
             <button 
-                onClick={() => setStatusFilter(AppointmentFilter.Completed)} 
+                onClick={() => {
+                  setStatusFilter(AppointmentFilter.Completed);
+                  setSelectedDate("");
+                }} 
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Completed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
                     Прошедшие
             </button>
             <button 
-                onClick={() => setStatusFilter(AppointmentFilter.All)}
+                onClick={() => {
+                  setStatusFilter(AppointmentFilter.All)
+                  setSelectedDate("");
+                }}
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
                     Все
             </button>
           </div>
 
           <div className="mt-8 space-y-6">
-            {filteredTodayAppointments.length > 0 ? (
-              filteredTodayAppointments.map((appointment) => (
+            {filteredAppointments.length > 0 ? (
+              filteredAppointments.map((appointment) => (
                 <AppointmentForDoctor key={appointment.id} appointment={appointment} onComplete={fetchAppointments} />
               ))
             ) : (

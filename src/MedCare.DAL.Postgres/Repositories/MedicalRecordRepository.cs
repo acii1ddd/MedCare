@@ -21,9 +21,21 @@ public class MedicalRecordRepository : IMedicalRecordRepository
         return medicalRecord;
     }
 
-    public async Task<List<MedicalRecordEntity>> GetAllAsync()
+    public async Task<List<MedicalRecordEntity>> GetAllByPatientAsync(Guid patientId)
     {
         return await _context.MedicalRecords
+            .Where(x => x.Appointment.PatientId == patientId)
+            .Include(x => x.Appointment)
+                .ThenInclude(x => x.Doctor)
+                    .ThenInclude(x => x!.UserProfile)
+            .Include(x => x.Appointment)
+                .ThenInclude(x => x.Doctor)
+                    .ThenInclude(x => x!.Specialization)
+            .Include(x => x.Appointment)
+                .ThenInclude(x => x.Patient)
+                    .ThenInclude(x => x.UserProfile)
+            .Include(x => x.Appointment)
+                .ThenInclude(x => x.Service)
             .AsNoTracking()
             .ToListAsync();
     }

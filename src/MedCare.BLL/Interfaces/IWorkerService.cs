@@ -8,7 +8,7 @@ public interface IWorkerService
     
     public Task<List<DateTime>> GetAvailableDaysForDoctorAsync(Guid doctorId, DateTime? startDate, DateTime? endDate);
     
-    public Task<UserModel> GetByIdAsync(Guid id);
+    public Task<UserModel> GetDoctorByIdAsync(Guid id);
     
     public Task<List<DateTime>> GetAvailableSlotsForDoctor(Guid id, DateTime visitDate);
 }

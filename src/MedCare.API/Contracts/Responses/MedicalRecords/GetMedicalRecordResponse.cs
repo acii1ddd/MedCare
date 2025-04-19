@@ -1,4 +1,5 @@
 using AutoMapper;
+using MedCare.API.Contracts.Responses.Appointments;
 using MedCare.BLL.Models;
 
 namespace MedCare.API.Contracts.Responses.MedicalRecords;
@@ -17,6 +18,8 @@ public class GetMedicalRecordResponse
     public string? Description { get; init; } = string.Empty;
     
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+
+    public GetAppointmentResponse Appointment { get; init; } = null!;
 }
 
 public class GetMedicalRecordResponseProfile : Profile

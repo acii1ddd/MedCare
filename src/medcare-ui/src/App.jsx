@@ -16,6 +16,7 @@ import DoctorInfo from "./components/Items/DoctorInfo";
 import PatientDashboard from './components/Dashboards/PatientDashboard';
 import DoctorDashboard from './components/Dashboards/DoctorDashboard';
 import MedRecordList from './components/Lists/MedRecordList';
+import MedicalRecordForm from "./components/Forms/MedicalRecordForm";
 
 function Layout() {
   return(
@@ -59,10 +60,18 @@ function Layout() {
                 }
               />
 
-              <Route path="/appointment/:id/med-card"
+              <Route path="/med-card/:id"
                 element={
                   <AuthPrivateRoute allowedRoles={["Doctor"]}>
                     <MedRecordList/>
+                  </AuthPrivateRoute>
+                }
+              />
+
+              <Route path="/med-card/:id/add-record"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Doctor"]}>
+                    <MedicalRecordForm/>
                   </AuthPrivateRoute>
                 }
               />

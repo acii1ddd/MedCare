@@ -6,9 +6,10 @@ export default function Appointment({ appointment }) {
         throw new Error("Параметр 'appointment' не определен");
     }
     
+    console.log("appointment:", appointment);
+
     return (
         <div
-            key={appointment.id}
             className="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition"
         >
             <div className="flex justify-between items-center">
@@ -41,14 +42,15 @@ export default function Appointment({ appointment }) {
 
             <div className="mt-4 text-left">
                 <h4 className="text-lg font-semibold text-gray-700">Записи в медицинской карте:</h4>
-                    {appointment.medicalRecords.length === 0 ? (
-                <p className="text-gray-500 mt-2">Нет записей</p>
+                
+                {appointment.medicalRecords.length === 0 ? (
+                    <p className="text-gray-500 mt-2">Нет записей</p>
                 ) : (
-                <ul className="mt-2 space-y-2">
-                    {appointment.medicalRecords.map((record) => (
-                    <MedicalRecord key={record.id} medicalRecord={record} />
-                    ))}
-                </ul>
+                    <ul className="mt-2 space-y-2">
+                        {appointment.medicalRecords.map((record) => (
+                            <MedicalRecord key={record.id} record={record} />
+                        ))}
+                    </ul>
                 )}
             </div>
         </div>

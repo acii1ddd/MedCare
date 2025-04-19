@@ -22,6 +22,7 @@ public class GetAppointmentResponseWithCards
     /// Примечание пациента
     /// </summary>
     public string? Note { get; init; }
+    
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 
     /// <summary>

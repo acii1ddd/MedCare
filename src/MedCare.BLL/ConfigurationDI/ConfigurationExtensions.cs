@@ -20,6 +20,7 @@ public static class ConfigurationExtensions
         services.AddScoped<IAppointmentService, AppointmentService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+        services.AddScoped<IPatientService, PatientService>();
         return services;
     }
 

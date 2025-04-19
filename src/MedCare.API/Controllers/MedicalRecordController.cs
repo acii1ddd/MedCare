@@ -35,12 +35,12 @@ public class MedicalRecordController : ControllerBase
         return Ok(_mapper.Map<AddMedicalRecordResponse>(medicalRecord));
     }
     
-    [HttpGet]
+    [HttpGet("{patientId:guid}")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetMedicalRecordResponse>))]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllByPatientAsync([FromRoute] Guid patientId)
     {
-        var medicalRecords = await _medicalRecordService.GetAllAsync();
-        return Ok(_mapper.Map<List<AddMedicalRecordResponse>>(medicalRecords));
+        var medicalRecords = await _medicalRecordService.GetAllByPatientAsync(patientId);
+        return Ok(_mapper.Map<List<GetMedicalRecordResponse>>(medicalRecords));
     }
 }

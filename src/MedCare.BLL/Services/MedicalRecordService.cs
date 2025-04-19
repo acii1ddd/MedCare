@@ -24,8 +24,10 @@ public class MedicalRecordService : IMedicalRecordService
         );
     }
 
-    public async Task<List<MedicalRecordModel>> GetAllAsync()
+    public async Task<List<MedicalRecordModel>> GetAllByPatientAsync(Guid patientId)
     {
-        return _mapper.Map<List<MedicalRecordModel>>(await _medicalRecordRepository.GetAllAsync());
+        return _mapper.Map<List<MedicalRecordModel>>(
+            await _medicalRecordRepository.GetAllByPatientAsync(patientId)
+        );
     }
 }

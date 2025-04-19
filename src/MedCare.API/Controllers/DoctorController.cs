@@ -49,7 +49,7 @@ public class DoctorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
     public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
     {
-        var doctor = await _workerService.GetByIdAsync(id);
+        var doctor = await _workerService.GetDoctorByIdAsync(id);
         return Ok(_mapper.Map<GetWorkerResponse>(doctor));
     }
     

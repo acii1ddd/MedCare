@@ -21,10 +21,46 @@ export default function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mt-15">
-            <input type="text" placeholder="Введите логин" value={userLogin} onChange={(e) => setUserLogin(e.target.value)}/> 
-            <input type="text" placeholder="Введите пароль" value={userPassword} onChange={(e) => setUserPassword(e.target.value)}/>
-            <button type="submit" className="text-white">Войти</button>
-        </form>
+        <div className="flex justify-center items-start min-h-[830px] bg-[oklch(97%_0.001_106.424)] pt-40 mt-15 rounded-lg">
+            <form 
+                onSubmit={handleSubmit} 
+                className="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-6"
+            >
+                <h2 className="text-3xl font-semibold text-center text-emerald-600">
+                    Вход в систему
+                </h2>
+
+                <div>
+                    <label className="text-left text-lg block mb-1 text-gray-700">Логин</label>
+                    <input
+                        type="text"
+                        placeholder="Введите логин"
+                        value={userLogin}
+                        onChange={(e) => setUserLogin(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 text-lg"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="text-left text-lg block mb-1 text-gray-700">Пароль</label>
+                    <input
+                        type="password"
+                        placeholder="Введите пароль"
+                        value={userPassword}
+                        onChange={(e) => setUserPassword(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 text-lg"
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-md text-lg font-medium transition duration-300"
+                >
+                    Войти
+                </button>
+            </form>
+        </div>
     );
 }

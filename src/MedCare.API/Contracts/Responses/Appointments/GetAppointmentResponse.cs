@@ -1,4 +1,5 @@
 using AutoMapper;
+using MedCare.API.Contracts.Responses.Workers;
 using MedCare.BLL.Models;
 
 namespace MedCare.API.Contracts.Responses.Appointments;
@@ -22,21 +23,12 @@ public class GetAppointmentResponse
     public string? Note { get; init; }
     
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+
+    public GetSmallDoctorResponse Doctor { get; init; } = null!;
     
-    /// <summary>
-    /// Пациент
-    /// </summary>
-    public Guid PatientId { get; init; }
+    public GetServiceResponse Service { get; init; } = null!;
     
-    /// <summary>
-    /// Доктор
-    /// </summary>
-    public Guid? DoctorId { get; init; }
-    
-    /// <summary>
-    /// Услуга, предоставляемая пациенту в рамках этого приема
-    /// </summary>
-    public Guid ServiceId { get; init; }
+    public GetPatientResponse Patient { get; init; } = null!;
 }
 
 public class GetAppointmentResponseProfile : Profile

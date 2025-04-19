@@ -6,5 +6,5 @@ public interface IMedicalRecordService
 {
     public Task<MedicalRecordModel> AddAsync(MedicalRecordModel medicalRecord);
     
-    public Task<List<MedicalRecordModel>> GetAllAsync();
+    public Task<List<MedicalRecordModel>> GetAllByPatientAsync(Guid patientId);
 }

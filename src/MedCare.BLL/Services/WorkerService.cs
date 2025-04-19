@@ -9,13 +9,13 @@ namespace MedCare.BLL.Services;
 
 internal class WorkerService : IWorkerService
 {
-    private readonly IWorkerRepository _workerRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IMapper _mapper;
 
-    public WorkerService(IWorkerRepository workerRepository, IMapper mapper, IAppointmentRepository appointmentRepository)
+    public WorkerService(IUserRepository userRepository, IMapper mapper, IAppointmentRepository appointmentRepository)
     {
-        _workerRepository = workerRepository;
+        _userRepository = userRepository;
         _mapper = mapper;
         _appointmentRepository = appointmentRepository;
     }
@@ -23,7 +23,7 @@ internal class WorkerService : IWorkerService
     public async Task<List<UserModel>> GetByBranchNameWithFilterAsync(string branchName, Guid? specializationId)
     {
         return _mapper.Map<List<UserModel>>(
-            await _workerRepository.GetDoctorsByBranchNameWithFilterAsync(branchName, specializationId)
+            await _userRepository.GetDoctorsByBranchNameWithFilterAsync(branchName, specializationId)
         );
     }
 
@@ -36,7 +36,7 @@ internal class WorkerService : IWorkerService
             DateTime.DaysInMonth(startDate.Value.Year, startDate.Value.Month)
         );
         
-        var doctor = _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(doctorId));
+        var doctor = _mapper.Map<UserModel>(await _userRepository.GetDoctorByIdAsync(doctorId));
         
         if (doctor.Schedules == null)
             throw new InvalidOperationException($"У врача {doctor.Id} нет расписания");
@@ -86,14 +86,20 @@ internal class WorkerService : IWorkerService
         return freeSlots.Count != 0 ? freeSlots : [];
     }
 
-    public async Task<UserModel> GetByIdAsync(Guid id)
+    public async Task<UserModel> GetDoctorByIdAsync(Guid id)
     {
-        return _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(id));
+        var doctor = await _userRepository.GetDoctorByIdAsync(id);
+        if (doctor is null)
+        {
+            throw new NotFoundException($"Врач с Id {id} не найден");
+        }
+        
+        return _mapper.Map<UserModel>(doctor);
     }
 
     public async Task<List<DateTime>> GetAvailableSlotsForDoctor(Guid id, DateTime visitDate)
     {
-        var doctor = _mapper.Map<UserModel>(await _workerRepository.GetByIdAsync(id))
+        var doctor = _mapper.Map<UserModel>(await _userRepository.GetDoctorByIdAsync(id))
             ?? throw new NotFoundException($"Врач с Id {id} не найден");
         
         return await GetAvailableSlotsForDoctorAsync(doctor, visitDate);
