@@ -1,4 +1,5 @@
 using MedCare.BLL.Models.Users;
+using Microsoft.AspNetCore.Http;
 
 namespace MedCare.BLL.Interfaces;
 
@@ -16,5 +17,5 @@ public interface IWorkerService
     
     public Task DeleteAsync(Guid workerId);
     
-    public Task AddAsync(UserModel user);
+    public Task AddAsync(UserModel user, IFormFile? file);
 }

@@ -5,6 +5,7 @@ using MedCare.BLL.Models;
 using MedCare.BLL.Models.Users;
 using MedCare.DAL.Entities.Users;
 using MedCare.DAL.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace MedCare.BLL.Services;
 
@@ -127,7 +128,7 @@ internal class WorkerService : IWorkerService
         await _userRepository.DeleteAsync(worker);
     }
 
-    public async Task AddAsync(UserModel user)
+    public async Task AddAsync(UserModel user, IFormFile? image)
     {
         if (user.UserProfile.BirthDate.Kind != DateTimeKind.Utc)
         {
@@ -140,6 +141,13 @@ internal class WorkerService : IWorkerService
         var profileId = Guid.NewGuid();
         user.UserProfile.Id = profileId;
         user.UserProfileId = profileId;
+
+        if (image != null)
+        {
+            using var stream = new MemoryStream();
+            await image.CopyToAsync(stream);
+            user.UserProfile.Image = stream.ToArray();
+        }
         
         await _userRepository.AddAsync(_mapper.Map<UserEntity>(user));
     }

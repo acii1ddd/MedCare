@@ -13,7 +13,6 @@ public class AddUserProfileRequest
     public Gender Gender { get; init; }
     public string Email { get; init; } = string.Empty;
     public string PhoneNumber { get; init; } = string.Empty;
-    public byte[]? Image { get; init; } = [];
     public string PassportSeries { get; init; } = string.Empty;
     public string PassportNumber { get; init; } = string.Empty;
 }

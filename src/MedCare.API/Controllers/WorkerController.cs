@@ -43,9 +43,9 @@ public class WorkerController : ControllerBase
     [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> AddAsync([FromBody] AddWorkerRequest request)
+    public async Task<IActionResult> AddAsync([FromForm] AddWorkerRequest request)
     {
-        await _workerService.AddAsync(_mapper.Map<UserModel>(request));
+        await _workerService.AddAsync(_mapper.Map<UserModel>(request), request.Image);
         return Ok();
     }
 }

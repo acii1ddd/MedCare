@@ -6,6 +6,7 @@ import { Add } from "../../services/users/workers";
 const AddWorkerForm = () => {
     const [branches, setBranches] = useState([]);
     const [specializations, setSpecializations] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
 
     const [formData, setFormData] = useState({
         login: "",
@@ -100,13 +101,16 @@ const AddWorkerForm = () => {
         if (!formData.specializationId.trim()) newErrors.specializationId = "Обязательное поле";
         if (!formData.branchId.trim()) newErrors.branchId = "Обязательное поле";
 
+
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             console.warn("Введенные данные не прошли валидацию");
             return;
         }
         
-        formData.image = "";
+        if (imageFile) {
+            formData.userProfile.image = imageFile;
+        }
         console.log("Данные отправлены ", formData);
         await Add(formData);
     }
@@ -314,14 +318,13 @@ const AddWorkerForm = () => {
 
             <div className="mb-4">
                 <label className="block font-semibold text-left">
-                    Изображение <span className="text-red-600"></span>
+                    Изображение
                 </label>
                 <input
-                    type="text"
-                    name="userProfile.image"
-                    placeholder="Вставьте изображение"
-                    value={formData.userProfile.image}
-                    onChange={handleChange}
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files[0])}
                     className="w-full border border-gray-300 rounded p-2"
                 />
             </div>
