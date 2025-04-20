@@ -13,10 +13,9 @@ import MainPage from './components/Pages/MainPage';
 import DashboardRouter from './components/Routes/DashboardRouter';
 import AppointmentForm from "./components/Forms/AppointmentForm/AppointmentForm";
 import DoctorInfo from "./components/Items/DoctorInfo";
-import PatientDashboard from './components/Dashboards/PatientDashboard';
-import DoctorDashboard from './components/Dashboards/DoctorDashboard';
 import MedRecordList from './components/Lists/MedRecordList';
 import MedicalRecordForm from "./components/Forms/MedicalRecordForm";
+import AddWorkerForm from './components/Forms/AddWorkerForm';
 
 function Layout() {
   return(
@@ -72,6 +71,14 @@ function Layout() {
                 element={
                   <AuthPrivateRoute allowedRoles={["Doctor"]}>
                     <MedicalRecordForm/>
+                  </AuthPrivateRoute>
+                }
+              />
+
+              <Route path="/workers/add"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Director"]}>
+                    <AddWorkerForm/>
                   </AuthPrivateRoute>
                 }
               />

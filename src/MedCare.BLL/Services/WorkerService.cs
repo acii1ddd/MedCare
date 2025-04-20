@@ -3,6 +3,7 @@ using MedCare.BLL.Exceptions;
 using MedCare.BLL.Interfaces;
 using MedCare.BLL.Models;
 using MedCare.BLL.Models.Users;
+using MedCare.DAL.Entities.Users;
 using MedCare.DAL.Interfaces;
 
 namespace MedCare.BLL.Services;
@@ -11,13 +12,15 @@ internal class WorkerService : IWorkerService
 {
     private readonly IUserRepository _userRepository;
     private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IPasswordHashService _passwordHashService;
     private readonly IMapper _mapper;
 
-    public WorkerService(IUserRepository userRepository, IMapper mapper, IAppointmentRepository appointmentRepository)
+    public WorkerService(IUserRepository userRepository, IMapper mapper, IAppointmentRepository appointmentRepository, IPasswordHashService passwordHashService)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _appointmentRepository = appointmentRepository;
+        _passwordHashService = passwordHashService;
     }
 
     public async Task<List<UserModel>> GetByBranchNameWithFilterAsync(string branchName, Guid? specializationId)
@@ -108,6 +111,37 @@ internal class WorkerService : IWorkerService
     public async Task<List<UserModel>> GetAllAsync()
     {
         return  _mapper.Map<List<UserModel>>(await _userRepository.GetAllWorkersAsync());
+    }
+
+    public async Task DeleteAsync(Guid workerId)
+    {
+        var worker = await _userRepository.GetByIdAsync(workerId);
+        if (worker is null)
+        {
+            throw new NotFoundException("Сотрудник с Id не найден");
+        }
+        if (worker.UserRole == UserRole.Director)
+        {
+            throw new InvalidOperationException("Невозможно удалить директора");
+        }        
+        await _userRepository.DeleteAsync(worker);
+    }
+
+    public async Task AddAsync(UserModel user)
+    {
+        if (user.UserProfile.BirthDate.Kind != DateTimeKind.Utc)
+        {
+            throw new InvalidOperationException("BirthDate должна быть в формате Utc");
+        }
+        
+        user.Id = Guid.NewGuid();
+        user.PasswordHash = _passwordHashService.HashPassword(user.PasswordHash);
+        
+        var profileId = Guid.NewGuid();
+        user.UserProfile.Id = profileId;
+        user.UserProfileId = profileId;
+        
+        await _userRepository.AddAsync(_mapper.Map<UserEntity>(user));
     }
 
     private static List<DateTime> GetAllSlotsForDay(DateTime date, TimeSpan startTime, TimeSpan endTime)

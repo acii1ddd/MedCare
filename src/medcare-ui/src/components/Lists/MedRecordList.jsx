@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { GetById } from "../../services/patients";
+import { GetById } from "../../services/users/patients";
 import { GetAllByPatient } from "../../services/medicalRecords";
 import MedicalRecord from "../Items/MedicalRecord";
 

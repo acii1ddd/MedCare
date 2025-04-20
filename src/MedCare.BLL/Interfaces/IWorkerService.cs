@@ -13,4 +13,8 @@ public interface IWorkerService
     public Task<List<DateTime>> GetAvailableSlotsForDoctor(Guid id, DateTime visitDate);
     
     public Task<List<UserModel>> GetAllAsync();
+    
+    public Task DeleteAsync(Guid workerId);
+    
+    public Task AddAsync(UserModel user);
 }

@@ -43,7 +43,7 @@ const PatientForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white rounded shadow text-left">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white rounded shadow text-left mt-15">
           <h2 className="text-xl font-bold text-blue-700 mb-4">ВАШИ ДАННЫЕ</h2>
       
             <div className="mb-4">

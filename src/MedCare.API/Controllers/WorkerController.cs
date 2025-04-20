@@ -1,6 +1,8 @@
 using AutoMapper;
+using MedCare.API.Contracts.Requests.User;
 using MedCare.API.Contracts.Responses.Workers;
 using MedCare.BLL.Interfaces;
+using MedCare.BLL.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,5 +29,23 @@ public class WorkerController : ControllerBase
     {
         var workers = await _workerService.GetAllAsync();
         return Ok(_mapper.Map<List<GetWorkerResponse>>(workers));
+    }
+    
+    [HttpDelete("{workerId:guid}")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> DeleteAsync(Guid workerId)
+    {
+        await _workerService.DeleteAsync(workerId);
+        return Ok();
+    }
+    
+    [HttpPost]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> AddAsync([FromBody] AddWorkerRequest request)
+    {
+        await _workerService.AddAsync(_mapper.Map<UserModel>(request));
+        return Ok();
     }
 }

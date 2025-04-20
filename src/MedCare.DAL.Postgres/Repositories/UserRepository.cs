@@ -43,6 +43,18 @@ public class UserRepository : IUserRepository
             .ToListAsync();
     }
 
+    public async Task DeleteAsync(UserEntity user)
+    {
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task AddAsync(UserEntity user)
+    {
+        await _context.AddAsync(user);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<UserEntity?> GetDoctorByIdAsync(Guid id)
     {
         return await _context.Users

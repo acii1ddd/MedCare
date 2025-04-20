@@ -11,7 +11,10 @@ public interface IUserRepository
     
     public Task<List<UserEntity>> GetAllWorkersAsync();
     
-
+    public Task DeleteAsync(UserEntity user);
+    
+    public Task AddAsync(UserEntity user);
+    
     // doctors
     public Task<UserEntity?> GetDoctorByIdAsync(Guid id);
 
