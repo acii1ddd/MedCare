@@ -5,9 +5,9 @@ namespace MedCare.API.Contracts.Responses.Branches;
 
 public class GetBranchResponse
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
     
-    public string FullAddress { get; set; } = string.Empty;
+    public string FullAddress { get; init; } = string.Empty;
 }
 
 public class GetBranchResponseProfile : Profile
@@ -18,6 +18,10 @@ public class GetBranchResponseProfile : Profile
             .ForMember(dest => dest.Name, opt
                 => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.FullAddress, opt
-                => opt.MapFrom(src => $"{src.Address.City.Name}, {src.Address.Street} {src.Address.BuildingNumber.ToString()}"));
+                => opt.MapFrom(src => 
+                    $"{src.Address.City.Name}, " + 
+                    $"{src.Address.Street} " +
+                    $"{src.Address.BuildingNumber.ToString()}")
+            );
     }
 }

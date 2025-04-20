@@ -105,6 +105,11 @@ internal class WorkerService : IWorkerService
         return await GetAvailableSlotsForDoctorAsync(doctor, visitDate);
     }
 
+    public async Task<List<UserModel>> GetAllAsync()
+    {
+        return  _mapper.Map<List<UserModel>>(await _userRepository.GetAllWorkersAsync());
+    }
+
     private static List<DateTime> GetAllSlotsForDay(DateTime date, TimeSpan startTime, TimeSpan endTime)
     {
         var slots = new List<DateTime>();

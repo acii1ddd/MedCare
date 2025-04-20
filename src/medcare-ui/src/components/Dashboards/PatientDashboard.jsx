@@ -48,8 +48,8 @@ const PatientDashboard = () => {
 
             <section className="px-6 py-12 bg-white">
                 <div className="max-w-7xl mx-auto">
-                    <h2 className="text-3xl font-semibold text-gray-800 text-center">Медицинская история</h2>
-                    <p className="mt-4 text-lg text-gray-600 text-center">
+                    <h2 className="text-left text-3xl font-semibold text-gray-800 text-center">Медицинская история</h2>
+                    <p className="text-left mt-4 text-lg text-gray-600 text-center">
                         Ознакомьтесь с вашей медицинской историей, информацией о прошедших и предстоящих приемах.
                     </p>
 

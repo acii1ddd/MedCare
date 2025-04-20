@@ -1,5 +1,4 @@
 using AutoMapper;
-using MedCare.API.Contracts.Responses;
 using MedCare.API.Contracts.Responses.Schedules;
 using MedCare.API.Contracts.Responses.Workers;
 using MedCare.BLL.Interfaces;
@@ -24,12 +23,12 @@ public class DoctorController : ControllerBase
     // api/doctors/branchName?specialization=spec
     [HttpGet("{branchName}")]
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetWorkerResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetDoctorResponse>))]
     public async Task<IActionResult> GetAllByBranchNameWithFilterAsync(
         [FromRoute] string branchName, [FromQuery] Guid? specializationId)
     {
         var doctors = await _workerService.GetByBranchNameWithFilterAsync(branchName, specializationId);
-        return Ok(_mapper.Map<List<GetWorkerResponse>>(doctors));
+        return Ok(_mapper.Map<List<GetDoctorResponse>>(doctors));
     }
     
     [HttpGet("{doctorId:guid}/available-days")]
@@ -46,11 +45,11 @@ public class DoctorController : ControllerBase
     
     [HttpGet("{id:guid}")]
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWorkerResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetDoctorResponse))]
     public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id)
     {
         var doctor = await _workerService.GetDoctorByIdAsync(id);
-        return Ok(_mapper.Map<GetWorkerResponse>(doctor));
+        return Ok(_mapper.Map<GetDoctorResponse>(doctor));
     }
     
     [HttpGet("{id:guid}/available-slots")]

@@ -29,6 +29,20 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
 
+    public async Task<List<UserEntity>> GetAllWorkersAsync()
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .Include(x => x.UserProfile)
+            .Include(x => x.Specialization)
+            .Include(x => x.Branch)
+                .ThenInclude(x => x!.Address)
+                    .ThenInclude(x => x.City)
+            .Include(x => x.Schedules)
+            .Where(x => x.UserRole != UserRole.Patient)
+            .ToListAsync();
+    }
+
     public async Task<UserEntity?> GetDoctorByIdAsync(Guid id)
     {
         return await _context.Users
