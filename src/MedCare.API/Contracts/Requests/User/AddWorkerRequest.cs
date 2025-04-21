@@ -13,8 +13,6 @@ public class AddWorkerRequest
 
     public AddUserProfileRequest UserProfile { get; init; } = null!;
     
-    public IFormFile? Image;
-    
     /// <summary>
     /// Специализация доктора
     /// </summary>

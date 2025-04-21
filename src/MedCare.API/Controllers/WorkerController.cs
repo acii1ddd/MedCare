@@ -45,7 +45,7 @@ public class WorkerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> AddAsync([FromForm] AddWorkerRequest request)
     {
-        await _workerService.AddAsync(_mapper.Map<UserModel>(request), request.Image);
+        await _workerService.AddAsync(_mapper.Map<UserModel>(request), request.UserProfile.Image);
         return Ok();
     }
 }

@@ -13,6 +13,7 @@ public class AddUserProfileRequest
     public Gender Gender { get; init; }
     public string Email { get; init; } = string.Empty;
     public string PhoneNumber { get; init; } = string.Empty;
+    public IFormFile? Image { get; init; } = null!;
     public string PassportSeries { get; init; } = string.Empty;
     public string PassportNumber { get; init; } = string.Empty;
 }
@@ -21,6 +22,8 @@ public class AddUserProfileProfile : Profile
 {
     public AddUserProfileProfile()
     {
-        CreateMap<AddUserProfileRequest, UserProfileModel>();
+        CreateMap<AddUserProfileRequest, UserProfileModel>()
+            .ForMember(dest => dest.Image, opt
+                => opt.Ignore());
     }
 }

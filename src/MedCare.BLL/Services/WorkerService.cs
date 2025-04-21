@@ -124,7 +124,7 @@ internal class WorkerService : IWorkerService
         if (worker.UserRole == UserRole.Director)
         {
             throw new InvalidOperationException("Невозможно удалить директора");
-        }        
+        }
         await _userRepository.DeleteAsync(worker);
     }
 

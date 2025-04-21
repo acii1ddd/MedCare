@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import GetAllBranches from "../../services/branches";
 import GetSpecializationsForBranch from "../../services/specializations";
 import { Add } from "../../services/users/workers";
+import { useNavigate } from "react-router-dom";
 
 const AddWorkerForm = () => {
     const [branches, setBranches] = useState([]);
@@ -29,6 +30,7 @@ const AddWorkerForm = () => {
         specializationId: "",
         branchId: ""
     });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBranches = async () => {
@@ -113,6 +115,7 @@ const AddWorkerForm = () => {
         }
         console.log("Данные отправлены ", formData);
         await Add(formData);
+        navigate("/dashboard", {replace: true});
     }
 
     return (
