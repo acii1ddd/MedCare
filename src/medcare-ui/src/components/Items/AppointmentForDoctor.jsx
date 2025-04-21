@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CompleteAppointment } from '../../services/appointments';
 import { formatDate, formatFullDateRuLocale } from '../../utils/date';
+import { genderToString } from '../../utils/toString';
 
 export default function AppointmentForDoctor({ appointment, onComplete }) {
     const navigate = useNavigate();
@@ -8,12 +9,6 @@ export default function AppointmentForDoctor({ appointment, onComplete }) {
     const AppointmentStatuses = Object.freeze({
         Completed: "Completed"
     });
-    
-    const genderToString = (gender) => {
-        if (gender === 0) return "Мужской";
-        if (gender === 1) return "Женский";
-        return "Неизвестно";
-    };
 
     return (
         <div

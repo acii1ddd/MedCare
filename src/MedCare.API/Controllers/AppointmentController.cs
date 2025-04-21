@@ -62,4 +62,13 @@ public class AppointmentController : BaseController
         await _appointmentService.SetToCompletedAsync(appointmentId);
         return Ok();
     }
+    
+    [HttpPost("{appointmentId:guid}/pay")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> MakrAsPaidAsync([FromRoute] Guid appointmentId)
+    {
+        await _appointmentService.MarkAsPaid(appointmentId);
+        return Ok();
+    }
 }

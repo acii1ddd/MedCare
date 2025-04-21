@@ -11,4 +11,6 @@ public interface IAppointmentService
         AppointmentStatus? appointmentStatus, PaymentStatus? paymentStatus, Guid? patientId, Guid? doctorId);
 
     public Task SetToCompletedAsync(Guid appointmentId);
+    
+    public Task MarkAsPaid(Guid appointmentId);
 }

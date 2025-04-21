@@ -1,7 +1,7 @@
 import MedicalRecord from '../Items/MedicalRecord';
 import { AppointmentFilter } from '../../utils/filters';
 
-export default function Appointment({ appointment }) {
+export default function AppointmentForPatient({ appointment }) {
     if (!appointment) {
         throw new Error("Параметр 'appointment' не определен");
     }

@@ -83,4 +83,16 @@ public class AppointmentService : IAppointmentService
         appointment.AppointmentStatus = AppointmentStatus.Completed;
         await _appointmentRepository.Update(_mapper.Map<AppointmentEntity>(appointment));
     }
+
+    public async Task MarkAsPaid(Guid appointmentId)
+    {
+        var appointment = await _appointmentRepository.GetByIdAsync(appointmentId);
+        if (appointment is null)
+        {
+            throw new NotFoundException($"Прием с Id {appointmentId} не найден");
+        }
+        
+        appointment.PaymentStatus = PaymentStatus.Paid;
+        await _appointmentRepository.Update(appointment);
+    }
 }

@@ -54,7 +54,7 @@ const DoctorDashboard = () => {
                 setSelectedDate(new Date().toLocaleDateString("sv-SE"));
               }}
             >
-                Сегодня
+                Все на сегодня
             </button>
             <button
                 onClick={() => {

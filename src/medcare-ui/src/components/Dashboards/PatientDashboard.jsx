@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth/AuthContext";
 import Footer from '../Layout/Footer';
 import { Link } from "react-router-dom";
-import Appointment from "../Items/Appointment";
+import AppointmentForPatient from "../Items/AppointmentForPatient";
 import { GetAllForPatient } from "../../services/appointments.js";
 import { AppointmentFilter, FilterAppoinements } from '../../utils/filters.js';
 
@@ -92,7 +92,7 @@ const PatientDashboard = () => {
                     <div className="mt-8 space-y-6">
                         {filteredAppointments && filteredAppointments.length > 0 ? (
                             filteredAppointments.map((appointment) => (
-                                <Appointment key={appointment.id} appointment={appointment} />
+                                <AppointmentForPatient key={appointment.id} appointment={appointment} />
                         ))
                         ) : (
                         <div
