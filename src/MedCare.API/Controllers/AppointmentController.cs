@@ -71,4 +71,22 @@ public class AppointmentController : BaseController
         await _appointmentService.MarkAsPaid(appointmentId);
         return Ok();
     }
+    
+    [HttpGet("popular-specializations")]
+    public async Task<IActionResult> GetPopularSpecializationsAsync()
+    {
+        return Ok(await _appointmentService.GetPopularSpecializationsAsync());
+    }
+    
+    [HttpGet("popular-doctors")]
+    public async Task<IActionResult> GetPopularDoctorsAsync()
+    {
+        return Ok(await _appointmentService.GetPopularDoctorsAsync());
+    }
+    
+    [HttpGet("popular-services")]
+    public async Task<IActionResult> GetPopularServicesAsync()
+    {
+        return Ok(await _appointmentService.GetPopularServicesAsync());
+    }
 }

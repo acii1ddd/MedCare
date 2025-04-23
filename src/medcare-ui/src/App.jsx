@@ -16,6 +16,7 @@ import DoctorInfo from "./components/Items/DoctorInfo";
 import MedRecordList from './components/Lists/MedRecordList';
 import MedicalRecordForm from "./components/Forms/MedicalRecordForm";
 import AddWorkerForm from './components/Forms/AddWorkerForm';
+import StatisticsPage from './components/Statistics/StatisticsPage';
 
 function Layout() {
   return(
@@ -79,6 +80,14 @@ function Layout() {
                 element={
                   <AuthPrivateRoute allowedRoles={["Director"]}>
                     <AddWorkerForm/>
+                  </AuthPrivateRoute>
+                }
+              />
+
+              <Route path="/statistics"
+                element={
+                  <AuthPrivateRoute allowedRoles={["Director"]}>
+                    <StatisticsPage/>
                   </AuthPrivateRoute>
                 }
               />

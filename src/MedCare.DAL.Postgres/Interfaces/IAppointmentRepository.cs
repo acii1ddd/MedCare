@@ -1,4 +1,6 @@
+using MedCare.DAL.Dto;
 using MedCare.DAL.Entities.Appointments;
+using MedCare.DAL.Repositories;
 
 namespace MedCare.DAL.Interfaces;
 
@@ -12,4 +14,10 @@ public interface IAppointmentRepository
     public Task Update(AppointmentEntity appointment);
     
     public Task<AppointmentEntity?> GetByIdAsync(Guid id);
+
+    public Task<List<PopularSpecializationDto>> GetPopularSpecializationsAsync();
+
+    public Task<List<PopularDoctorsDto>> GetPopularDoctorsAsync();
+
+    public Task<List<PopularServicesDto>> GetPopularServicesAsync();
 }

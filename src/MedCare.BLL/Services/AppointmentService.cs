@@ -1,8 +1,8 @@
-using System.Text;
 using AutoMapper;
 using MedCare.BLL.Exceptions;
 using MedCare.BLL.Interfaces;
 using MedCare.BLL.Models;
+using MedCare.DAL.Dto;
 using MedCare.DAL.Entities.Appointments;
 using MedCare.DAL.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -94,5 +94,20 @@ public class AppointmentService : IAppointmentService
         
         appointment.PaymentStatus = PaymentStatus.Paid;
         await _appointmentRepository.Update(appointment);
+    }
+
+    public async Task<List<PopularSpecializationDto>> GetPopularSpecializationsAsync()
+    {
+        return await _appointmentRepository.GetPopularSpecializationsAsync();
+    }
+
+    public async Task<List<PopularDoctorsDto>> GetPopularDoctorsAsync()
+    {
+        return await _appointmentRepository.GetPopularDoctorsAsync();
+    }
+
+    public async Task<List<PopularServicesDto>> GetPopularServicesAsync()
+    {
+        return await _appointmentRepository.GetPopularServicesAsync();
     }
 }

@@ -1,4 +1,5 @@
 using MedCare.DAL.Context;
+using MedCare.DAL.Dto;
 using MedCare.DAL.Entities.Appointments;
 using MedCare.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -79,5 +80,60 @@ public class AppointmentRepository : IAppointmentRepository
     {
         return await _context.Appointments.AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<List<PopularSpecializationDto>> GetPopularSpecializationsAsync()
+    {
+        return await _context.Appointments
+            .Where(a => a.DoctorId != null && a.Doctor!.SpecializationId != null)
+            .GroupBy(a => new {
+                a.Doctor!.SpecializationId,
+                a.Doctor!.Specialization!.Name
+            })
+            .Select(g => new PopularSpecializationDto {
+                SpecializationId = g.Key.SpecializationId!.Value,
+                SpecializationName = g.Key.Name,
+                AppointmentCount = g.Count()
+            })
+            .OrderByDescending(g => g.AppointmentCount)
+            .ToListAsync();
+    }
+    
+    public async Task<List<PopularDoctorsDto>> GetPopularDoctorsAsync()
+    {
+        return await _context.Appointments
+            .Where(a => a.DoctorId != null)
+            .GroupBy(u => new {
+                u.Doctor!.Id,
+                u.Doctor!.UserProfile.FirstName,
+                u.Doctor!.UserProfile.LastName,
+                u.Doctor!.UserProfile.Patronymic,
+                u.Doctor!.Specialization!.Name,
+            })
+            .Select(g => new PopularDoctorsDto {
+                DoctorId = g.Key.Id,
+                SpecializationName = g.Key.Name,
+                DoctorName = $"{g.Key.FirstName} {g.Key.LastName} {g.Key.Patronymic}",
+                AppointmentCount = g.Count()
+            })
+            .OrderByDescending(g => g.AppointmentCount)
+            .ToListAsync();
+    }
+    
+    public async Task<List<PopularServicesDto>> GetPopularServicesAsync()
+    {
+        return await _context.Appointments
+            .Where(a => a.DoctorId != null)
+            .GroupBy(u => new {
+                u.Service.Id,
+                u.Service.Name
+            })
+            .Select(g => new PopularServicesDto {
+                ServiceId = g.Key.Id,
+                ServiceName = g.Key.Name,
+                AppointmentCount = g.Count()
+            })
+            .OrderByDescending(g => g.AppointmentCount)
+            .ToListAsync();
     }
 }
