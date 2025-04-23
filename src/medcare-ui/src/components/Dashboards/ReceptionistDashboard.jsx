@@ -9,8 +9,8 @@ import { GetAll, MarkAsPaid } from "../../services/appointments.js";
 const ReceptionistDashboard = () => {
     const { currUser } = useContext(AuthContext);
     const [appointments, setAppointments] = useState([]);
-    const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Date);
-    const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("sv-SE"));
+    const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Unpaid);
+    const [selectedDate, setSelectedDate] = useState("");
 
     const fetchAppointments = useCallback(async () => {
         const appointments = await GetAll();
@@ -53,7 +53,7 @@ const ReceptionistDashboard = () => {
 
             <section className="px-6 pt-8 bg-white mt-5">
               <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <h2 className="text-3xl font-semibold text-gray-800">Пациенты</h2>
+                    <h2 className="text-3xl font-semibold text-gray-800">Пациенты?</h2>
                     <Link
                         to="/add-patient"
                         className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-medium py-2 px-4 rounded-lg transition duration-200"
@@ -64,7 +64,6 @@ const ReceptionistDashboard = () => {
             </section>
 
             <section className="px-6 py-15 bg-white">
-    
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
                         <h2 className="text-3xl font-semibold text-gray-800">
@@ -72,24 +71,6 @@ const ReceptionistDashboard = () => {
                         </h2>
 
                         <div className="flex justify-center items-center gap-4 mt-2 flex-wrap">
-                            <input
-                                type="date"
-                                value={selectedDate}
-                                onChange={(e) => {
-                                    setSelectedDate(e.target.value);
-                                    setStatusFilter(AppointmentFilter.Date);
-                                }}
-                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
-                            />
-                            <button
-                                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
-                                onClick={() => {
-                                    setStatusFilter(AppointmentFilter.Date);
-                                    setSelectedDate(new Date().toLocaleDateString("sv-SE"));
-                                }}
-                            >
-                                Все на сегодня
-                            </button>
                             <button 
                                 onClick={() => {
                                     setStatusFilter(AppointmentFilter.Unpaid);
@@ -97,7 +78,7 @@ const ReceptionistDashboard = () => {
                                 }} 
                                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Unpaid ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
                             >
-                                Пройден и неоплачен
+                                К оплате
                             </button>
                             <button
                                 onClick={() => {
@@ -108,6 +89,25 @@ const ReceptionistDashboard = () => {
                             >
                                 Предстоящие
                             </button>
+                            <div className="w-1.5 h-8 bg-gray-300 mx-10 rounded"></div>
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={(e) => {
+                                    setSelectedDate(e.target.value);
+                                    //setStatusFilter((prev) => prev);
+                                }}
+                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
+                            />
+                            {/* <button
+                                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
+                                onClick={() => {
+                                    setStatusFilter(AppointmentFilter.Date);
+                                    setSelectedDate(new Date().toLocaleDateString("sv-SE"));
+                                }}
+                            >
+                                Все на сегодня
+                            </button> */}
                             <button 
                                 onClick={() => {
                                     setStatusFilter(AppointmentFilter.All);

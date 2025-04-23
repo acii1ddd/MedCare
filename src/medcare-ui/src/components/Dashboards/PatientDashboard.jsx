@@ -1,25 +1,34 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth/AuthContext";
 import Footer from '../Layout/Footer';
 import { Link } from "react-router-dom";
 import AppointmentForPatient from "../Items/AppointmentForPatient";
-import { GetAllForPatient } from "../../services/appointments.js";
+import { GetAllForPatient, MarkAsPaid } from "../../services/appointments.js";
 import { AppointmentFilter, FilterAppoinements } from '../../utils/filters.js';
 
 const PatientDashboard = () => {
     const { currUser } = useContext(AuthContext);
     const [appointments, setAppointments] = useState([]);
-    const [statusFilter, setStatusFilter] = useState(AppointmentFilter.All);
+    const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Confirmed);
     const [selectedDate, setSelectedDate] = useState("");
 
-    useEffect(() => {
-        const fetchAppointments = async () => {
-            const appointments = await GetAllForPatient(currUser.id);
-            setAppointments(appointments);
-        };
-
-        fetchAppointments();
+    const fetchAppointments = useCallback(async () => {
+        const appointments = await GetAllForPatient(currUser.id);
+        setAppointments(appointments);
     }, [currUser.id]);
+
+    useEffect(() => {
+        fetchAppointments();
+    }, [fetchAppointments]);
+
+    const markAsPaidClickHandler =  async (id) => {
+        if(await MarkAsPaid(id)) {
+            alert("Прием оплачен");
+            fetchAppointments();
+        } else {
+            console.warn("Ошибка при оплате приема");
+        }
+    };
 
     const filteredAppointments = FilterAppoinements(appointments, statusFilter, selectedDate);
 
@@ -54,15 +63,6 @@ const PatientDashboard = () => {
                     </p>
 
                     <div className="flex justify-center gap-4 mt-6">
-                        <input 
-                            type="date"
-                            value={selectedDate}
-                            onChange={(e) => {
-                                setSelectedDate(e.target.value);
-                                setStatusFilter(AppointmentFilter.Date);
-                            }}
-                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
-                        />
                         <button 
                             onClick={() => {
                                 setStatusFilter(AppointmentFilter.Confirmed);
@@ -73,26 +73,36 @@ const PatientDashboard = () => {
                         </button>
                         <button 
                             onClick={() => {
-                                setStatusFilter(AppointmentFilter.Completed);
+                                setStatusFilter(AppointmentFilter.Unpaid);
                                 setSelectedDate("");
                             }} 
-                            className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Completed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                                Прошедшие
+                            className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Unpaid ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                                К оплате
                         </button>
+                        <div className="w-1.5 h-8 bg-gray-300 mx-1 mt-2 rounded"></div>
                         <button 
                             onClick={() => {
-                                setStatusFilter(AppointmentFilter.All);
+                                setStatusFilter(AppointmentFilter.Paid);
                                 setSelectedDate("");
                             }}
-                            className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                                Все
+                            className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Paid ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                                История приемов
                         </button>
+                        <input 
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => {
+                                setSelectedDate(e.target.value);
+                                // setStatusFilter(AppointmentFilter.Date);
+                            }}
+                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
+                        />
                     </div>
 
                     <div className="mt-8 space-y-6">
                         {filteredAppointments && filteredAppointments.length > 0 ? (
                             filteredAppointments.map((appointment) => (
-                                <AppointmentForPatient key={appointment.id} appointment={appointment} />
+                                <AppointmentForPatient key={appointment.id} appointment={appointment} onMarkAsPaidClick={markAsPaidClickHandler} />
                         ))
                         ) : (
                         <div

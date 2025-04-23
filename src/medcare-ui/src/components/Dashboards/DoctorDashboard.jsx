@@ -7,9 +7,9 @@ import { AppointmentFilter, FilterAppoinements } from '../../utils/filters';
 
 const DoctorDashboard = () => {
   const { currUser } = useContext(AuthContext);
-  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString("sv-SE"));
+  const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
-  const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Date);
+  const [statusFilter, setStatusFilter] = useState(AppointmentFilter.Confirmed);
 
   const fetchAppointments = useCallback(async () => {
     const appointments = await GetAllForDoctor(currUser.id);
@@ -38,24 +38,6 @@ const DoctorDashboard = () => {
           </p>
 
           <div className="flex justify-center items-center gap-4 mt-6 flex-wrap">
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => {
-                setSelectedDate(e.target.value);
-                setStatusFilter(AppointmentFilter.Date);
-              }}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
-            />
-            <button
-              className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
-              onClick={() => {
-                setStatusFilter(AppointmentFilter.Date);
-                setSelectedDate(new Date().toLocaleDateString("sv-SE"));
-              }}
-            >
-                Все на сегодня
-            </button>
             <button
                 onClick={() => {
                   setStatusFilter(AppointmentFilter.Confirmed);
@@ -64,6 +46,34 @@ const DoctorDashboard = () => {
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Confirmed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
                     Предстоящие
             </button>
+            <div className="w-1.5 h-8 bg-gray-300 mx-10 rounded"></div>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => {
+                setSelectedDate(e.target.value);
+                // setStatusFilter(AppointmentFilter.Date);
+              }}
+              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-lg"
+            />
+            {/* <button
+              className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Date && selectedDate === new Date().toLocaleDateString("sv-SE") ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}
+              onClick={() => {
+                setStatusFilter(AppointmentFilter.Date);
+                setSelectedDate(new Date().toLocaleDateString("sv-SE"));
+              }}
+            >
+                Все на сегодня
+            </button> */}
+            {/* <button 
+                onClick={() => {
+                  setStatusFilter(AppointmentFilter.All);
+                  setSelectedDate("");
+                }}
+                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
+                    Все
+            </button> */}
+
             <button 
                 onClick={() => {
                   setStatusFilter(AppointmentFilter.Completed);
@@ -71,14 +81,6 @@ const DoctorDashboard = () => {
                 }} 
                 className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.Completed ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
                     Прошедшие
-            </button>
-            <button 
-                onClick={() => {
-                  setStatusFilter(AppointmentFilter.All);
-                  setSelectedDate("");
-                }}
-                className={`px-6 py-3 rounded-md text-lg font-medium ${statusFilter === AppointmentFilter.All ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-400 hover:bg-gray-300"}`}>
-                    Все
             </button>
           </div>
 

@@ -65,6 +65,30 @@ const DirectorDashboard = () => {
                 </section>
 
                 <section className="px-6 py-3 bg-white">
+                    <div className="max-w-7xl mx-auto flex items-center justify-between">
+                        <h2 className="text-3xl font-semibold text-gray-800">Статистика</h2>
+                        <Link
+                            to="/top-specializations"
+                            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-medium py-2 px-4 rounded-lg transition duration-200"
+                        >
+                            Самые популярные специализации 
+                        </Link>
+                        <Link
+                            to="/top-doctors"
+                            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-medium py-2 px-4 rounded-lg transition duration-200"
+                        >
+                            Самые популярные врачи 
+                        </Link>
+                        <Link
+                            to="/top-services"
+                            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-medium py-2 px-4 rounded-lg transition duration-200"
+                        >
+                            Самая популярная услуга (услуги) 
+                        </Link>
+                    </div>
+                </section>
+
+                <section className="px-6 py-3 bg-white">
                     <div className="max-w-7xl mx-auto">
 
                         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">

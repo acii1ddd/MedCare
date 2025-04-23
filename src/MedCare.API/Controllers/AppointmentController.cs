@@ -50,7 +50,7 @@ public class AppointmentController : BaseController
             visitDate, appointmentStatus, paymentStatus, patientId, doctorId
         );
 
-        var mapped = _mapper.Map<List<GetAppointmentResponseWithCards>>(appointments); 
+        var mapped = _mapper.Map<List<GetAppointmentResponseWithCards>>(appointments);
         return Ok(mapped);
     }
     

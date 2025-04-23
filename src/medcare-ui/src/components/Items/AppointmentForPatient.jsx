@@ -1,12 +1,14 @@
 import MedicalRecord from '../Items/MedicalRecord';
 import { AppointmentFilter } from '../../utils/filters';
 
-export default function AppointmentForPatient({ appointment }) {
+export default function AppointmentForPatient({ appointment, onMarkAsPaidClick }) {
     if (!appointment) {
         throw new Error("Параметр 'appointment' не определен");
     }
-    
-    console.log("appointment:", appointment);
+
+    const isButtonView =
+        appointment.appointmentStatus === AppointmentFilter.Completed &&
+        appointment.paymentStatus !== "Paid";
 
     return (
         <div
@@ -53,6 +55,17 @@ export default function AppointmentForPatient({ appointment }) {
                     </ul>
                 )}
             </div>
+
+            {isButtonView && (
+                <div className="mt-6 text-right">
+                    <button
+                        onClick={() => onMarkAsPaidClick(appointment.id)}
+                        className="px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition"
+                    >
+                        Оплатить
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

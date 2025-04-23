@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetById } from "../../services/doctors.js"
 
 export default function DoctorInfo() {
     const { id } = useParams();
     const [doctor, setDoctor] = useState(null);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (!id) return;
 
@@ -17,8 +18,10 @@ export default function DoctorInfo() {
         fetchDoctor();
     }, [id]);
 
-    const buttonClickHandle = (docotor) => {
-        alert(`Перейти в /appointment с выбранным доктором (${docotor.firstName})`);
+    // const buttonClickHandle = (docotor) => { 
+    const buttonClickHandle = () => {
+        //alert(`Перейти в /appointment с выбранным доктором (${docotor.firstName})`);
+        navigate("/appointment", {replace: true});
     };
 
     const DAYS_MAP = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
