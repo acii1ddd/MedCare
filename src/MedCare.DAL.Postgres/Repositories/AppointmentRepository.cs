@@ -85,7 +85,7 @@ public class AppointmentRepository : IAppointmentRepository
     public async Task<List<PopularSpecializationDto>> GetPopularSpecializationsAsync()
     {
         return await _context.Appointments
-            .Where(a => a.DoctorId != null && a.Doctor!.SpecializationId != null)
+            .Where(a=> a.PaymentStatus == PaymentStatus.Paid)
             .GroupBy(a => new {
                 a.Doctor!.SpecializationId,
                 a.Doctor!.Specialization!.Name
@@ -102,7 +102,7 @@ public class AppointmentRepository : IAppointmentRepository
     public async Task<List<PopularDoctorsDto>> GetPopularDoctorsAsync()
     {
         return await _context.Appointments
-            .Where(a => a.DoctorId != null)
+            .Where(a => a.DoctorId != null && a.PaymentStatus == PaymentStatus.Paid)
             .GroupBy(u => new {
                 u.Doctor!.Id,
                 u.Doctor!.UserProfile.FirstName,
@@ -123,7 +123,7 @@ public class AppointmentRepository : IAppointmentRepository
     public async Task<List<PopularServicesDto>> GetPopularServicesAsync()
     {
         return await _context.Appointments
-            .Where(a => a.DoctorId != null)
+            .Where(a => a.DoctorId != null && a.PaymentStatus == PaymentStatus.Paid)
             .GroupBy(u => new {
                 u.Service.Id,
                 u.Service.Name

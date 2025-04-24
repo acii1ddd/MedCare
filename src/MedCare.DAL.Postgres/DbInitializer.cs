@@ -402,177 +402,6 @@ public static class DbInitializer
             await context.UserProfiles.AddRangeAsync(user1, user2, user3, user4, user5, user6, 
                 user7, user8, user9, user10, user11, user12, user13, user14, user15, user16);
             
-            // сотрудники
-            // password: 123
-            const string passwordHash = "$2a$11$dqWSehl3tqJ5QRlE5zxpKeF2ulVPv.4NyU9m5FziPz9IUWwecUjxu";
-            
-            // Гомель
-            var director1 = new UserEntity
-            {
-                Id = Guid.NewGuid(),
-                Login = "director1",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Director,
-                UserProfileId = user1.Id,
-                SpecializationId = null,
-                BranchId = branch1.Id
-            };
-            var receptionist1 = new UserEntity
-            {
-                Id = Guid.NewGuid(),
-                Login = "register1",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Receptionist,
-                UserProfileId = user2.Id,
-                SpecializationId = null,
-                BranchId = branch1.Id
-            };
-            var doctor1 = new UserEntity // Аллергология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc1",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user3.Id,
-                SpecializationId = specialization1.Id,
-                BranchId = branch1.Id
-            };
-            var doctor2 = new UserEntity
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc2",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user4.Id,
-                SpecializationId = specialization2.Id,
-                BranchId = branch1.Id
-            };
-            var doctor3 = new UserEntity // Кардиология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc3",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user5.Id,
-                SpecializationId = specialization3.Id,
-                BranchId = branch1.Id
-            };
-            
-            var doctor4 = new UserEntity // Кардиология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc4",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user6.Id,
-                SpecializationId = specialization3.Id,
-                BranchId = branch1.Id
-            };
-            
-            var doctor5 = new UserEntity // Косметология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc5",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user7.Id,
-                SpecializationId = specialization4.Id,
-                BranchId = branch1.Id
-            };
-            var doctor6 = new UserEntity // Неврология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc6",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user8.Id,
-                SpecializationId = specialization5.Id,
-                BranchId = branch1.Id
-            };
-            var doctor7 = new UserEntity // Оториноларингология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc7",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user9.Id,
-                SpecializationId = specialization6.Id,
-                BranchId = branch1.Id
-            };
-            var doctor8 = new UserEntity // Офтальмология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc8",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user10.Id,
-                SpecializationId = specialization7.Id,
-                BranchId = branch1.Id
-            };
-            var doctor9 = new UserEntity // Психологическая помощь
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc9",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user11.Id,
-                SpecializationId = specialization8.Id,
-                BranchId = branch1.Id
-            };
-            var doctor10 = new UserEntity // Терапия
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc10",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user12.Id,
-                SpecializationId = specialization9.Id,
-                BranchId = branch1.Id
-            };
-            var doctor11 = new UserEntity // Ультразвуковая диагностика
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc11",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user13.Id,
-                SpecializationId = specialization10.Id,
-                BranchId = branch1.Id
-            };
-            var doctor12 = new UserEntity // Лазерная эпиляция
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc12",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user14.Id,
-                SpecializationId = specialization11.Id,
-                BranchId = branch1.Id
-            };
-            var doctor13 = new UserEntity // Лазерная эпиляция
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc13",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user15.Id,
-                SpecializationId = specialization11.Id,
-                BranchId = branch1.Id
-            };
-            var doctor14 = new UserEntity // Эндокринология
-            {
-                Id = Guid.NewGuid(),
-                Login = "doc14",
-                PasswordHash = passwordHash,
-                UserRole = UserRole.Doctor,
-                UserProfileId = user16.Id,
-                SpecializationId = specialization12.Id,
-                BranchId = branch1.Id
-            };
-            await context.Users.AddRangeAsync(director1, receptionist1, doctor1, doctor2, doctor3, 
-                doctor4, doctor5, doctor6, doctor7, doctor8, doctor9, doctor10, doctor11, doctor12, 
-                doctor13, doctor14);
-            
             // расписание врачей
             var scheduleRecord1 = new ScheduleEntity
             {
@@ -606,7 +435,7 @@ public static class DbInitializer
             };
             context.Schedules.AddRange(scheduleRecord1, scheduleRecord2, scheduleRecord3, scheduleRecord4, scheduleRecord5, scheduleRecord6);
 
-            var scheduleList1 = new List<ScheduleEntity>
+            var doctorSchedules = new List<ScheduleEntity>
             {
                 scheduleRecord1,
                 scheduleRecord2,
@@ -615,6 +444,191 @@ public static class DbInitializer
                 scheduleRecord5,
                 scheduleRecord6
             };
+            
+            // сотрудники
+            // password: 123
+            const string passwordHash = "$2a$11$dqWSehl3tqJ5QRlE5zxpKeF2ulVPv.4NyU9m5FziPz9IUWwecUjxu";
+            
+            // Гомель
+            var director1 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "director1",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Director,
+                UserProfileId = user1.Id,
+                SpecializationId = null,
+                BranchId = branch1.Id
+            };
+            var receptionist1 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "register1",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Receptionist,
+                UserProfileId = user2.Id,
+                SpecializationId = null,
+                BranchId = branch1.Id
+            };
+            var doctor1 = new UserEntity // Аллергология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc1",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user3.Id,
+                SpecializationId = specialization1.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor2 = new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc2",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user4.Id,
+                SpecializationId = specialization2.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor3 = new UserEntity // Кардиология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc3",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user5.Id,
+                SpecializationId = specialization3.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            
+            var doctor4 = new UserEntity // Кардиология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc4",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user6.Id,
+                SpecializationId = specialization3.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            
+            var doctor5 = new UserEntity // Косметология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc5",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user7.Id,
+                SpecializationId = specialization4.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor6 = new UserEntity // Неврология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc6",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user8.Id,
+                SpecializationId = specialization5.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor7 = new UserEntity // Оториноларингология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc7",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user9.Id,
+                SpecializationId = specialization6.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor8 = new UserEntity // Офтальмология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc8",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user10.Id,
+                SpecializationId = specialization7.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor9 = new UserEntity // Психологическая помощь
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc9",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user11.Id,
+                SpecializationId = specialization8.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor10 = new UserEntity // Терапия
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc10",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user12.Id,
+                SpecializationId = specialization9.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor11 = new UserEntity // Ультразвуковая диагностика
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc11",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user13.Id,
+                SpecializationId = specialization10.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor12 = new UserEntity // Лазерная эпиляция
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc12",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user14.Id,
+                SpecializationId = specialization11.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor13 = new UserEntity // Лазерная эпиляция
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc13",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user15.Id,
+                SpecializationId = specialization11.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            var doctor14 = new UserEntity // Эндокринология
+            {
+                Id = Guid.NewGuid(),
+                Login = "doc14",
+                PasswordHash = passwordHash,
+                UserRole = UserRole.Doctor,
+                UserProfileId = user16.Id,
+                SpecializationId = specialization12.Id,
+                BranchId = branch1.Id,
+                Schedules = doctorSchedules
+            };
+            await context.Users.AddRangeAsync(director1, receptionist1, doctor1, doctor2, doctor3, 
+                doctor4, doctor5, doctor6, doctor7, doctor8, doctor9, doctor10, doctor11, doctor12, 
+                doctor13, doctor14);
             
             // В Речице
             var user17 = new UserProfileEntity
@@ -705,7 +719,7 @@ public static class DbInitializer
                 UserProfileId = user19.Id,
                 SpecializationId = specialization3.Id,
                 BranchId = branch2.Id,
-                Schedules = scheduleList1
+                Schedules = doctorSchedules
             };
             var doctor16 = new UserEntity // Неврология
             {
@@ -716,7 +730,7 @@ public static class DbInitializer
                 UserProfileId = user20.Id,
                 SpecializationId = specialization5.Id,
                 BranchId = branch2.Id,
-                Schedules = scheduleList1
+                Schedules = doctorSchedules
             };
 
             await context.Users.AddRangeAsync(director2, receptionist2, doctor15, doctor16);
